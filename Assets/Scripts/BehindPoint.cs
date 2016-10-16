@@ -1,34 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FollowTheLeader : MonoBehaviour {
+public class BehindPoint : MonoBehaviour {
 
     public Transform Leader;
-    public GameObject Behind_Sphere;
+    Transform Behind_Sphere;
     public int LEADER_BEHIND_DIST = 3;
 
-    private GameObject follower;
     private Vector3 tv;
     private Vector3 behind;
-    
-	// Use this for initialization
-	void Start ()
-    {
-        follower = GetComponent<GameObject>();
-        Behind_Sphere = GetComponent<GameObject>();
 
-        Vector3 tv = Leader.GetComponent<Rigidbody>().velocity * -1;
-    }
-	
-	// Update is called once per frame
-	void Update ()
+    // Use this for initialization
+    void Start()
     {
-        //follower.Translate(followLeader(Leader));*
+        Behind_Sphere = GetComponent<Transform>();
+
+        tv = Leader.GetComponent<Rigidbody>().velocity * -1;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
         tv = tv.normalized * LEADER_BEHIND_DIST;
         behind = Leader.position + tv;
 
-        Behind_Sphere.transform.position = behind;
+        Behind_Sphere.position = behind;
 
     }
 

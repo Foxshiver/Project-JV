@@ -77,5 +77,7 @@ public class FollowerBehavior : GeneralBehavior {
 		desiredVelocity *= -1;
 
 		return desiredVelocity - _velocity;
+
+
 	}
 }

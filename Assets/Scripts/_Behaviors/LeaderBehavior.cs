@@ -10,7 +10,7 @@ public class LeaderBehavior : GeneralBehavior
 
 	void Start()
 	{
-		_position = this.transform.position;
+		_position = new Vector2(this.transform.position.x,this.transform.position.z);
 	}
 
 	void Update()
@@ -18,7 +18,7 @@ public class LeaderBehavior : GeneralBehavior
 		//_position = this.transform.position;
 
 		_position = computeNewPosition(controllerMovement());
-		this.transform.position = _position;
+		this.transform.position = new Vector3(_position.x,0.0f,_position.y);
 //		this.transform.position += controllerMovement();
 //		_position = this.transform.position;
 
@@ -26,17 +26,17 @@ public class LeaderBehavior : GeneralBehavior
 
 	}
 
-	Vector3 controllerMovement()
+	Vector2 controllerMovement()
 	{
 		float forceHorizontal = Input.GetAxis ("Horizontal");
 		float forceVertical = Input.GetAxis ("Vertical");
 
-		Vector3 force = new Vector3 (forceHorizontal, 0, forceVertical);
+		Vector2 force = new Vector2 (forceHorizontal, forceVertical);
 		//Debug.Log ("mov vec : " + force);
 //
-		if (force == Vector3.zero) {
+		if (force == Vector2.zero) {
 			_velocity *= 0.0f;
-			Debug.Log ("Velocity : " + _velocity);
+			//Debug.Log ("Velocity : " + _velocity);
 		}
 
 		return force*2.0f;

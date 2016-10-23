@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ChickenUnit : MonoBehaviour {
+public class ChickenUnit : Unit
+{
+    // Constructor
+    public ChickenUnit()
+    {
+        Debug.Log("ChickenUnit constructor called");
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Update is called once per frame
+    void Update()
+    {
+        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
+
+        Vector2 steering = ((FleeBehavior)_behaviors[1]).computeFleeSteering(targetPosition);
+        _position = ((FleeBehavior)_behaviors[1]).computeNewPosition(steering);
+
+        this.updatePosition(_position);
+    }
 }

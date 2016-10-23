@@ -1,29 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FoxUnit : FollowerBehavior {
+public class FoxUnit : Unit
+{
+    // Constructor
+    public FoxUnit()
+    {
+        Debug.Log("FoxUnit constructor called");
+    }
 
-	public int stateSteering = 0;
-
-	//Attributes
-	public LeaderBehavior _target;
-
-
-	// Use this for initialization
-	void Start () {
-		_position = this.transform.position;
-	}
-	
 	// Update is called once per frame
-	void Update () {
-		if(stateSteering == 0)
-			_position = computeNewPosition(computeSeekSteering(_target));
-		if(stateSteering == 1)
-			_position = computeNewPosition(computeFleeSteering(_target));
-		if(stateSteering == 2)
-			_position = computeNewPosition(computePursuitSteering(_target));
-		if(stateSteering == 3)
-			_position = computeNewPosition(computeEvasionSteering(_target));
-		this.transform.position = _position;	
-	}
+	void Update()
+    {
+        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
+
+        Vector2 steering = ((SeekBehavior)_behaviors[0]).computeSeekSteering(targetPosition);
+        _position = ((SeekBehavior)_behaviors[0]).computeNewPosition(steering);
+
+        this.updatePosition(_position);
+    }   
 }

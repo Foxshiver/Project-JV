@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SnakeUnit : MonoBehaviour {
+public class SnakeUnit : Unit
+{
+    // Constructor
+    public SnakeUnit()
+    {
+        Debug.Log("SnakeUnit constructor called");
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Update is called once per frame
+    void Update()
+    {
+        Vector2 steering = ((PursuitBehavior)_behaviors[2]).computePursuitSteering(_targetUnit);
+        _position = ((PursuitBehavior)_behaviors[2]).computeNewPosition(steering);
+
+        this.updatePosition(_position);
+    }
 }

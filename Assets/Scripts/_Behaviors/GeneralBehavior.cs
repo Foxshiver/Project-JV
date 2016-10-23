@@ -1,25 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GeneralBehavior : MonoBehaviour {
-    
-    public float _masse;
-    public float _maxSpeed;
-    public float _maxSteeringForce;
-    public Vector3 _position;
-    public Vector3 _direction;
-    public Vector3 _velocity;
-    public Vector3 _steering;
+public class GeneralBehavior {
 
-    public GeneralBehavior()
-    {}
+    protected Unit _unit;
 
-	public Vector3 computeNewPosition(Vector3 steering)
+    public GeneralBehavior(Unit unit)
     {
-		_steering = Vector3.ClampMagnitude(steering, _maxSteeringForce); // steering return the force corresponding at the behavior send by param
-        Vector3 acceleration = _steering / _masse;
-        _velocity = Vector3.ClampMagnitude(_velocity + acceleration /* *Time.deltaTime*/, _maxSpeed);
+        _unit = unit;
+    }
+
+	public Vector2 computeNewPosition(Vector2 steering)
+    {
+        _unit._steering = Vector2.ClampMagnitude(steering, _unit._maxSteeringForce); // steering return the force corresponding at the behavior send by param
+        Vector2 acceleration = _unit._steering / _unit._masse;
+        _unit._velocity = Vector2.ClampMagnitude(_unit._velocity + acceleration /* *Time.deltaTime*/, _unit._maxSpeed);
         
-		return _position + _velocity * Time.deltaTime;
+		return _unit._position + _unit._velocity * Time.deltaTime;
     }
 }

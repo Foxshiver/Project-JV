@@ -13,15 +13,15 @@ public class EvasionBehavior : GeneralBehavior
     }
 
     // Functions
-    public Vector2 computeEvasionSteering(Unit avoidUnit)
+    public Vector2 computeEvasionSteering(Vector2 targetPosition, Vector2 targetVelocity)
     {
         CoefPredictedPosition = 1;
-        Vector2 predictedPosition = avoidUnit._position + avoidUnit._velocity * CoefPredictedPosition;
+        Vector2 predictedPosition = targetPosition + targetVelocity * CoefPredictedPosition;
 
-        Vector2 targetOffset = predictedPosition - _unit._position;
+        Vector2 targetOffset = predictedPosition - _unit._currentPosition;
         float distance = targetOffset.magnitude;
 
-        Vector2 desiredVelocity = (predictedPosition - _unit._position).normalized * _unit._maxSpeed;
+        Vector2 desiredVelocity = (predictedPosition - _unit._currentPosition).normalized * _unit._maxSpeed;
         desiredVelocity *= -1;
 
         return desiredVelocity - _unit._velocity;

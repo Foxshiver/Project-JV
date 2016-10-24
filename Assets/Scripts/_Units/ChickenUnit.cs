@@ -15,8 +15,8 @@ public class ChickenUnit : Unit
         Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
 
         Vector2 steering = ((FleeBehavior)_behaviors[1]).computeFleeSteering(targetPosition);
-        _position = ((FleeBehavior)_behaviors[1]).computeNewPosition(steering);
+        _currentPosition = ((FleeBehavior)_behaviors[1]).computeNewPosition(steering);
 
-        this.updatePosition(_position);
+        this.updatePosition(_currentPosition);
     }
 }

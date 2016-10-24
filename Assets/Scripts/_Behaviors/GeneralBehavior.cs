@@ -37,6 +37,7 @@ public class GeneralBehavior {
 
 				steeringSeparation += vecDistance / distance;
 			}
+
 			//Debug.Log ("SteeringSep : " + steeringSeparation);
 			return steeringSeparation * CoefSteeringSeparation;
 	}

@@ -24,9 +24,9 @@ public class SeekBehavior : GeneralBehavior
 
         if (distance < targetRadius)
         {
-            float rampedSpeed  = _unit._maxSpeed * (distance / (targetRadius * CoefRadiusTarget));
+            float rampedSpeed = _unit._maxSpeed * (distance / (targetRadius * CoefRadiusTarget));
             float clippedSpeed = Mathf.Min(rampedSpeed, _unit._maxSpeed);
-            desiredVelocity    = (clippedSpeed / distance) * targetOffset;
+            desiredVelocity = (clippedSpeed / distance) * targetOffset;
         }
         else
         {

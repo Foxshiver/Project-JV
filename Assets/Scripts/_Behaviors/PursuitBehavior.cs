@@ -5,6 +5,7 @@ public class PursuitBehavior : GeneralBehavior
 {
     // Attributes
     public int CoefPredictedPosition;
+    public float CoefRadiusTarget = 2.0f;
 
     // Constructor
     public PursuitBehavior(Unit unit) : base(unit)
@@ -30,7 +31,19 @@ public class PursuitBehavior : GeneralBehavior
         float distance = targetOffset.magnitude;
         Vector2 desiredVelocity;
 
-        desiredVelocity = (predictedPosition - _unit._position).normalized * _unit._maxSpeed;
+        // Arrival Behavior
+        float targetRadius = 5.0f;
+
+        if (distance < targetRadius)
+        {
+            float rampedSpeed = _unit._maxSpeed * (distance / (targetRadius * CoefRadiusTarget));
+            float clippedSpeed = Mathf.Min(rampedSpeed, _unit._maxSpeed);
+            desiredVelocity = (clippedSpeed / distance) * targetOffset;
+        }
+        else
+        {
+            desiredVelocity = (predictedPosition - _unit._position).normalized * _unit._maxSpeed;
+        }
 
         return desiredVelocity - _unit._velocity;
     }

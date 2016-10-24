@@ -15,11 +15,8 @@ public class PlayerUnit : Unit {
 		_position = Vector3TOVector2(this.transform.position);
 
 		_position = ((LeaderBehavior)_behaviors [4]).computeNewPosition( ((LeaderBehavior)_behaviors [4]).controllerMovement() );
-		//this.transform.position = new Vector3(_position.x,0.0f,_position.y);
-		updatePosition(_position);
-//		this.transform.position += ((LeaderBehavior)_behaviors [4]).controllerMovement();
-//		_position = this.transform.position;
+        updatePosition(_position);		
 		
-				//Debug.Log ("Velocity : " + _velocity);
+        //Debug.Log ("Velocity : " + _velocity);
 	}  
 }

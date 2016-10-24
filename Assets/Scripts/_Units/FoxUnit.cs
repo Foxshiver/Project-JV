@@ -12,11 +12,9 @@ public class FoxUnit : Unit
 	// Update is called once per frame
 	void Update()
     {
-        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
-
-        Vector2 steering = ((SeekBehavior)_behaviors[0]).computeSeekSteering(targetPosition);
-		_position = ((SeekBehavior)_behaviors[0]).computeNewPosition(steering - ((SeekBehavior)_behaviors[0]).computeSteeringSeparationForce());
+        Vector2 steering = ((SeekBehavior)_behaviors[0]).computeSeekSteering(_targetUnit._behindPosition);
+		_currentPosition = ((SeekBehavior)_behaviors[0]).computeNewPosition(steering - ((SeekBehavior)_behaviors[0]).computeSteeringSeparationForce());
         
-        this.updatePosition(_position);
-    }   
+        this.updatePosition(_currentPosition);
+    }
 }

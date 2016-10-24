@@ -14,9 +14,9 @@ public class PursuitBehavior : GeneralBehavior
     }
 
     // Functions
-    public Vector2 computePursuitSteering(Unit targetUnit)
+    public Vector2 computePursuitSteering(Vector2 targetPosition, Vector2 targetVelocity)
     {
-        Vector2 targetOffsetTarget = targetUnit._position - _unit._position;
+        Vector2 targetOffsetTarget = targetPosition - _unit._currentPosition;
         float distanceTarget = targetOffsetTarget.magnitude;
 
         // TO IMPROVE
@@ -25,9 +25,9 @@ public class PursuitBehavior : GeneralBehavior
         else
             CoefPredictedPosition = 1;
 
-        Vector2 predictedPosition = targetUnit._position + targetUnit._velocity * CoefPredictedPosition;
+        Vector2 predictedPosition = targetPosition + targetVelocity * CoefPredictedPosition;
 
-        Vector2 targetOffset = predictedPosition - _unit._position;
+        Vector2 targetOffset = predictedPosition - _unit._currentPosition;
         float distance = targetOffset.magnitude;
         Vector2 desiredVelocity;
 
@@ -42,7 +42,7 @@ public class PursuitBehavior : GeneralBehavior
         }
         else
         {
-            desiredVelocity = (predictedPosition - _unit._position).normalized * _unit._maxSpeed;
+            desiredVelocity = (predictedPosition - _unit._currentPosition).normalized * _unit._maxSpeed;
         }
 
         return desiredVelocity - _unit._velocity;

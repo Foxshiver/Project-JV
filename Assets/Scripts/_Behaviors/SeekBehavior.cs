@@ -15,7 +15,7 @@ public class SeekBehavior : GeneralBehavior
     // Functions
     public Vector2 computeSeekSteering(Vector2 targetPosition)
     {
-        Vector2 targetOffset = targetPosition - _unit._position;
+        Vector2 targetOffset = targetPosition - _unit._currentPosition;
         float distance = targetOffset.magnitude;
         Vector2 desiredVelocity;
 
@@ -30,7 +30,7 @@ public class SeekBehavior : GeneralBehavior
         }
         else
         {
-            desiredVelocity = (targetPosition - _unit._position).normalized * _unit._maxSpeed;
+            desiredVelocity = (targetPosition - _unit._currentPosition).normalized * _unit._maxSpeed;
         }
 
         return desiredVelocity - _unit._velocity;

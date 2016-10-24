@@ -6,7 +6,10 @@ public class Unit : MonoBehaviour
     public float _masse;
     public float _maxSpeed;
     public float _maxSteeringForce;
-    public Vector2 _position;
+
+    public Vector2 _currentPosition;
+    public Vector2 _behindPosition;
+
     public Vector2 _direction;
     public Vector2 _velocity;
     public Vector2 _steering;
@@ -32,8 +35,8 @@ public class Unit : MonoBehaviour
 
     void Start()
     {
-		_position = new Vector2(this.transform.position.x, this.transform.position.z);
-        Debug.Log(_name + " POSITION = " + _position);
+		_currentPosition = new Vector2(this.transform.position.x, this.transform.position.z);
+        Debug.Log(_name + " POSITION = " + _currentPosition);
     }
 
     protected void updatePosition(Vector2 position)

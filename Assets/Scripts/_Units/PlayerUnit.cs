@@ -3,8 +3,10 @@ using System.Collections;
 
 public class PlayerUnit : Unit {
 
-	// Constructor
-	public PlayerUnit()
+    public GameObject test;
+
+    // Constructor
+    public PlayerUnit()
 	{
 		Debug.Log("PlayerUnit constructor called");
 	}
@@ -12,10 +14,13 @@ public class PlayerUnit : Unit {
 	// Update is called once per frame
 	void Update()
 	{
-		_position = Vector3TOVector2(this.transform.position);
+        _behindPosition = ((LeaderBehavior)_behaviors[4]).getBehindLeader();
+        test.transform.position = new Vector3(_behindPosition.x, 0.0f, _behindPosition.y);
 
-		_position = ((LeaderBehavior)_behaviors [4]).computeNewPosition( ((LeaderBehavior)_behaviors [4]).controllerMovement() );
-        updatePosition(_position);		
+        _currentPosition = Vector3TOVector2(this.transform.position);
+
+		_currentPosition = ((LeaderBehavior)_behaviors [4]).computeNewPosition( ((LeaderBehavior)_behaviors [4]).controllerMovement() );
+        updatePosition(_currentPosition);		
 		
         //Debug.Log ("Velocity : " + _velocity);
 	}  

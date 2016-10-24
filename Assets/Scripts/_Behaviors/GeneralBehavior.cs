@@ -19,7 +19,7 @@ public class GeneralBehavior {
         Vector2 acceleration = _unit._steering / _unit._masse;
         _unit._velocity = Vector2.ClampMagnitude(_unit._velocity + acceleration /* *Time.deltaTime*/, _unit._maxSpeed);
         
-		return _unit._position + _unit._velocity * Time.deltaTime;
+		return _unit._currentPosition + _unit._velocity * Time.deltaTime;
     }
 
 	public Vector2 computeSteeringSeparationForce()
@@ -32,7 +32,7 @@ public class GeneralBehavior {
 			{
 
 				//Debug.Log ("Voisin of " + _unit.name + " " + i + " = " + listOfNeighboors [i].name);
-				Vector2 vecDistance = (listOfNeighboors [i]._position - this._unit._position);  //this._position);
+				Vector2 vecDistance = (listOfNeighboors [i]._currentPosition - this._unit._currentPosition);  //this._position);
 				float distance = vecDistance.magnitude;
 
 				steeringSeparation += vecDistance / distance;

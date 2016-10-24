@@ -13,7 +13,7 @@ public class SnakeUnit : Unit
     void Update()
     {
         Vector2 steering = ((PursuitBehavior)_behaviors[2]).computePursuitSteering(_targetUnit);
-        _position = ((PursuitBehavior)_behaviors[2]).computeNewPosition(steering);
+		_position = ((PursuitBehavior)_behaviors[2]).computeNewPosition(steering - ((PursuitBehavior)_behaviors[2]).computeSteeringSeparationForce());
 
         this.updatePosition(_position);
     }

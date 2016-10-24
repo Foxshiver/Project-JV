@@ -25,23 +25,24 @@ public class Unit : MonoBehaviour
         _behaviors.Add(new FleeBehavior(this));
         _behaviors.Add(new PursuitBehavior(this));
         _behaviors.Add(new EvasionBehavior(this));
+		_behaviors.Add(new LeaderBehavior(this));
 
         Debug.Log("Unit constructor called");
     }
 
     void Start()
     {
-        _position = new Vector2(this.transform.position[0], this.transform.position[2]);
+		_position = new Vector2(this.transform.position.x, this.transform.position.z);
         Debug.Log(_name + " POSITION = " + _position);
     }
 
     protected void updatePosition(Vector2 position)
     {
-        this.transform.position = new Vector3(position[0], this.transform.position[1], position[1]);
+		this.transform.position = new Vector3(position.x, this.transform.position.y, position.y);
     }
 
     protected Vector2 Vector3TOVector2(Vector3 position)
     {
-        return new Vector2(position[0], position[2]);
+        return new Vector2(position.x, position.z);
     }
 }

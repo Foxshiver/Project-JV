@@ -15,7 +15,7 @@ public class FoxUnit : Unit
         Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
 
         Vector2 steering = ((SeekBehavior)_behaviors[0]).computeSeekSteering(targetPosition);
-        _position = ((SeekBehavior)_behaviors[0]).computeNewPosition(steering);
+		_position = ((SeekBehavior)_behaviors[0]).computeNewPosition(steering - ((SeekBehavior)_behaviors[0]).computeSteeringSeparationForce());
         
         this.updatePosition(_position);
     }   

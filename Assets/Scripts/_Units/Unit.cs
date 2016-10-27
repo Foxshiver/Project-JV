@@ -29,6 +29,7 @@ public class Unit : MonoBehaviour
         _behaviors.Add(new PursuitBehavior(this));
         _behaviors.Add(new EvasionBehavior(this));
 		_behaviors.Add(new LeaderBehavior(this));
+		_behaviors.Add (new WaitBehavior (this));
 
         Debug.Log("Unit constructor called");
     }
@@ -36,7 +37,7 @@ public class Unit : MonoBehaviour
     void Start()
     {
 		_currentPosition = new Vector2(this.transform.position.x, this.transform.position.z);
-        Debug.Log(_name + " POSITION = " + _currentPosition);
+        //Debug.Log(_name + " POSITION = " + _currentPosition);
     }
 
     protected void updatePosition(Vector2 position)

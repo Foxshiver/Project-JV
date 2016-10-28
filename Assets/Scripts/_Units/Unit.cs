@@ -20,6 +20,16 @@ public class Unit : MonoBehaviour
     public GameObject _simpleTarget;
     public Unit _targetUnit;
 
+	public enum State
+	{
+		    WaitFree,
+		    SeekLeader,
+		    WaitWork,
+		    Fight
+	}
+
+	public State _stateUnit;
+
     public Unit()
     {
         _behaviors = new ArrayList();
@@ -38,6 +48,8 @@ public class Unit : MonoBehaviour
     {
 		_currentPosition = new Vector2(this.transform.position.x, this.transform.position.z);
         //Debug.Log(_name + " POSITION = " + _currentPosition);
+
+		_stateUnit = Unit.State.WaitFree;
     }
 
     protected void updatePosition(Vector2 position)

@@ -6,6 +6,7 @@ public class SnakeUnit : Unit
     // Constructor
     public SnakeUnit()
     {
+        _name = "Snake";
         Debug.Log("SnakeUnit constructor called");
     }
 

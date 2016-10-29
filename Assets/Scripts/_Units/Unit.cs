@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour
     public Vector2 _velocity;
     public Vector2 _steering;
 
-    public string _name;
+    protected string _name;
     protected ArrayList _behaviors;
 
     public GameObject _simpleTarget;
@@ -50,6 +50,16 @@ public class Unit : MonoBehaviour
         //Debug.Log(_name + " POSITION = " + _currentPosition);
 
 		_stateUnit = Unit.State.WaitFree;
+    }
+
+    public string getName()
+    {
+        return _name;
+    }
+
+    public void changeTarget(Unit newTarget)
+    {
+        this._targetUnit = newTarget;
     }
 
     protected void updatePosition(Vector2 position)

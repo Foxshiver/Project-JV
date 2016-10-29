@@ -6,6 +6,7 @@ public class FoxUnit : Unit
     // Constructor
     public FoxUnit()
     {
+        _name = "Fox";
         Debug.Log("FoxUnit constructor called");
     }
 

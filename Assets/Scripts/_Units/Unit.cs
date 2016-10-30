@@ -18,7 +18,9 @@ public class Unit : MonoBehaviour
     protected ArrayList _behaviors;
 
     public GameObject _simpleTarget;
-    public Unit _targetUnit;
+	public Unit _targetUnit;
+
+	public int _money;
 
 	public enum State
 	{

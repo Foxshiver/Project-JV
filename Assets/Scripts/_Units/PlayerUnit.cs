@@ -9,6 +9,7 @@ public class PlayerUnit : Unit {
     public PlayerUnit()
 	{
 		Debug.Log("PlayerUnit constructor called");
+		_money = 100;
 	}
 
 	// Update is called once per frame

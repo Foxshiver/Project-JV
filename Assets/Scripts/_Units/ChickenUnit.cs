@@ -31,7 +31,10 @@ public class ChickenUnit : Unit
 				_stateUnit = Unit.State.WaitFree;
 			}
 			break;
-
+		case Unit.State.WaitWork:
+			break;
+		case Unit.State.Fight:
+			break;
 		}
 
 

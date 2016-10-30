@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WaitBehavior : GeneralBehavior
+public class WaitBehavior : SeekBehavior
 {
 	// Attributes
 	public float CoefRadiusTarget = 2.0f;
@@ -33,28 +33,28 @@ public class WaitBehavior : GeneralBehavior
 
 		return computeSeekSteering (_randomTarget);
 	}
-
-	// Functions
-	public Vector2 computeSeekSteering(Vector2 targetPosition)
-	{
-		Vector2 targetOffset = targetPosition - _unit._currentPosition;
-		float distance = targetOffset.magnitude;
-		Vector2 desiredVelocity;
-
-		// Arrival Behavior
-		float targetRadius = 5.0f;
-
-		if (distance < targetRadius)
-		{
-			float rampedSpeed = _unit._maxSpeed * (distance / (targetRadius * CoefRadiusTarget));
-			float clippedSpeed = Mathf.Min(rampedSpeed, _unit._maxSpeed);
-			desiredVelocity = (clippedSpeed / distance) * targetOffset;
-		}
-		else
-		{
-			desiredVelocity = (targetPosition - _unit._currentPosition).normalized * _unit._maxSpeed;
-		}
-
-		return desiredVelocity - _unit._velocity;
-	}
+//
+//	// Functions
+//	public Vector2 computeSeekSteering(Vector2 targetPosition)
+//	{
+//		Vector2 targetOffset = targetPosition - _unit._currentPosition;
+//		float distance = targetOffset.magnitude;
+//		Vector2 desiredVelocity;
+//
+//		// Arrival Behavior
+//		float targetRadius = 5.0f;
+//
+//		if (distance < targetRadius)
+//		{
+//			float rampedSpeed = _unit._maxSpeed * (distance / (targetRadius * CoefRadiusTarget));
+//			float clippedSpeed = Mathf.Min(rampedSpeed, _unit._maxSpeed);
+//			desiredVelocity = (clippedSpeed / distance) * targetOffset;
+//		}
+//		else
+//		{
+//			desiredVelocity = (targetPosition - _unit._currentPosition).normalized * _unit._maxSpeed;
+//		}
+//
+//		return desiredVelocity - _unit._velocity;
+//	}
 }

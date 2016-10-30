@@ -14,13 +14,18 @@ public class Unit : MonoBehaviour
     public Vector2 _velocity;
     public Vector2 _steering;
 
-    public string _name;
+    protected string _name;
     protected ArrayList _behaviors;
 
+<<<<<<< HEAD
     public GameObject _simpleTarget;
 	public Unit _targetUnit;
 
 	public int _money;
+=======
+    public GameObject _simpleTarget = null;
+    public Unit _targetUnit = null;
+>>>>>>> 58fa32dba1df0f1a89aead6f3ec1b4c47d74d6f6
 
 	public enum State
 	{
@@ -52,6 +57,16 @@ public class Unit : MonoBehaviour
         //Debug.Log(_name + " POSITION = " + _currentPosition);
 
 		_stateUnit = Unit.State.WaitFree;
+    }
+
+    public string getName()
+    {
+        return _name;
+    }
+
+    public void changeTarget(Unit newTarget)
+    {
+        this._targetUnit = newTarget;
     }
 
     protected void updatePosition(Vector2 position)

@@ -6,17 +6,23 @@ public class FoxUnit : Unit
     // Constructor
     public FoxUnit()
     {
+        _name = "Fox";
         Debug.Log("FoxUnit constructor called");
     }
 
 	// Update is called once per frame
 	void Update()
     {
-		_currentPosition = Vector3TOVector2(this.transform.position);
-
-        Vector2 steering = ((SeekBehavior)_behaviors[0]).computeSeekSteering(_targetUnit._behindPosition);
-		_currentPosition = ((SeekBehavior)_behaviors[0]).computeNewPosition(steering - ((SeekBehavior)_behaviors[0]).computeSteeringSeparationForce());
+        if (_simpleTarget == null)
+            return;
         
+        _currentPosition = Vector3TOVector2(this.transform.position);
+
+        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
+        
+        Vector2 steering = ((WaitBehavior)_behaviors[5]).computeWaitSteering(targetPosition, 7.0f, 4.0f);
+        _currentPosition = ((WaitBehavior)_behaviors[5]).computeNewPosition(steering - ((WaitBehavior)_behaviors[5]).computeSteeringSeparationForce());
+
         this.updatePosition(_currentPosition);
     }
 }

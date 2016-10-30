@@ -17,10 +17,32 @@ public class UnitPrefab : MonoBehaviour
     public SnakeUnit snakePrefab;
     SnakeUnit snakeClone;
 
+    public GameObject foxSpawner;
+    public GameObject chickenSpawner;
+    public GameObject snakeSpawner;
+
     // Use this for initialization
     void Start()
     {
         playerClone = Instantiate(playerPrefab) as PlayerUnit;
+
+        foxClone = Instantiate(foxPrefab) as FoxUnit;
+        foxClone._simpleTarget = foxSpawner;
+        foxClone.transform.position = new Vector3(7.0f,0.5f,-2.0f);
+        foxClone = Instantiate(foxPrefab) as FoxUnit;
+        foxClone._simpleTarget = foxSpawner;
+
+        chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
+        chickenClone._simpleTarget = chickenSpawner;
+        chickenClone.transform.position = new Vector3(3.5f, 0.5f, 14.0f);
+        chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
+        chickenClone._simpleTarget = chickenSpawner;
+
+        snakeClone = Instantiate(snakePrefab) as SnakeUnit;
+        snakeClone._simpleTarget = snakeSpawner;
+        snakeClone.transform.position = new Vector3(15.0f, 0.5f, -8.0f);
+        snakeClone = Instantiate(snakePrefab) as SnakeUnit;
+        snakeClone._simpleTarget = snakeSpawner;
     }
 
     void Update()

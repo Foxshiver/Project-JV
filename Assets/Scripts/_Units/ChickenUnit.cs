@@ -13,7 +13,10 @@ public class ChickenUnit : Unit
     // Update is called once per frame
     void Update()
     {
-		_currentPosition = Vector3TOVector2(this.transform.position);
+        if (_simpleTarget == null)
+            return;
+
+        _currentPosition = Vector3TOVector2(this.transform.position);
 
 		switch (_stateUnit)
 		{

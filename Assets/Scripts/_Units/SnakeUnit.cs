@@ -13,10 +13,15 @@ public class SnakeUnit : Unit
     // Update is called once per frame
     void Update()
     {
-		_currentPosition = Vector3TOVector2(this.transform.position);
+        if (_simpleTarget == null)
+            return;
 
-        Vector2 steering = ((PursuitBehavior)_behaviors[2]).computePursuitSteering(_targetUnit._behindPosition, _targetUnit._velocity);
-		_currentPosition = ((PursuitBehavior)_behaviors[2]).computeNewPosition(steering - ((PursuitBehavior)_behaviors[2]).computeSteeringSeparationForce());
+        _currentPosition = Vector3TOVector2(this.transform.position);
+
+        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
+
+        Vector2 steering = ((WaitBehavior)_behaviors[5]).computeWaitSteering(targetPosition, 7.0f, 4.0f);
+		_currentPosition = ((WaitBehavior)_behaviors[5]).computeNewPosition(steering - ((WaitBehavior)_behaviors[5]).computeSteeringSeparationForce());
 
         this.updatePosition(_currentPosition);
     }

@@ -17,8 +17,8 @@ public class Unit : MonoBehaviour
     protected string _name;
     protected ArrayList _behaviors;
 
-    public GameObject _simpleTarget;
-    public Unit _targetUnit;
+    public GameObject _simpleTarget = null;
+    public Unit _targetUnit = null;
 
 	public enum State
 	{

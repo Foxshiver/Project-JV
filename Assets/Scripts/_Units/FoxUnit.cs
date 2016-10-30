@@ -13,11 +13,23 @@ public class FoxUnit : Unit
 	// Update is called once per frame
 	void Update()
     {
-		_currentPosition = Vector3TOVector2(this.transform.position);
+        if (_simpleTarget == null)
+        {
+            Debug.Log("simple target is null");
 
-        Vector2 steering = ((SeekBehavior)_behaviors[0]).computeSeekSteering(_targetUnit._behindPosition);
-		_currentPosition = ((SeekBehavior)_behaviors[0]).computeNewPosition(steering - ((SeekBehavior)_behaviors[0]).computeSteeringSeparationForce());
+            return;
+        }
+
         
+        _currentPosition = Vector3TOVector2(this.transform.position);
+
+        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
+        
+        Vector2 steering = ((WaitBehavior)_behaviors[5]).computeWaitSteering(targetPosition, 7.0f, 4.0f);
+        Debug.Log("simple target is NOT null " + steering);
+
+        _currentPosition = ((WaitBehavior)_behaviors[5]).computeNewPosition(steering - ((WaitBehavior)_behaviors[5]).computeSteeringSeparationForce());
+
         this.updatePosition(_currentPosition);
     }
 }

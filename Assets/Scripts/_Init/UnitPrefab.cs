@@ -4,22 +4,24 @@ using System.Collections;
 public class UnitPrefab : MonoBehaviour
 {
     // Attributes
-    // PLAYER
-    public PlayerUnit playerPrefab;
-    PlayerUnit playerClone;
+        // PLAYER
+        public PlayerUnit playerPrefab;
+        PlayerUnit playerClone;
 
-    public FoxUnit foxPrefab;
-    FoxUnit foxClone;
+        // UNITS
+        public FoxUnit foxPrefab;
+        FoxUnit foxClone;
 
-    public ChickenUnit chickenPrefab;
-    ChickenUnit chickenClone;
+        public ChickenUnit chickenPrefab;
+        ChickenUnit chickenClone;
 
-    public SnakeUnit snakePrefab;
-    SnakeUnit snakeClone;
+        public SnakeUnit snakePrefab;
+        SnakeUnit snakeClone;
 
-    public GameObject foxSpawner;
-    public GameObject chickenSpawner;
-    public GameObject snakeSpawner;
+        // SPAWNERS
+        public GameObject foxSpawner;
+        public GameObject chickenSpawner;
+        public GameObject snakeSpawner;
 
     // Use this for initialization
     void Start()
@@ -51,6 +53,21 @@ public class UnitPrefab : MonoBehaviour
         {
             foxClone = Instantiate(foxPrefab) as FoxUnit;
             foxClone.changeTarget(playerClone);
+            foxClone._simpleTarget = foxSpawner;
+        }
+
+        if (Input.GetKeyDown("h"))
+        {
+            chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
+            chickenClone.changeTarget(playerClone);
+            chickenClone._simpleTarget = chickenSpawner;
+        }
+
+        if (Input.GetKeyDown("g"))
+        {
+            snakeClone = Instantiate(snakePrefab) as SnakeUnit;
+            snakeClone.changeTarget(playerClone);
+            snakeClone._simpleTarget = snakeSpawner;
         }
     }
 }

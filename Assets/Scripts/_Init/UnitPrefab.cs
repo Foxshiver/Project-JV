@@ -30,19 +30,19 @@ public class UnitPrefab : MonoBehaviour
 
         foxClone = Instantiate(foxPrefab) as FoxUnit;
         foxClone._simpleTarget = foxSpawner;
-        foxClone.transform.position = new Vector3(7.0f,0.5f,-2.0f);
+        foxClone.updatePosition(new Vector2(7.0f,-2.0f));
         foxClone = Instantiate(foxPrefab) as FoxUnit;
         foxClone._simpleTarget = foxSpawner;
 
         chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
         chickenClone._simpleTarget = chickenSpawner;
-        chickenClone.transform.position = new Vector3(3.5f, 0.5f, 14.0f);
+        chickenClone.updatePosition(new Vector2(3.5f,14.0f));
         chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
         chickenClone._simpleTarget = chickenSpawner;
 
         snakeClone = Instantiate(snakePrefab) as SnakeUnit;
         snakeClone._simpleTarget = snakeSpawner;
-        snakeClone.transform.position = new Vector3(15.0f, 0.5f, -8.0f);
+        snakeClone.updatePosition(new Vector2(15.0f,-8.0f));
         snakeClone = Instantiate(snakePrefab) as SnakeUnit;
         snakeClone._simpleTarget = snakeSpawner;
     }

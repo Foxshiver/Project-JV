@@ -6,7 +6,7 @@ public class NPCUnit : Unit {
     // State
     protected Vector2 computePosition(State state)
     {
-        switch (_stateUnit)
+        switch(_stateUnit)
         {
             case Unit.State.Pursuit:
                 return usePursuitBehavior();

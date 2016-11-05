@@ -54,6 +54,8 @@ public class UnitPrefab : MonoBehaviour
             foxClone = Instantiate(foxPrefab) as FoxUnit;
             foxClone.changeTarget(playerClone);
             foxClone._simpleTarget = foxSpawner;
+
+            foxClone.setFaction(2);
         }
 
         if (Input.GetKeyDown("h"))
@@ -61,6 +63,8 @@ public class UnitPrefab : MonoBehaviour
             chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
             chickenClone.changeTarget(playerClone);
             chickenClone._simpleTarget = chickenSpawner;
+
+            chickenClone.setFaction(2);
         }
 
         if (Input.GetKeyDown("g"))
@@ -68,6 +72,8 @@ public class UnitPrefab : MonoBehaviour
             snakeClone = Instantiate(snakePrefab) as SnakeUnit;
             snakeClone.changeTarget(playerClone);
             snakeClone._simpleTarget = snakeSpawner;
+
+            snakeClone.setFaction(2);
         }
     }
 }

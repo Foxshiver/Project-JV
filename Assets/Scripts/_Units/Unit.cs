@@ -15,7 +15,18 @@ public class Unit : MonoBehaviour
     public Vector2 _steering;
 
     protected string _name;
+    protected string _unitType;
     protected ArrayList _behaviors;
+
+    // Faction:
+    //      > 0 = neutral
+    //      > 1 = ally
+    //      > 2 = enemy
+    protected int _faction;
+    protected float _fieldOfVision;
+
+    protected float _healPoint;
+    protected float _damagePoint;
 
     public GameObject _simpleTarget = null;
     public Unit _targetUnit = null;
@@ -24,7 +35,8 @@ public class Unit : MonoBehaviour
 	{
 		Wait,
         Pursuit,
-        Evade
+        Evade,
+        Fight
     }
 
 	public State _stateUnit;
@@ -49,11 +61,6 @@ public class Unit : MonoBehaviour
         //Debug.Log(_name + " POSITION = " + _currentPosition);
     }
 
-    public string getName()
-    {
-        return _name;
-    }
-
     public void changeTarget(Unit newTarget)
     {
         this._targetUnit = newTarget;
@@ -68,4 +75,30 @@ public class Unit : MonoBehaviour
     {
         return new Vector2(position.x, position.z);
     }
+
+    // Setter and Getter
+    public string getName()
+    { return _name; }
+    public void setName(string newName)
+    { _name = newName; }
+
+    public string getUnitType()
+    { return _unitType; }
+    public void setUnitType(string newUnitType)
+    { _unitType = newUnitType; }
+
+    public int getFaction()
+    { return _faction; }
+    public void setFaction(int newFaction)
+    { _faction = newFaction; }
+
+    public float getHealPoint()
+    { return _healPoint; }
+    public void setHealPoint(float newHealPoint)
+    { _healPoint = newHealPoint; }
+
+    public float getDamagePoint()
+    { return _damagePoint; }
+    public void setDamagePoint(float newDamagePoint)
+    { _damagePoint = newDamagePoint; }
 }

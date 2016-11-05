@@ -4,8 +4,7 @@ using System;
 using System.Collections.Generic;
 
 public class PlayerUnit : Unit {
-
-    private float radius = 8.0f;
+    
     private List<Unit> listOfUnits;
     private List<List<Unit>> listOfHoldPositionUnits;
 
@@ -13,6 +12,9 @@ public class PlayerUnit : Unit {
     public PlayerUnit()
 	{
         _name = "Player";
+        _faction = 1;
+        _fieldOfVision = 8.0f;
+        _healPoint = 50.0f;
         listOfUnits = new List<Unit> { };
         listOfHoldPositionUnits = new List<List<Unit>> { };
 
@@ -28,16 +30,19 @@ public class PlayerUnit : Unit {
         _currentPosition = ((LeaderBehavior)_behaviors[4]).computeNewPosition( ((LeaderBehavior)_behaviors [4]).controllerMovement() );
         updatePosition(_currentPosition);
 
-        // Take unit on if player push 'space' button and unit is in radius
-        if(Input.GetButtonDown("TakeUnitOn"))
-        {
-            Unit[] ListOfNeighboor = ListOfNeighboors();
-            if(ListOfNeighboor.Length != 0)
-            {
-                ListOfNeighboor[0]._targetUnit = this;
-                ListOfNeighboor[0]._stateUnit = Unit.State.Pursuit;
+        // Seeking all the unit around the player
+        Unit[] listOfNeighboor = ListOfNeighboors();
 
-                listOfUnits.Add(ListOfNeighboor[0]);
+        // Take unit on if player push 'space' button and unit is in radius
+        if (Input.GetButtonDown("TakeUnitOn"))
+        {
+            if(listOfNeighboor.Length != 0)
+            {
+                listOfNeighboor[0].setFaction(this._faction);
+                listOfNeighboor[0]._targetUnit = this;
+                listOfNeighboor[0]._stateUnit = Unit.State.Pursuit;
+
+                listOfUnits.Add(listOfNeighboor[0]);
             }
         }
 
@@ -83,6 +88,23 @@ public class PlayerUnit : Unit {
 
             listOfHoldPositionUnits.Clear();
         }
+
+        // Engage units in combat
+        if(listOfNeighboor.Length != 0)
+        {
+            for(int i=0; i<listOfNeighboor.Length; i++)
+            {
+                if(listOfNeighboor[i].getFaction() == 2)
+                {
+                    for(int j=0; j<listOfUnits.Count; j++)
+                    {
+                        listOfUnits[i]._targetUnit  = listOfNeighboor[i];
+                        listOfUnits[i]._stateUnit   = Unit.State.Fight;
+                    }
+                }
+            }
+        }
+
     }
 
     public Unit[] ListOfNeighboors()
@@ -98,7 +120,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfUnit[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this.radius)
+                if (distance < this._fieldOfVision)
                 {
                     isInRadius[i] = true;
                     nbNeighboors++;
@@ -115,7 +137,7 @@ public class PlayerUnit : Unit {
         Unit[] listOfNeighboors = new Unit[nbNeighboors];
         for(int i = 0; i < listOfUnit.Length; i++)
         {
-            if(isInRadius[i] && listOfUnit[i]._stateUnit == Unit.State.Wait)
+            if(isInRadius[i])// && listOfUnit[i]._stateUnit == Unit.State.Wait)
             {
                 listOfNeighboors.SetValue(listOfUnit[i], indiceNewList);
                 indiceNewList++;

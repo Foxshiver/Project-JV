@@ -7,6 +7,10 @@ public class ChickenUnit : NPCUnit
     public ChickenUnit()
     {
         _name = "Chicken";
+        _faction = 0;
+        _fieldOfVision = 3.0f;
+        _healPoint = 10.0f;
+        _damagePoint = 2.5f;
         _stateUnit = Unit.State.Wait;
 
         Debug.Log("ChickenUnit constructor called");

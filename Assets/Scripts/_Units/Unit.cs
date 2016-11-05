@@ -24,11 +24,10 @@ public class Unit : MonoBehaviour
 
 	public enum State
 	{
-		    WaitFree,
-		    SeekLeader,
-		    WaitWork,
-		    Fight
-	}
+		Wait,
+        Pursuit,
+        Evade
+    }
 
 	public State _stateUnit;
 
@@ -36,12 +35,12 @@ public class Unit : MonoBehaviour
     {
         _behaviors = new ArrayList();
 
-        _behaviors.Add(new SeekBehavior(this));
-        _behaviors.Add(new FleeBehavior(this));
-        _behaviors.Add(new PursuitBehavior(this));
-        _behaviors.Add(new EvasionBehavior(this));
-		_behaviors.Add(new LeaderBehavior(this));
-		_behaviors.Add (new WaitBehavior (this));
+        _behaviors.Add(new SeekBehavior(this));         // [0] >>> Seek
+        _behaviors.Add(new FleeBehavior(this));         // [1] >>> Flee
+        _behaviors.Add(new PursuitBehavior(this));      // [2] >>> Pursuit
+        _behaviors.Add(new EvasionBehavior(this));      // [3] >>> Evasion
+        _behaviors.Add(new LeaderBehavior(this));       // [4] >>> Leader
+        _behaviors.Add(new WaitBehavior(this));         // [5] >>> Wait
 
         Debug.Log("Unit constructor called");
     }
@@ -50,8 +49,6 @@ public class Unit : MonoBehaviour
     {
 		_currentPosition = new Vector2(this.transform.position.x, this.transform.position.z);
         //Debug.Log(_name + " POSITION = " + _currentPosition);
-
-		_stateUnit = Unit.State.WaitFree;
     }
 
     public string getName()
@@ -64,7 +61,7 @@ public class Unit : MonoBehaviour
         this._targetUnit = newTarget;
     }
 
-    protected void updatePosition(Vector2 position)
+    public void updatePosition(Vector2 position)
     {
 		this.transform.position = new Vector3(position.x, this.transform.position.y, position.y);
     }

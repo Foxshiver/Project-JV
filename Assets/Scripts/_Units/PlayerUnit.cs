@@ -8,13 +8,11 @@ public class PlayerUnit : Unit {
     // Constructor
     public PlayerUnit()
 	{
-<<<<<<< HEAD
-		Debug.Log("PlayerUnit constructor called");
 		_money = 100;
-=======
+
         _name = "Player";
         Debug.Log("PlayerUnit constructor called");
->>>>>>> 58fa32dba1df0f1a89aead6f3ec1b4c47d74d6f6
+
 	}
 
 	// Update is called once per frame

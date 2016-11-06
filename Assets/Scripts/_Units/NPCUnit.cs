@@ -67,21 +67,16 @@ public class NPCUnit : Unit {
         Unit enemy = this._targetUnit;
         
         float healPointRemaining = enemy.getHealPoint() - this._damagePoint;
+        Debug.Log("HIT : " + healPointRemaining);
         enemy.setHealPoint(healPointRemaining);
 
         if(healPointRemaining <= 0.0f)
         {
-            Debug.Log("Destroy " + enemy.getName());
-
-            Destroy(enemy.gameObject);
             CancelInvoke("fight");
+            Destroy(enemy.gameObject);
 
-            GameObject positionToWait = new GameObject();
-            positionToWait.name = "Position to wait";
-            positionToWait.transform.position = new Vector3(this._currentPosition[0], 0.0f, this._currentPosition[1]);
-
-            this._simpleTarget = positionToWait;
-            this._stateUnit = Unit.State.Wait;
+            this._targetUnit = this.general;
+            this._stateUnit = Unit.State.Pursuit;
         }
     }
 

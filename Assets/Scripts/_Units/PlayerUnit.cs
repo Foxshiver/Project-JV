@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 public class PlayerUnit : Unit {
     
-    private List<Unit> listOfUnits;
-    private List<List<Unit>> listOfHoldPositionUnits;
+    private List<NPCUnit> listOfUnits;
+    private List< List<NPCUnit> > listOfHoldPositionUnits;
+    private List<GameObject> listOfPositions;
 
     // Constructor
     public PlayerUnit()
@@ -17,11 +18,12 @@ public class PlayerUnit : Unit {
         _faction = 1;
         _fieldOfVision = 8.0f;
         _healPoint = 50.0f;
-        listOfUnits = new List<Unit> { };
-        listOfHoldPositionUnits = new List<List<Unit>> { };
+
+        listOfUnits = new List<NPCUnit> { };
+        listOfHoldPositionUnits = new List<List<NPCUnit>> { };
+        listOfPositions = new List<GameObject> { };
 
         Debug.Log("PlayerUnit constructor called");
-
 	}
 
 	// Update is called once per frame
@@ -41,11 +43,14 @@ public class PlayerUnit : Unit {
         {
             if(listOfNeighboor.Length != 0)
             {
-                listOfNeighboor[0].setFaction(this._faction);
-                listOfNeighboor[0]._targetUnit = this;
-                listOfNeighboor[0]._stateUnit = Unit.State.Pursuit;
+                listOfUnits.Add((NPCUnit)listOfNeighboor[0]);
 
-                listOfUnits.Add(listOfNeighboor[0]);
+                int newUnitIndex = listOfUnits.LastIndexOf((NPCUnit)listOfNeighboor[0]);
+
+                listOfUnits[newUnitIndex].setGeneral(this);
+                listOfUnits[newUnitIndex].setFaction(this._faction);
+                listOfUnits[newUnitIndex]._targetUnit = this;
+                listOfUnits[newUnitIndex]._stateUnit = Unit.State.Pursuit;
             }
         }
 
@@ -59,11 +64,14 @@ public class PlayerUnit : Unit {
             positionToHold.name = "Position to hold n°" + indiceHoldPositionUnitsList;
             positionToHold.transform.position = new Vector3(this._currentPosition[0], 0.0f, this._currentPosition[1]);
 
-            List<Unit> listTampon = new List<Unit> { };
+            listOfPositions.Add(positionToHold);
+            int newPositionIndex = listOfPositions.LastIndexOf(positionToHold);
+
+            List<NPCUnit> listTampon = new List<NPCUnit> { };
 
             for(int i=0; i<listOfUnits.Count; i++)
-            {
-                listOfUnits[i]._simpleTarget = positionToHold;
+            {              
+                listOfUnits[i]._simpleTarget = listOfPositions[newPositionIndex];
                 listOfUnits[i]._stateUnit = Unit.State.Wait;
 
                 listTampon.Add(listOfUnits[i]);
@@ -84,9 +92,11 @@ public class PlayerUnit : Unit {
                 for (int j = 0; j < listOfHoldPositionUnits[i].Count; j++)
                 {
                     listOfHoldPositionUnits[i][j]._stateUnit = Unit.State.Pursuit;
-
                     listOfUnits.Add(listOfHoldPositionUnits[i][j]);
                 }
+
+                Destroy(listOfPositions[0].gameObject);
+                listOfPositions.RemoveAt(0);
             }
 
             listOfHoldPositionUnits.Clear();
@@ -123,7 +133,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfUnit[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfVision)
+                if (distance < this._fieldOfVision && listOfUnit[i]._stateUnit == Unit.State.Wait)
                 {
                     isInRadius[i] = true;
                     nbNeighboors++;
@@ -140,7 +150,7 @@ public class PlayerUnit : Unit {
         Unit[] listOfNeighboors = new Unit[nbNeighboors];
         for(int i = 0; i < listOfUnit.Length; i++)
         {
-            if(isInRadius[i])// && listOfUnit[i]._stateUnit == Unit.State.Wait)
+            if(isInRadius[i])
             {
                 listOfNeighboors.SetValue(listOfUnit[i], indiceNewList);
                 indiceNewList++;

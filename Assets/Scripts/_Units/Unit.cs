@@ -18,7 +18,6 @@ public class Unit : MonoBehaviour
     protected string _unitType;
     protected ArrayList _behaviors;
 
-
 	public int _money;
     // Faction:
     //      > 0 = neutral

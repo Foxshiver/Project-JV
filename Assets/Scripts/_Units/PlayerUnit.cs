@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class PlayerUnit : Unit {
     
-    private List<Unit> listOfUnits;
+	public List<Unit> listOfUnits; // public because I need this in GestionUserInterface
     private List<List<Unit>> listOfHoldPositionUnits;
 
     // Constructor
@@ -23,6 +23,7 @@ public class PlayerUnit : Unit {
         Debug.Log("PlayerUnit constructor called");
 
 	}
+		
 
 	// Update is called once per frame
 	void Update()
@@ -36,7 +37,18 @@ public class PlayerUnit : Unit {
         // Seeking all the unit around the player
         Unit[] listOfNeighboor = ListOfNeighboors();
 
-        // Take unit on if player push 'space' button and unit is in radius
+		Highlightable[] hList = GameObject.FindObjectsOfType<Highlightable>();
+
+		foreach (Highlightable h in hList) // Allow to highlight in blue all the neighboors of the player
+		{
+			//if (isInUnits(h.gameObject)) // We have some problems with this, because of destruction when fight I guess
+			if (isInNeighboors (listOfNeighboor, h.gameObject)) 
+				h.Highlight (true);
+			else
+				h.Highlight (false);
+		}
+
+		// Take unit on if player push 'space' button and unit is in radius (Or 'A' button on 360 controler)
         if (Input.GetButtonDown("TakeUnitOn"))
         {
             if(listOfNeighboor.Length != 0)
@@ -49,7 +61,7 @@ public class PlayerUnit : Unit {
             }
         }
 
-        // Unit hold position if player push 'c' button
+		// Unit hold position if player push 'c' button (Or 'B' button on 360 controler)
         if(Input.GetButtonDown("HoldPosition"))
         {
             int indiceUnitsList = 0;
@@ -76,7 +88,7 @@ public class PlayerUnit : Unit {
             listOfUnits.Clear();
         }
 
-        // Call units back if player push 'v' button
+		// Call units back if player push 'v' button (Or 'X' button on 360 controler)
         if(Input.GetButtonDown("CallBack"))
         {
             for(int i=0; i<listOfHoldPositionUnits.Count; i++)
@@ -110,7 +122,7 @@ public class PlayerUnit : Unit {
 
     }
 
-    public Unit[] ListOfNeighboors()
+    public Unit[] ListOfNeighboors() // Return the tab containing all the neighboors of the player
     {
         Unit[] listOfUnit = GameObject.FindObjectsOfType<Unit>();
         bool[] isInRadius = new bool[listOfUnit.Length];
@@ -149,4 +161,28 @@ public class PlayerUnit : Unit {
 
         return listOfNeighboors;
     }
+
+	private bool isInNeighboors(Unit[] listOfNeighboors, GameObject h) // Return true if the Gameobject h is in the tab listOfNeighboors
+	{
+		foreach (Unit u in listOfNeighboors)
+		{
+			if (h.gameObject == u.gameObject)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private bool isInUnits(GameObject h) // Return true if the Gameobject h is in the list listOfUnits
+	{
+		foreach (Unit u in listOfUnits)
+		{
+			if (h.gameObject == u.gameObject)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -77,7 +77,6 @@ public class PlayerUnit : Unit {
 		// Unit hold position if player push 'c' button (Or 'B' button on 360 controler)
         if(Input.GetButtonDown("HoldPosition"))
         {
-            int indiceUnitsList = 0;
             int indiceHoldPositionUnitsList = listOfHoldPositionUnits.Count;
 
             GameObject positionToHold = new GameObject();
@@ -92,11 +91,10 @@ public class PlayerUnit : Unit {
             for(int i=0; i<listOfUnits.Count; i++)
             {              
                 listOfUnits[i]._simpleTarget = listOfPositions[newPositionIndex];
-                listOfUnits[i]._stateUnit = Unit.State.Wait;
+				listOfUnits [i].setNbHolders (listOfUnits.Count);
+                listOfUnits[i]._stateUnit = Unit.State.Defend;
 
-                listTampon.Add(listOfUnits[i]);
-                     
-                indiceUnitsList++;    
+                listTampon.Add(listOfUnits[i]);  
             }
 
             listOfHoldPositionUnits.Add(listTampon);

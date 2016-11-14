@@ -4,36 +4,35 @@ using System.Collections;
 public class NPCUnit : Unit {
 
     private Unit general;
-
 	private bool isAttacking = false;
+
+	private int nbHolders = 0;
 
     // State
     protected Vector2 computePosition(State state)
     {
-        switch(_stateUnit)
+		switch(state)
         {
             case Unit.State.Pursuit:
                 return usePursuitBehavior();
             case Unit.State.Wait:
-                return useWaitBehavior();
+                return useWaitBehavior(7.0f,4.0f);
             case Unit.State.Evade:
                 return useEvasionBehavior();
+			case Unit.State.Defend:
+				return useDefendBehavior();
             case Unit.State.Fight:
                 return useFightBehavior();
-
-            //case Unit.State.HoldPosition:
-            //    break;
-
             default:
                 return new Vector2(0.0f, 0.0f);
         }
     }
 
     // All the behaviors are implemented here
-    private Vector2 useWaitBehavior()
+	private Vector2 useWaitBehavior(float sizeRadius, float timeBeforeChangePos)
     {
         Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
-        Vector2 steering = ((WaitBehavior)_behaviors[5]).computeWaitSteering(targetPosition, 7.0f, 4.0f);
+		Vector2 steering = ((WaitBehavior)_behaviors[5]).computeWaitSteering(targetPosition, sizeRadius, timeBeforeChangePos);
         return ((WaitBehavior)_behaviors[5]).computeNewPosition(steering - ((WaitBehavior)_behaviors[5]).computeSteeringSeparationForce());
     }
 
@@ -48,6 +47,20 @@ public class NPCUnit : Unit {
         Vector2 steering = ((EvasionBehavior)_behaviors[3]).computeEvasionSteering(_targetUnit._currentPosition, _targetUnit._velocity);
         return ((EvasionBehavior)_behaviors[3]).computeNewPosition(steering - ((EvasionBehavior)_behaviors[3]).computeSteeringSeparationForce());
     }
+
+	private Vector2 useDefendBehavior()
+	{
+		Unit[] listOfNeighboors = ListOfNeighboors (5.0f);
+
+		foreach (Unit u in listOfNeighboors) {
+			if ((u.getFaction () != this.getFaction ()) && (u.getFaction () != 0)) {
+				this._targetUnit = u;
+				useFightBehavior ();
+			}
+		}
+			
+		return useWaitBehavior (nbHolders,4.0f);
+	}
 
     private Vector2 useFightBehavior()
     {
@@ -99,10 +112,59 @@ public class NPCUnit : Unit {
 		}
     }
 
+	public Unit[] ListOfNeighboors(float radius) // Return the tab containing all the neighboors of the player
+	{
+		Unit[] listOfUnit = GameObject.FindObjectsOfType<Unit>();
+		bool[] isInRadius = new bool[listOfUnit.Length];
+
+		int nbNeighboors = 0;
+
+		for (int i = 0; i < listOfUnit.Length; i++)
+		{
+			if (listOfUnit[i].gameObject != this.gameObject)
+			{
+				float distance = (listOfUnit[i].gameObject.transform.position - this._simpleTarget.transform.position).magnitude;
+
+				if (distance < radius)
+				{
+					isInRadius[i] = true;
+					nbNeighboors++;
+				}
+				else
+				{
+					isInRadius[i] = false;
+				}
+			}
+		}
+
+		int indiceNewList = 0;
+
+		Unit[] listOfNeighboors = new Unit[nbNeighboors];
+		for(int i = 0; i < listOfUnit.Length; i++)
+		{
+			if(isInRadius[i])
+			{
+				listOfNeighboors.SetValue(listOfUnit[i], indiceNewList);
+				indiceNewList++;
+			}
+		}
+
+		return listOfNeighboors;
+	}
+
     // Setter and Getter
     public Unit getGeneral()
     { return general; }
     
     public void setGeneral(Unit newGeneral)
     { general = newGeneral; }
+
+	public int getNbHolders()
+	{
+		return nbHolders;
+	}
+	public void setNbHolders(int newNbHolders)
+	{
+		nbHolders = newNbHolders;
+	}
 }

@@ -43,26 +43,34 @@ public class PlayerUnit : Unit {
 
 		foreach (Highlightable h in hList) // Allow to highlight in blue all the neighboors of the player
 		{
-			//if (isInUnits(h.gameObject)) // We have some problems with this, because of destruction when fight I guess
-			if (isInNeighboors (listOfNeighboor, h.gameObject)) 
-				h.Highlight (true);
-			else
-				h.Highlight (false);
+			if (h != null) {
+				if (isInUnits (h.gameObject)) // We have some problems with this, because of destruction when fight I guess
+				//if (isInNeighboors (listOfNeighboor, h.gameObject)) 
+					h.Highlight (true);
+				else
+					h.Highlight (false);
+			}
 		}
 
 		// Take unit on if player push 'space' button and unit is in radius (Or 'A' button on 360 controler)
-        if (Input.GetButtonDown("TakeUnitOn"))
+        if (Input.GetButtonDown("TakeUnitOn") )
         {
             if(listOfNeighboor.Length != 0)
             {
-                listOfUnits.Add((NPCUnit)listOfNeighboor[0]);
+				NPCUnit nearestUnit = (NPCUnit)getNearestUnit (listOfNeighboor);
 
-                int newUnitIndex = listOfUnits.LastIndexOf((NPCUnit)listOfNeighboor[0]);
+				if (nearestUnit.getFaction() == 0) {
+					listOfUnits.Add (nearestUnit);
 
-                listOfUnits[newUnitIndex].setGeneral(this);
-                listOfUnits[newUnitIndex].setFaction(this._faction);
-                listOfUnits[newUnitIndex]._targetUnit = this;
-                listOfUnits[newUnitIndex]._stateUnit = Unit.State.Pursuit;
+					int newUnitIndex = listOfUnits.LastIndexOf ((NPCUnit)getNearestUnit (listOfNeighboor));
+
+					listOfUnits [newUnitIndex].setGeneral (this);
+					listOfUnits [newUnitIndex].setFaction (this._faction);
+					listOfUnits [newUnitIndex]._targetUnit = this;
+					listOfUnits [newUnitIndex]._stateUnit = Unit.State.Pursuit;
+
+					_money--;
+				}
             }
         }
 
@@ -123,14 +131,32 @@ public class PlayerUnit : Unit {
                 {
                     for(int j=0; j<listOfUnits.Count; j++)
                     {
-                        listOfUnits[i]._targetUnit  = listOfNeighboor[i];
-                        listOfUnits[i]._stateUnit   = Unit.State.Fight;
+                        listOfUnits[j]._targetUnit  = listOfNeighboor[i];
+                        listOfUnits[j]._stateUnit   = Unit.State.Fight;
                     }
                 }
             }
         }
 
     }
+
+	public Unit getNearestUnit(Unit[] listOfNeighboor)
+	{
+		float minDistance = float.MaxValue;
+		Unit nearestUnit = null;
+
+		foreach (Unit u in listOfNeighboor)
+		{
+			float distance = (this._currentPosition - u._currentPosition).magnitude;
+			if (distance < minDistance) {
+				nearestUnit = u;
+				minDistance = distance;
+			}
+
+		}
+
+		return nearestUnit;
+	}
 
     public Unit[] ListOfNeighboors() // Return the tab containing all the neighboors of the player
     {
@@ -186,6 +212,7 @@ public class PlayerUnit : Unit {
 
 	private bool isInUnits(GameObject h) // Return true if the Gameobject h is in the list listOfUnits
 	{
+
 		foreach (Unit u in listOfUnits)
 		{
 			if (h.gameObject == u.gameObject)

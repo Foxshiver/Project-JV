@@ -5,6 +5,8 @@ public class NPCUnit : Unit {
 
     private Unit general;
 
+	private bool isAttacking = false;
+
     // State
     protected Vector2 computePosition(State state)
     {
@@ -51,33 +53,50 @@ public class NPCUnit : Unit {
     {
         float distance = (_targetUnit._currentPosition - this._currentPosition).magnitude;
 
-        if(distance > this._fieldOfVision)
-            return usePursuitBehavior();
-        else
-        {
-            InvokeRepeating("fight", 0.0f, 1.0f);
-
-            return this._currentPosition;
-        }       
+		if (distance > this._fieldOfVision)
+			return usePursuitBehavior ();
+		else if (!isAttacking)
+		{
+			InvokeRepeating ("fight", 0.0f, 1.0f);
+			return this._currentPosition;
+		}
+		else
+		{
+			return this._currentPosition;
+		}
     }
 
     // Fight function
     private void fight()
     {
-        Unit enemy = this._targetUnit;
-        
-        float healPointRemaining = enemy.getHealPoint() - this._damagePoint;
-        Debug.Log("HIT : " + healPointRemaining);
-        enemy.setHealPoint(healPointRemaining);
+		isAttacking = true;
 
-        if(healPointRemaining <= 0.0f)
-        {
-            CancelInvoke("fight");
-            Destroy(enemy.gameObject);
+		if (this._targetUnit == null)
+		{
+			this._targetUnit = this.general;
+			this._stateUnit = Unit.State.Pursuit;
 
-            this._targetUnit = this.general;
-            this._stateUnit = Unit.State.Pursuit;
-        }
+			CancelInvoke("fight");
+			isAttacking = false;
+		}
+		else
+		{
+			Unit enemy = this._targetUnit;
+
+			float healPointRemaining = enemy.getHealPoint() - this._damagePoint;
+			Debug.Log("HIT : " + healPointRemaining);
+			enemy.setHealPoint(healPointRemaining);
+
+			if(healPointRemaining <= 0.0f)
+			{
+				CancelInvoke("fight");
+				isAttacking = false;
+				Destroy(enemy.gameObject);
+
+				this._targetUnit = this.general;
+				this._stateUnit = Unit.State.Pursuit;
+			}
+		}
     }
 
     // Setter and Getter

@@ -37,6 +37,7 @@ public class Unit : MonoBehaviour
 		Wait,
         Pursuit,
         Evade,
+		Defend,
         Fight
     }
 

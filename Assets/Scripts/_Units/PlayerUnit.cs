@@ -44,7 +44,7 @@ public class PlayerUnit : Unit {
 		foreach (Highlightable h in hList) // Allow to highlight in blue all the neighboors of the player
 		{
 			//if (isInUnits(h.gameObject)) // We have some problems with this, because of destruction when fight I guess
-			if (isInNeighboors (listOfNeighboor, h.gameObject)) 
+			if (isInNeighboors (listOfNeighboor, h.gameObject))
 				h.Highlight (true);
 			else
 				h.Highlight (false);

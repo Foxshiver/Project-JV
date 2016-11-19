@@ -38,6 +38,10 @@ public class NPCUnit : Unit {
 
     private Vector2 usePursuitBehavior()
     {
+		// If dans le rayon, on change l'etat en fight
+		// Sinon pursuit normal
+
+
         Vector2 steering = ((PursuitBehavior)_behaviors[2]).computePursuitSteering(_targetUnit._currentPosition, _targetUnit._velocity);
         return ((PursuitBehavior)_behaviors[2]).computeNewPosition(steering - ((PursuitBehavior)_behaviors[2]).computeSteeringSeparationForce());
     }
@@ -52,31 +56,34 @@ public class NPCUnit : Unit {
 	{
 		Unit[] listOfNeighboors = ListOfNeighboors (5.0f);
 
+		if((this._currentPosition - Vector3TOVector2(this._simpleTarget.transform.position)).magnitude > nbHolders) // nbHolder A CHANGER
+			return useWaitBehavior (nbHolders,4.0f);  // nbHolder A CHANGER
+
 		foreach (Unit u in listOfNeighboors) {
-			if ((u.getFaction () != this.getFaction ()) && (u.getFaction () != 0)) {
+			if ((u.getFaction () != this.getFaction ()) && (u.getFaction () != 0)) { // if there is an enemy
 				this._targetUnit = u;
-				useFightBehavior ();
+				this._stateUnit = State.Fight; // Si dans le voisinage on a des ennemis, on passe en state Fight ! 
+				Debug.Log ("FIGHT !");
+				return useFightBehavior ();
 			}
 		}
+
+		Debug.Log ("NO FIGHT !");
 			
-		return useWaitBehavior (nbHolders,4.0f);
+		return useWaitBehavior (nbHolders,4.0f);  // nbHolder A CHANGER
 	}
 
     private Vector2 useFightBehavior()
     {
-        float distance = (_targetUnit._currentPosition - this._currentPosition).magnitude;
+        //float distance = (_targetUnit._currentPosition - this._currentPosition).magnitude;
 
-		if (distance > this._fieldOfVision)
-			return usePursuitBehavior ();
-		else if (!isAttacking)
-		{
+//		if (distance > this._fieldOfVision)
+//			return usePursuitBehavior ();    // Remettre, en changeant l'etat en Pursuit OU Defend
+		
+		if (!isAttacking)
 			InvokeRepeating ("fight", 0.0f, 1.0f);
-			return this._currentPosition;
-		}
-		else
-		{
-			return this._currentPosition;
-		}
+
+		return usePursuitBehavior();
     }
 
     // Fight function
@@ -84,10 +91,9 @@ public class NPCUnit : Unit {
     {
 		isAttacking = true;
 
-		if (this._targetUnit == null)
+		if (this._targetUnit == null) // If enemy is already dead
 		{
 			this._targetUnit = this.general;
-			this._stateUnit = Unit.State.Pursuit;
 
 			CancelInvoke("fight");
 			isAttacking = false;
@@ -102,12 +108,14 @@ public class NPCUnit : Unit {
 
 			if(healPointRemaining <= 0.0f)
 			{
+
 				CancelInvoke("fight");
 				isAttacking = false;
 				Destroy(enemy.gameObject);
 
+				Debug.Log ("TARGET : " + this._targetUnit);
 				this._targetUnit = this.general;
-				this._stateUnit = Unit.State.Pursuit;
+
 			}
 		}
     }

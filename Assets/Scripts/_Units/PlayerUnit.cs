@@ -39,16 +39,19 @@ public class PlayerUnit : Unit {
         // Seeking all the unit around the player
         Unit[] listOfNeighboor = ListOfNeighboors();
 
-		Highlightable[] hList = GameObject.FindObjectsOfType<Highlightable>();
+		ChangeMaterialColorHighlight[] hList = GameObject.FindObjectsOfType<ChangeMaterialColorHighlight>();
 
-		foreach (Highlightable h in hList) // Allow to highlight in blue all the neighboors of the player
+		foreach (ChangeMaterialColorHighlight h in hList) // Allow to highlight in blue all the neighboors of the player
 		{
 			if (h != null) {
-				if (isInUnits (h.gameObject)) // We have some problems with this, because of destruction when fight I guess
 				//if (isInNeighboors (listOfNeighboor, h.gameObject)) 
+				if (isInUnits (h.gameObject)) { 
+					//h.HighlightColor = Color.blue;
 					h.Highlight (true);
-				else
+				} else {
+					//h.HighlightColor = Color.red;
 					h.Highlight (false);
+				}
 			}
 		}
 
@@ -120,21 +123,21 @@ public class PlayerUnit : Unit {
             listOfHoldPositionUnits.Clear();
         }
 
-        // Engage units in combat
-        if(listOfNeighboor.Length != 0)
-        {
-            for(int i=0; i<listOfNeighboor.Length; i++)
-            {
-                if(listOfNeighboor[i].getFaction() == 2)
-                {
-                    for(int j=0; j<listOfUnits.Count; j++)
-                    {
-                        listOfUnits[j]._targetUnit  = listOfNeighboor[i];
-                        listOfUnits[j]._stateUnit   = Unit.State.Fight;
-                    }
-                }
-            }
-        }
+//        // Engage units in combat
+//        if(listOfNeighboor.Length != 0)
+//        {
+//            for(int i=0; i<listOfNeighboor.Length; i++)
+//            {
+//                if(listOfNeighboor[i].getFaction() == 2)
+//                {
+//                    for(int j=0; j<listOfUnits.Count; j++)
+//                    {
+//                        listOfUnits[j]._targetUnit  = listOfNeighboor[i];
+//                        listOfUnits[j]._stateUnit   = Unit.State.Fight;
+//                    }
+//                }
+//            }
+//        }
 
     }
 

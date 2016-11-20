@@ -30,10 +30,10 @@ public class PlayerUnit : Unit {
 	// Update is called once per frame
 	void Update()
 	{
-        // Update behind point et current player position 
+        // Update behind point and current player position 
         _currentPosition = Vector3TOVector2(this.transform.position);
-        _behindPosition = ((LeaderBehavior)_behaviors[4]).getBehindLeader();
-        _currentPosition = ((LeaderBehavior)_behaviors[4]).computeNewPosition( ((LeaderBehavior)_behaviors [4]).controllerMovement() );
+        _behindPosition = ((LeaderBehavior)_behaviors[5]).getBehindLeader();
+        _currentPosition = ((LeaderBehavior)_behaviors[5]).computeNewPosition( ((LeaderBehavior)_behaviors [5]).controllerMovement() );
         updatePosition(_currentPosition);
 
         // Seeking all the unit around the player
@@ -69,8 +69,8 @@ public class PlayerUnit : Unit {
 
 					listOfUnits [newUnitIndex].setGeneral (this);
 					listOfUnits [newUnitIndex].setFaction (this._faction);
-					listOfUnits [newUnitIndex]._targetUnit = this;
-					listOfUnits [newUnitIndex]._stateUnit = Unit.State.Pursuit;
+					listOfUnits [newUnitIndex]._unitTarget = this;
+					listOfUnits [newUnitIndex]._stateUnit = Unit.State.Seek;
 
 					_money--;
 				}
@@ -94,7 +94,7 @@ public class PlayerUnit : Unit {
             for(int i=0; i<listOfUnits.Count; i++)
             {              
                 listOfUnits[i]._simpleTarget = listOfPositions[newPositionIndex];
-				listOfUnits [i].setNbHolders (listOfUnits.Count);
+				listOfUnits[i].setNbHolders (listOfUnits.Count);
                 listOfUnits[i]._stateUnit = Unit.State.Defend;
 
                 listTampon.Add(listOfUnits[i]);  

@@ -30,15 +30,16 @@ public class Unit : MonoBehaviour
     protected float _damagePoint;
 
     public GameObject _simpleTarget = null;
-    public Unit _targetUnit = null;
+    public Unit _unitTarget = null;
 
 	public enum State
 	{
-		Wait,
+        Wait,
+        Seek,
         Pursuit,
-        Evade,
-		Defend,
-        Fight
+        Fight,
+        Defend,
+        Work
     }
 
 	public State _stateUnit;
@@ -47,12 +48,12 @@ public class Unit : MonoBehaviour
     {
         _behaviors = new ArrayList();
 
-        _behaviors.Add(new SeekBehavior(this));         // [0] >>> Seek
-        _behaviors.Add(new FleeBehavior(this));         // [1] >>> Flee
-        _behaviors.Add(new PursuitBehavior(this));      // [2] >>> Pursuit
-        _behaviors.Add(new EvasionBehavior(this));      // [3] >>> Evasion
-        _behaviors.Add(new LeaderBehavior(this));       // [4] >>> Leader
-        _behaviors.Add(new WaitBehavior(this));         // [5] >>> Wait
+        _behaviors.Add(new WaitBehavior(this));         // [0] >>> Wait
+        _behaviors.Add(new SeekBehavior(this));         // [1] >>> Seek
+        _behaviors.Add(new FleeBehavior(this));         // [2] >>> Flee
+        _behaviors.Add(new PursuitBehavior(this));      // [3] >>> Pursuit
+        _behaviors.Add(new EvasionBehavior(this));      // [4] >>> Evasion
+        _behaviors.Add(new LeaderBehavior(this));       // [5] >>> Leader
 
         Debug.Log("Unit constructor called");
     }
@@ -61,11 +62,6 @@ public class Unit : MonoBehaviour
     {
 		_currentPosition = new Vector2(this.transform.position.x, this.transform.position.z);
         //Debug.Log(_name + " POSITION = " + _currentPosition);
-    }
-
-    public void changeTarget(Unit newTarget)
-    {
-        this._targetUnit = newTarget;
     }
 
     public void updatePosition(Vector2 position)
@@ -103,4 +99,14 @@ public class Unit : MonoBehaviour
     { return _damagePoint; }
     public void setDamagePoint(float newDamagePoint)
     { _damagePoint = newDamagePoint; }
+
+    public Unit getUnitTarget()
+    { return this._unitTarget; }
+    public void setUnitTarget(Unit newUnitTarget)
+    { this._unitTarget = newUnitTarget; }
+
+    public GameObject getSimpleTarget()
+    { return this._simpleTarget; }
+    public void setSimpleTarget(GameObject newSimpleTarget)
+    { this._simpleTarget = newSimpleTarget; }
 }

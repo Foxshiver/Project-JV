@@ -4,55 +4,84 @@ using System.Collections;
 public class NPCUnit : Unit {
 
     private Unit general;
-	private bool isAttacking = false;
+    private State previousState;
 
+	private bool isAttacking = false;
 	private int nbHolders = 0;
 
-    // State
+    /*
+     * Compute position of the unit according 
+     * to his current state
+     */
     protected Vector2 computePosition(State state)
     {
 		switch(state)
         {
+            case Unit.State.Seek:
+                return useSeekBehavior();
             case Unit.State.Pursuit:
                 return usePursuitBehavior();
             case Unit.State.Wait:
-                return useWaitBehavior(7.0f,4.0f);
-            case Unit.State.Evade:
-                return useEvasionBehavior();
-			case Unit.State.Defend:
-				return useDefendBehavior();
+                return useWaitBehavior(7.0f, 4.0f);
             case Unit.State.Fight:
                 return useFightBehavior();
+            case Unit.State.Defend:
+				return useDefendBehavior();
+            case Unit.State.Work:
+                return useWorkBehavior(7.0f, 4.0f);
             default:
                 return new Vector2(0.0f, 0.0f);
         }
     }
 
-    // All the behaviors are implemented here
-	private Vector2 useWaitBehavior(float sizeRadius, float timeBeforeChangePos)
+    /////////////////////////////////////////
+    // IMPLEMENTATION OF ALL THE BEHAVIORS //
+    /////////////////////////////////////////
+
+    /*
+     * Wait behavior
+     * 
+     * Allow to initialize neutral unit position at the beggining
+     */
+    private Vector2 useWaitBehavior(float sizeRadius, float timeBeforeChangePos)
     {
         Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
-		Vector2 steering = ((WaitBehavior)_behaviors[5]).computeWaitSteering(targetPosition, sizeRadius, timeBeforeChangePos);
-        return ((WaitBehavior)_behaviors[5]).computeNewPosition(steering - ((WaitBehavior)_behaviors[5]).computeSteeringSeparationForce());
+        Vector2 steering = ((WaitBehavior)_behaviors[0]).computeWaitSteering(targetPosition, sizeRadius, timeBeforeChangePos);
+        return ((WaitBehavior)_behaviors[0]).computeNewPosition(steering - ((WaitBehavior)_behaviors[0]).computeSteeringSeparationForce());
     }
 
+    /*
+     * Seek behavior
+     * 
+     * Allow to follow the leader
+     */
+    private Vector2 useSeekBehavior()
+    {
+        Vector2 steering = ((SeekBehavior)_behaviors[1]).computeSeekSteering(_unitTarget._currentPosition);
+        return ((SeekBehavior)_behaviors[1]).computeNewPosition(steering - ((SeekBehavior)_behaviors[1]).computeSteeringSeparationForce());
+    }
+
+    /*
+     * Pursuit behavior
+     * 
+     * Allow to hunt enemy
+     */
     private Vector2 usePursuitBehavior()
     {
 		// If dans le rayon, on change l'etat en fight
 		// Sinon pursuit normal
 
 
-        Vector2 steering = ((PursuitBehavior)_behaviors[2]).computePursuitSteering(_targetUnit._currentPosition, _targetUnit._velocity);
-        return ((PursuitBehavior)_behaviors[2]).computeNewPosition(steering - ((PursuitBehavior)_behaviors[2]).computeSteeringSeparationForce());
+        Vector2 steering = ((PursuitBehavior)_behaviors[3]).computePursuitSteering(_unitTarget._currentPosition, _unitTarget._velocity);
+        return ((PursuitBehavior)_behaviors[3]).computeNewPosition(steering - ((PursuitBehavior)_behaviors[3]).computeSteeringSeparationForce());
     }
 
-    private Vector2 useEvasionBehavior()
-    {
-        Vector2 steering = ((EvasionBehavior)_behaviors[3]).computeEvasionSteering(_targetUnit._currentPosition, _targetUnit._velocity);
-        return ((EvasionBehavior)_behaviors[3]).computeNewPosition(steering - ((EvasionBehavior)_behaviors[3]).computeSteeringSeparationForce());
-    }
-
-	private Vector2 useDefendBehavior()
+    /*
+     * Defend behavior
+     * 
+     * Allow to hold position
+     */
+    private Vector2 useDefendBehavior()
 	{
 		Unit[] listOfNeighboors = ListOfNeighboors (5.0f);
 
@@ -61,7 +90,7 @@ public class NPCUnit : Unit {
 
 		foreach (Unit u in listOfNeighboors) {
 			if ((u.getFaction () != this.getFaction ()) && (u.getFaction () != 0)) { // if there is an enemy
-				this._targetUnit = u;
+				this._unitTarget = u;
 				this._stateUnit = State.Fight; // Si dans le voisinage on a des ennemis, on passe en state Fight ! 
 				Debug.Log ("FIGHT !");
 				return useFightBehavior ();
@@ -73,12 +102,17 @@ public class NPCUnit : Unit {
 		return useWaitBehavior (nbHolders,4.0f);  // nbHolder A CHANGER
 	}
 
+    /*
+     * Fight behavior
+     * 
+     * Allow to attack close enemy
+     */
     private Vector2 useFightBehavior()
     {
         //float distance = (_targetUnit._currentPosition - this._currentPosition).magnitude;
 
-//		if (distance > this._fieldOfVision)
-//			return usePursuitBehavior ();    // Remettre, en changeant l'etat en Pursuit OU Defend
+        //if (distance > this._fieldOfVision)
+        //	return usePursuitBehavior ();    // Remettre, en changeant l'etat en Pursuit OU Defend
 		
 		if (!isAttacking)
 			InvokeRepeating ("fight", 0.0f, 1.0f);
@@ -86,21 +120,38 @@ public class NPCUnit : Unit {
 		return usePursuitBehavior();
     }
 
+
+    /*
+     * Work behavior
+     * 
+     * Allow to earn money by affecting unit to work
+     */
+    private Vector2 useWorkBehavior(float sizeRadius, float timeBeforeChangePos)
+    {
+        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
+        Vector2 steering = ((WaitBehavior)_behaviors[0]).computeWaitSteering(targetPosition, sizeRadius, timeBeforeChangePos);
+        return ((WaitBehavior)_behaviors[0]).computeNewPosition(steering - ((WaitBehavior)_behaviors[0]).computeSteeringSeparationForce());
+    }
+
+    ///////////////////////
+    // HELPFUL FUNCTIONS //
+    ///////////////////////
+
     // Fight function
     private void fight()
     {
 		isAttacking = true;
 
-		if (this._targetUnit == null) // If enemy is already dead
+		if (this._unitTarget == null) // If enemy is already dead
 		{
-			this._targetUnit = this.general;
+			this._unitTarget = this.general;
 
 			CancelInvoke("fight");
 			isAttacking = false;
 		}
 		else
 		{
-			Unit enemy = this._targetUnit;
+			Unit enemy = this._unitTarget;
 
 			float healPointRemaining = enemy.getHealPoint() - this._damagePoint;
 			Debug.Log("HIT : " + healPointRemaining);
@@ -113,8 +164,8 @@ public class NPCUnit : Unit {
 				isAttacking = false;
 				Destroy(enemy.gameObject);
 
-				Debug.Log ("TARGET : " + this._targetUnit);
-				this._targetUnit = this.general;
+				Debug.Log ("TARGET : " + this._unitTarget);
+				this._unitTarget = this.general;
 
 			}
 		}
@@ -160,19 +211,17 @@ public class NPCUnit : Unit {
 		return listOfNeighboors;
 	}
 
-    // Setter and Getter
+    /////////////////////
+    // SETTER - GETTER //
+    /////////////////////
+
     public Unit getGeneral()
     { return general; }
-    
     public void setGeneral(Unit newGeneral)
     { general = newGeneral; }
 
 	public int getNbHolders()
-	{
-		return nbHolders;
-	}
+	{ return nbHolders; }
 	public void setNbHolders(int newNbHolders)
-	{
-		nbHolders = newNbHolders;
-	}
+	{ nbHolders = newNbHolders; }
 }

@@ -29,7 +29,7 @@ public class Unit : MonoBehaviour
     protected float _healPoint;
     protected float _damagePoint;
 
-    public GameObject _simpleTarget = null;
+    public Buildings _simpleTarget = null;
     public Unit _unitTarget = null;
 
 	public enum State
@@ -42,7 +42,7 @@ public class Unit : MonoBehaviour
         Work
     }
 
-	public State _stateUnit;
+    protected State _stateUnit;
 
     public Unit()
     {
@@ -100,13 +100,18 @@ public class Unit : MonoBehaviour
     public void setDamagePoint(float newDamagePoint)
     { _damagePoint = newDamagePoint; }
 
+    public State getState()
+    { return this._stateUnit; }
+    public void setState(State newSate)
+    { this._stateUnit = newSate; }
+
     public Unit getUnitTarget()
     { return this._unitTarget; }
     public void setUnitTarget(Unit newUnitTarget)
     { this._unitTarget = newUnitTarget; }
 
-    public GameObject getSimpleTarget()
+    public Buildings getSimpleTarget()
     { return this._simpleTarget; }
-    public void setSimpleTarget(GameObject newSimpleTarget)
+    public void setSimpleTarget(Buildings newSimpleTarget)
     { this._simpleTarget = newSimpleTarget; }
 }

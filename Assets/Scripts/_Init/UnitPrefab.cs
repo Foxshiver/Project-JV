@@ -18,36 +18,43 @@ public class UnitPrefab : MonoBehaviour
     SnakeUnit snakeClone;
 
     // SPAWNERS
-    public GameObject foxSpawner;
-    public GameObject chickenSpawner;
-    public GameObject snakeSpawner;
+    public Spawner foxSpawner;
+    public Spawner chickenSpawner;
+    public Spawner snakeSpawner;
 
     // Use this for initialization
     void Start()
     {
         // Instanciate 1 player
         playerClone = Instantiate(playerPrefab) as PlayerUnit;
+        playerClone.updatePosition(new Vector2(22.0f, -16.0f));
 
         // Instanciate 2 neutral fox
         foxClone = Instantiate(foxPrefab) as FoxUnit;
         foxClone.setSimpleTarget(foxSpawner);
+        foxSpawner._nbCurrentUnit++;
         foxClone.updatePosition(new Vector2(7.0f,-2.0f));
         foxClone = Instantiate(foxPrefab) as FoxUnit;
         foxClone.setSimpleTarget(foxSpawner);
+        foxSpawner._nbCurrentUnit++;
 
         // Instanciate 2 neutral chicken
         chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
         chickenClone.setSimpleTarget(chickenSpawner);
+        chickenSpawner._nbCurrentUnit++;
         chickenClone.updatePosition(new Vector2(3.5f,14.0f));
         chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
         chickenClone.setSimpleTarget(chickenSpawner);
+        chickenSpawner._nbCurrentUnit++;
 
         // Instanciate 2 neutral snake
         snakeClone = Instantiate(snakePrefab) as SnakeUnit;
         snakeClone.setSimpleTarget(snakeSpawner);
+        snakeSpawner._nbCurrentUnit++;
         snakeClone.updatePosition(new Vector2(15.0f,-8.0f));
         snakeClone = Instantiate(snakePrefab) as SnakeUnit;
         snakeClone.setSimpleTarget(snakeSpawner);
+        snakeSpawner._nbCurrentUnit++;
     }
 
     void Update()

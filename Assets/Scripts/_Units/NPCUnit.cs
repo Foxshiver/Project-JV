@@ -45,8 +45,7 @@ public class NPCUnit : Unit {
      */
     private Vector2 useWaitBehavior(float sizeRadius, float timeBeforeChangePos)
     {
-        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
-        Vector2 steering = ((WaitBehavior)_behaviors[0]).computeWaitSteering(targetPosition, sizeRadius, timeBeforeChangePos);
+        Vector2 steering = ((WaitBehavior)_behaviors[0]).computeWaitSteering(_simpleTarget.position, sizeRadius, timeBeforeChangePos);
         return ((WaitBehavior)_behaviors[0]).computeNewPosition(steering - ((WaitBehavior)_behaviors[0]).computeSteeringSeparationForce());
     }
 
@@ -85,7 +84,7 @@ public class NPCUnit : Unit {
 	{
 		Unit[] listOfNeighboors = ListOfNeighboors (5.0f);
 
-		if((this._currentPosition - Vector3TOVector2(this._simpleTarget.transform.position)).magnitude > nbHolders) // nbHolder A CHANGER
+		if((this._currentPosition - this._simpleTarget.position).magnitude > nbHolders) // nbHolder A CHANGER
 			return useWaitBehavior (nbHolders,4.0f);  // nbHolder A CHANGER
 
 		foreach (Unit u in listOfNeighboors) {
@@ -128,8 +127,7 @@ public class NPCUnit : Unit {
      */
     private Vector2 useWorkBehavior(float sizeRadius, float timeBeforeChangePos)
     {
-        Vector2 targetPosition = Vector3TOVector2(_simpleTarget.transform.position);
-        Vector2 steering = ((WaitBehavior)_behaviors[0]).computeWaitSteering(targetPosition, sizeRadius, timeBeforeChangePos);
+        Vector2 steering = ((WaitBehavior)_behaviors[0]).computeWaitSteering(_simpleTarget.position, sizeRadius, timeBeforeChangePos);
         return ((WaitBehavior)_behaviors[0]).computeNewPosition(steering - ((WaitBehavior)_behaviors[0]).computeSteeringSeparationForce());
     }
 
@@ -178,11 +176,11 @@ public class NPCUnit : Unit {
 
 		int nbNeighboors = 0;
 
-		for (int i = 0; i < listOfUnit.Length; i++)
+		for(int i = 0; i < listOfUnit.Length; i++)
 		{
 			if (listOfUnit[i].gameObject != this.gameObject)
 			{
-				float distance = (listOfUnit[i].gameObject.transform.position - this._simpleTarget.transform.position).magnitude;
+				float distance = (listOfUnit[i]._currentPosition - this._simpleTarget.position).magnitude;
 
 				if (distance < radius)
 				{
@@ -218,7 +216,11 @@ public class NPCUnit : Unit {
     public Unit getGeneral()
     { return general; }
     public void setGeneral(Unit newGeneral)
-    { general = newGeneral; }
+    {
+        general = newGeneral;
+        setUnitTarget(general);
+        setFaction(general.getFaction());
+    }
 
 	public int getNbHolders()
 	{ return nbHolders; }

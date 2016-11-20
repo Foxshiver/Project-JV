@@ -7,7 +7,7 @@ public class PlayerUnit : Unit {
     
     public List<NPCUnit> listOfUnits;
     private List< List<NPCUnit> > listOfHoldPositionUnits;
-    private List<GameObject> listOfPositions;
+    private List<Buildings> listOfPositions;
 
     // Constructor
     public PlayerUnit()
@@ -21,7 +21,7 @@ public class PlayerUnit : Unit {
 
         listOfUnits = new List<NPCUnit> { };
         listOfHoldPositionUnits = new List<List<NPCUnit>> { };
-        listOfPositions = new List<GameObject> { };
+        listOfPositions = new List<Buildings> { };
 
         Debug.Log("PlayerUnit constructor called");
 	}
@@ -56,21 +56,20 @@ public class PlayerUnit : Unit {
 		}
 
 		// Take unit on if player push 'space' button and unit is in radius (Or 'A' button on 360 controler)
-        if (Input.GetButtonDown("TakeUnitOn") )
+        if(Input.GetButtonDown("TakeUnitOn"))
         {
             if(listOfNeighboor.Length != 0)
             {
-				NPCUnit nearestUnit = (NPCUnit)getNearestUnit (listOfNeighboor);
+				NPCUnit nearestUnit = (NPCUnit)getNearestUnit(listOfNeighboor);
 
 				if (nearestUnit.getFaction() == 0) {
 					listOfUnits.Add (nearestUnit);
 
-					int newUnitIndex = listOfUnits.LastIndexOf ((NPCUnit)getNearestUnit (listOfNeighboor));
+					int newUnitIndex = listOfUnits.LastIndexOf((NPCUnit)getNearestUnit(listOfNeighboor));
 
-					listOfUnits [newUnitIndex].setGeneral (this);
-					listOfUnits [newUnitIndex].setFaction (this._faction);
-					listOfUnits [newUnitIndex]._unitTarget = this;
-					listOfUnits [newUnitIndex]._stateUnit = Unit.State.Seek;
+                    listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
+                    listOfUnits[newUnitIndex].setGeneral(this);
+					listOfUnits[newUnitIndex].setState(Unit.State.Seek);
 
 					_money--;
 				}
@@ -82,9 +81,9 @@ public class PlayerUnit : Unit {
         {
             int indiceHoldPositionUnitsList = listOfHoldPositionUnits.Count;
 
-            GameObject positionToHold = new GameObject();
+            Buildings positionToHold = new Buildings();
             positionToHold.name = "Position to hold n°" + indiceHoldPositionUnitsList;
-            positionToHold.transform.position = new Vector3(this._currentPosition[0], 0.0f, this._currentPosition[1]);
+            positionToHold.position = new Vector2(this._currentPosition[0], this._currentPosition[1]);
 
             listOfPositions.Add(positionToHold);
             int newPositionIndex = listOfPositions.LastIndexOf(positionToHold);
@@ -93,9 +92,9 @@ public class PlayerUnit : Unit {
 
             for(int i=0; i<listOfUnits.Count; i++)
             {              
-                listOfUnits[i]._simpleTarget = listOfPositions[newPositionIndex];
-				listOfUnits[i].setNbHolders (listOfUnits.Count);
-                listOfUnits[i]._stateUnit = Unit.State.Defend;
+                listOfUnits[i].setSimpleTarget(listOfPositions[newPositionIndex]);
+				listOfUnits[i].setNbHolders(listOfUnits.Count);
+                listOfUnits[i].setState(Unit.State.Defend);
 
                 listTampon.Add(listOfUnits[i]);  
             }
@@ -112,36 +111,43 @@ public class PlayerUnit : Unit {
             {
                 for (int j = 0; j < listOfHoldPositionUnits[i].Count; j++)
                 {
-                    listOfHoldPositionUnits[i][j]._stateUnit = Unit.State.Pursuit;
+                    listOfHoldPositionUnits[i][j].setState(Unit.State.Seek);
                     listOfUnits.Add(listOfHoldPositionUnits[i][j]);
                 }
 
-                Destroy(listOfPositions[0].gameObject);
+                Destroy(listOfPositions[0]);
                 listOfPositions.RemoveAt(0);
             }
 
             listOfHoldPositionUnits.Clear();
         }
 
-//        // Engage units in combat
-//        if(listOfNeighboor.Length != 0)
-//        {
-//            for(int i=0; i<listOfNeighboor.Length; i++)
-//            {
-//                if(listOfNeighboor[i].getFaction() == 2)
-//                {
-//                    for(int j=0; j<listOfUnits.Count; j++)
-//                    {
-//                        listOfUnits[j]._targetUnit  = listOfNeighboor[i];
-//                        listOfUnits[j]._stateUnit   = Unit.State.Fight;
-//                    }
-//                }
-//            }
-//        }
+        // Unit works if player push 'n' button (Or '?' button on 360 controler)
+        if (Input.GetButtonDown("Work"))
+        {
+            
+        }
+
+        //        // Engage units in combat
+        //        if(listOfNeighboor.Length != 0)
+        //        {
+        //            for(int i=0; i<listOfNeighboor.Length; i++)
+        //            {
+        //                if(listOfNeighboor[i].getFaction() == 2)
+        //                {
+        //                    for(int j=0; j<listOfUnits.Count; j++)
+        //                    {
+        //                        listOfUnits[j]._targetUnit  = listOfNeighboor[i];
+        //                        listOfUnits[j]._stateUnit   = Unit.State.Fight;
+        //                    }
+        //                }
+        //            }
+        //        }
 
     }
 
-	public Unit getNearestUnit(Unit[] listOfNeighboor)
+    // Return the nearsest unit of the player
+    public Unit getNearestUnit(Unit[] listOfNeighboor)
 	{
 		float minDistance = float.MaxValue;
 		Unit nearestUnit = null;
@@ -153,13 +159,13 @@ public class PlayerUnit : Unit {
 				nearestUnit = u;
 				minDistance = distance;
 			}
-
 		}
 
 		return nearestUnit;
 	}
 
-    public Unit[] ListOfNeighboors() // Return the tab containing all the neighboors of the player
+    // Return the tab containing all the neighboors of the player
+    public Unit[] ListOfNeighboors() 
     {
         Unit[] listOfUnit = GameObject.FindObjectsOfType<Unit>();
         bool[] isInRadius = new bool[listOfUnit.Length];
@@ -172,7 +178,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfUnit[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfVision && listOfUnit[i]._stateUnit == Unit.State.Wait)
+                if (distance < this._fieldOfVision && listOfUnit[i].getState() == Unit.State.Wait)
                 {
                     isInRadius[i] = true;
                     nbNeighboors++;
@@ -199,7 +205,8 @@ public class PlayerUnit : Unit {
         return listOfNeighboors;
     }
 
-	private bool isInNeighboors(Unit[] listOfNeighboors, GameObject h) // Return true if the Gameobject h is in the tab listOfNeighboors
+    // Return true if the Gameobject h is in the tab listOfNeighboors
+    private bool isInNeighboors(Unit[] listOfNeighboors, GameObject h)
 	{
 		foreach (Unit u in listOfNeighboors)
 		{
@@ -211,9 +218,9 @@ public class PlayerUnit : Unit {
 		return false;
 	}
 
-	private bool isInUnits(GameObject h) // Return true if the Gameobject h is in the list listOfUnits
+    // Return true if the Gameobject h is in the list listOfUnits
+    private bool isInUnits(GameObject h)
 	{
-
 		foreach (Unit u in listOfUnits)
 		{
 			if (h.gameObject == u.gameObject)
@@ -223,4 +230,16 @@ public class PlayerUnit : Unit {
 		}
 		return false;
 	}
+
+    // Call when player destroyed enemy QG
+    public void win()
+    {
+        Debug.Log("VICTORY !");
+    }
+
+    // Call when player QG is destroyed
+    public void lose()
+    {
+        Debug.Log("DEFEAT !");
+    }
 }

@@ -22,13 +22,13 @@ public class NPCUnit : Unit {
             case Unit.State.Pursuit:
                 return usePursuitBehavior();
             case Unit.State.Wait:
-                return useWaitBehavior(7.0f, 4.0f);
+                return useWaitBehavior(5.0f, 4.0f);
             case Unit.State.Fight:
                 return useFightBehavior();
             case Unit.State.Defend:
 				return useDefendBehavior();
             case Unit.State.Work:
-                return useWorkBehavior(7.0f, 4.0f);
+                return useWorkBehavior(2.0f, 1.5f);
             default:
                 return new Vector2(0.0f, 0.0f);
         }
@@ -118,7 +118,6 @@ public class NPCUnit : Unit {
 
 		return usePursuitBehavior();
     }
-
 
     /*
      * Work behavior

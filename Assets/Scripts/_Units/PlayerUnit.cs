@@ -38,8 +38,9 @@ public class PlayerUnit : Unit {
 
         // Seeking all the unit around the player
         Unit[] listOfNeighboor = ListOfNeighboors();
+        Field[] listOfField    = ListOfFields();
 
-		ChangeMaterialColorHighlight[] hList = GameObject.FindObjectsOfType<ChangeMaterialColorHighlight>();
+        ChangeMaterialColorHighlight[] hList = GameObject.FindObjectsOfType<ChangeMaterialColorHighlight>();
 
 		foreach (ChangeMaterialColorHighlight h in hList) // Allow to highlight in blue all the neighboors of the player
 		{
@@ -125,7 +126,31 @@ public class PlayerUnit : Unit {
         // Unit works if player push 'n' button (Or '?' button on 360 controler)
         if (Input.GetButtonDown("Work"))
         {
-            
+            if (listOfUnits.Count == 0 || listOfField.Length == 0)
+                return;
+
+            if(listOfField[0]._nbCurrentUnit == listOfField[0]._nbMaxUnit)
+                return;
+
+            float lessHPUnit = listOfUnits[0].getHealPoint();
+            NPCUnit weakestUnit = listOfUnits[0];
+
+            for (int i = 1; i < listOfUnits.Count; i++)
+            {
+                float HPUnit = listOfUnits[i].getHealPoint();
+
+                if (HPUnit < lessHPUnit)
+                {
+                    lessHPUnit = HPUnit;
+                    weakestUnit = listOfUnits[i];
+                }
+            }
+
+            listOfUnits.Remove(weakestUnit);
+
+            listOfField[0]._nbCurrentUnit++;
+            weakestUnit.setSimpleTarget(listOfField[0]);
+            weakestUnit.setState(Unit.State.Work);
         }
 
         //        // Engage units in combat
@@ -203,6 +228,46 @@ public class PlayerUnit : Unit {
         }
 
         return listOfNeighboors;
+    }
+
+    public Field[] ListOfFields()
+    {
+        Field[] listOfField = GameObject.FindObjectsOfType<Field>();
+        bool[] isInRadius = new bool[listOfField.Length];
+
+        int nbFields = 0;
+
+        for (int i = 0; i < listOfField.Length; i++)
+        {
+            if (listOfField[i].gameObject != this.gameObject)
+            {
+                float distance = (listOfField[i].gameObject.transform.position - this.transform.position).magnitude;
+
+                if (distance < this._fieldOfVision)
+                {
+                    isInRadius[i] = true;
+                    nbFields++;
+                }
+                else
+                {
+                    isInRadius[i] = false;
+                }
+            }
+        }
+
+        int indiceNewList = 0;
+
+        Field[] listOfFields = new Field[nbFields];
+        for (int i = 0; i < listOfField.Length; i++)
+        {
+            if (isInRadius[i])
+            {
+                listOfFields.SetValue(listOfField[i], indiceNewList);
+                indiceNewList++;
+            }
+        }
+
+        return listOfFields;
     }
 
     // Return true if the Gameobject h is in the tab listOfNeighboors

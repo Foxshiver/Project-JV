@@ -3,14 +3,10 @@ using System.Collections;
 
 public class Field : Buildings
 {
+    public int _nbMaxUnit = 1;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Start()
+    {
+        position = Vector3TOVector2(this.transform.position);
+    }
 }

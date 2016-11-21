@@ -22,6 +22,9 @@ public class UnitPrefab : MonoBehaviour
     public Spawner chickenSpawner;
     public Spawner snakeSpawner;
 
+    // ENEMY FARM
+    public Farm enemyFarm;
+
     // Use this for initialization
     void Start()
     {
@@ -62,7 +65,7 @@ public class UnitPrefab : MonoBehaviour
         if (Input.GetKeyDown("f"))
         {
             foxClone = Instantiate(foxPrefab) as FoxUnit;
-            foxClone.setSimpleTarget(foxSpawner);
+            foxClone.setSimpleTarget(enemyFarm);
 
             foxClone.setFaction(2);
         }
@@ -70,7 +73,7 @@ public class UnitPrefab : MonoBehaviour
         if (Input.GetKeyDown("h"))
         {
             chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
-            chickenClone.setSimpleTarget(chickenSpawner);
+            chickenClone.setSimpleTarget(enemyFarm);
 
             chickenClone.setFaction(2);
         }
@@ -78,7 +81,7 @@ public class UnitPrefab : MonoBehaviour
         if (Input.GetKeyDown("g"))
         {
             snakeClone = Instantiate(snakePrefab) as SnakeUnit;
-            snakeClone.setSimpleTarget(snakeSpawner);
+            snakeClone.setSimpleTarget(enemyFarm);
 
             snakeClone.setFaction(2);
         }

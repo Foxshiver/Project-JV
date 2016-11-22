@@ -34,12 +34,14 @@ public class Unit : MonoBehaviour
 
 	public enum State
 	{
-        Wait,
         Seek,
+        Flee,
         Pursuit,
-        Fight,
+        Evade,
+        Wait,
+        Work,
         Defend,
-        Work
+        Fight        
     }
 
     protected State _stateUnit;
@@ -48,11 +50,11 @@ public class Unit : MonoBehaviour
     {
         _behaviors = new ArrayList();
 
-        _behaviors.Add(new WaitBehavior(this));         // [0] >>> Wait
-        _behaviors.Add(new SeekBehavior(this));         // [1] >>> Seek
-        _behaviors.Add(new FleeBehavior(this));         // [2] >>> Flee
-        _behaviors.Add(new PursuitBehavior(this));      // [3] >>> Pursuit
-        _behaviors.Add(new EvasionBehavior(this));      // [4] >>> Evasion
+        _behaviors.Add(new SeekBehavior(this));         // [0] >>> Seek
+        _behaviors.Add(new FleeBehavior(this));         // [1] >>> Flee
+        _behaviors.Add(new PursuitBehavior(this));      // [2] >>> Pursuit
+        _behaviors.Add(new EvasionBehavior(this));      // [3] >>> Evasion
+        _behaviors.Add(new WaitBehavior(this));         // [4] >>> Wait        
         _behaviors.Add(new LeaderBehavior(this));       // [5] >>> Leader
 
         Debug.Log("Unit constructor called");

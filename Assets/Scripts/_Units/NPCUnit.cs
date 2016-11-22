@@ -9,6 +9,8 @@ public class NPCUnit : Unit {
 	private bool isAttacking = false;
 	private int nbHolders = 0;
 
+    private Behaviors behaviors = new Behaviors();
+
     /*
      * Compute position of the unit according 
      * to his current state
@@ -45,8 +47,7 @@ public class NPCUnit : Unit {
      */
     private Vector2 useWaitBehavior(float sizeRadius, float timeBeforeChangePos)
     {
-        Vector2 steering = ((WaitBehavior)_behaviors[0]).computeWaitSteering(_simpleTarget.position, sizeRadius, timeBeforeChangePos);
-        return ((WaitBehavior)_behaviors[0]).computeNewPosition(steering - ((WaitBehavior)_behaviors[0]).computeSteeringSeparationForce());
+        return behaviors.wait(this._behaviors, this._simpleTarget.position, sizeRadius, timeBeforeChangePos);
     }
 
     /*
@@ -56,8 +57,7 @@ public class NPCUnit : Unit {
      */
     private Vector2 useSeekBehavior()
     {
-        Vector2 steering = ((SeekBehavior)_behaviors[1]).computeSeekSteering(_unitTarget._currentPosition);
-        return ((SeekBehavior)_behaviors[1]).computeNewPosition(steering - ((SeekBehavior)_behaviors[1]).computeSteeringSeparationForce());
+        return behaviors.seek(this._behaviors, this._unitTarget._currentPosition);
     }
 
     /*
@@ -67,12 +67,10 @@ public class NPCUnit : Unit {
      */
     private Vector2 usePursuitBehavior()
     {
-		// If dans le rayon, on change l'etat en fight
-		// Sinon pursuit normal
+        // If dans le rayon, on change l'etat en fight
+        // Sinon pursuit normal
 
-
-        Vector2 steering = ((PursuitBehavior)_behaviors[3]).computePursuitSteering(_unitTarget._currentPosition, _unitTarget._velocity);
-        return ((PursuitBehavior)_behaviors[3]).computeNewPosition(steering - ((PursuitBehavior)_behaviors[3]).computeSteeringSeparationForce());
+        return behaviors.pursuit(this._behaviors, this._unitTarget._currentPosition, this._unitTarget._velocity);
     }
 
     /*
@@ -91,14 +89,12 @@ public class NPCUnit : Unit {
 			if ((u.getFaction () != this.getFaction ()) && (u.getFaction () != 0)) { // if there is an enemy
 				this._unitTarget = u;
 				this._stateUnit = State.Fight; // Si dans le voisinage on a des ennemis, on passe en state Fight ! 
-				Debug.Log ("FIGHT !");
+				
 				return useFightBehavior ();
 			}
 		}
-
-		Debug.Log ("NO FIGHT !");
-			
-		return useWaitBehavior (nbHolders,4.0f);  // nbHolder A CHANGER
+        			
+		return behaviors.wait(this._behaviors, this._simpleTarget.position, nbHolders, 4.0f);   // nbHolder A CHANGER
 	}
 
     /*
@@ -116,7 +112,7 @@ public class NPCUnit : Unit {
 		if (!isAttacking)
 			InvokeRepeating ("fight", 0.0f, 1.0f);
 
-		return usePursuitBehavior();
+		return behaviors.pursuit(this._behaviors, this._unitTarget._currentPosition, this._unitTarget._velocity);
     }
 
     /*
@@ -126,15 +122,14 @@ public class NPCUnit : Unit {
      */
     private Vector2 useWorkBehavior(float sizeRadius, float timeBeforeChangePos)
     {
-        Vector2 steering = ((WaitBehavior)_behaviors[0]).computeWaitSteering(_simpleTarget.position, sizeRadius, timeBeforeChangePos);
-        return ((WaitBehavior)_behaviors[0]).computeNewPosition(steering - ((WaitBehavior)_behaviors[0]).computeSteeringSeparationForce());
+        return behaviors.wait(this._behaviors, this._simpleTarget.position, sizeRadius, timeBeforeChangePos);
     }
 
     ///////////////////////
     // HELPFUL FUNCTIONS //
     ///////////////////////
 
-    // Fight function
+        // Fight function
     private void fight()
     {
 		isAttacking = true;

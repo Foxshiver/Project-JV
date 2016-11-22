@@ -9,7 +9,7 @@ public class SnakeUnit : NPCUnit
         _name = "Snake";
         _faction = 0;
         _fieldOfVision = 3.0f;
-        _healPoint = 10.0f;
+        _healPoint = 7.0f;
         _damagePoint = 2.5f;
         _stateUnit = Unit.State.Wait;
 

@@ -8,7 +8,13 @@ public class Spawner : Buildings
     public NPCUnit unitPrefab;
     NPCUnit unitClone;
 
-    void Update () {
+    void Start()
+    {
+        position = Vector3TOVector2(this.transform.position);
+    }
+
+    void Update ()
+    {
 	    if(_nbCurrentUnit < _nbMaxUnit)
         {
             InvokeRepeating("createUnit", 5.0f, 1.0f);
@@ -27,7 +33,7 @@ public class Spawner : Buildings
 
     private Vector2 nearToSpawner()
     {
-        Vector3 spawnerPosition = this.transform.position;
+        Vector3 spawnerPosition = this.position;
 
         float x = Random.Range(spawnerPosition.x - 1, spawnerPosition.x + 1);
         float y = Random.Range(spawnerPosition.z - 1, spawnerPosition.z + 1);

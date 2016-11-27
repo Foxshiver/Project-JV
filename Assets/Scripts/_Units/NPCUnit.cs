@@ -9,8 +9,6 @@ public class NPCUnit : Unit {
 	private bool isAttacking = false;
 	private int nbHolders = 0;
 
-    private Behaviors behaviors = new Behaviors();
-
     /*
      * Compute position of the unit according 
      * to his current state
@@ -47,7 +45,7 @@ public class NPCUnit : Unit {
      */
     private Vector2 useWaitBehavior(float sizeRadius, float timeBeforeChangePos)
     {
-        return behaviors.wait(this._behaviors, this._simpleTarget.position, sizeRadius, timeBeforeChangePos);
+        return transform.wait(this._behaviors, this._simpleTarget.position, sizeRadius, timeBeforeChangePos);
     }
 
     /*
@@ -57,7 +55,7 @@ public class NPCUnit : Unit {
      */
     private Vector2 useSeekBehavior()
     {
-        return behaviors.seek(this._behaviors, this._unitTarget._currentPosition);
+        return transform.seek(this._behaviors, this._unitTarget._currentPosition);
     }
 
     /*
@@ -70,7 +68,7 @@ public class NPCUnit : Unit {
         // If dans le rayon, on change l'etat en fight
         // Sinon pursuit normal
 
-        return behaviors.pursuit(this._behaviors, this._unitTarget._currentPosition, this._unitTarget._velocity);
+        return transform.pursuit(this._behaviors, this._unitTarget._currentPosition, this._unitTarget._velocity);
     }
 
     /*
@@ -94,7 +92,7 @@ public class NPCUnit : Unit {
 			}
 		}
         			
-		return behaviors.wait(this._behaviors, this._simpleTarget.position, nbHolders, 4.0f);   // nbHolder A CHANGER
+		return transform.wait(this._behaviors, this._simpleTarget.position, nbHolders, 4.0f);   // nbHolder A CHANGER
 	}
 
     /*
@@ -112,7 +110,7 @@ public class NPCUnit : Unit {
 		if (!isAttacking)
 			InvokeRepeating ("fight", 0.0f, 1.0f);
 
-		return behaviors.pursuit(this._behaviors, this._unitTarget._currentPosition, this._unitTarget._velocity);
+		return transform.pursuit(this._behaviors, this._unitTarget._currentPosition, this._unitTarget._velocity);
     }
 
     /*
@@ -122,14 +120,14 @@ public class NPCUnit : Unit {
      */
     private Vector2 useWorkBehavior(float sizeRadius, float timeBeforeChangePos)
     {
-        return behaviors.wait(this._behaviors, this._simpleTarget.position, sizeRadius, timeBeforeChangePos);
+        return transform.wait(this._behaviors, this._simpleTarget.position, sizeRadius, timeBeforeChangePos);
     }
 
     ///////////////////////
     // HELPFUL FUNCTIONS //
     ///////////////////////
 
-        // Fight function
+    // Fight function
     private void fight()
     {
 		isAttacking = true;
@@ -151,14 +149,11 @@ public class NPCUnit : Unit {
 
 			if(healPointRemaining <= 0.0f)
 			{
-
-				CancelInvoke("fight");
+                CancelInvoke("fight");
 				isAttacking = false;
 				Destroy(enemy.gameObject);
-
-				Debug.Log ("TARGET : " + this._unitTarget);
+                
 				this._unitTarget = this.general;
-
 			}
 		}
     }

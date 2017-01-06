@@ -8,6 +8,8 @@ public class Spawner : Buildings
     public NPCUnit unitPrefab;
     NPCUnit unitClone;
 
+    public GameObject World;
+
     void Start()
     {
         position = Vector3TOVector2(this.transform.position);
@@ -26,6 +28,7 @@ public class Spawner : Buildings
         unitClone = Instantiate(unitPrefab) as NPCUnit;
         unitClone.updatePosition(nearToSpawner());
         unitClone.setSimpleTarget(this);
+        unitClone.gameObject.transform.parent = World.transform;
         _nbCurrentUnit++;
 
         CancelInvoke("createUnit");

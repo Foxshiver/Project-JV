@@ -46,7 +46,7 @@ public static class ExtensionMethods {
     /*
      * Wait behavior
      */
-    public static Vector2 wait(this Transform trans, ArrayList behaviors, Vector2 targetPosition, float sizeRadius, float timeBeforeChangePos)
+    public static Vector2 wait(ArrayList behaviors, Vector2 targetPosition, float sizeRadius, float timeBeforeChangePos)
     {
         Vector2 steering = ((WaitBehavior)behaviors[4]).computeWaitSteering(targetPosition, sizeRadius, timeBeforeChangePos);
         return ((WaitBehavior)behaviors[4]).computeNewPosition(steering - ((WaitBehavior)behaviors[4]).computeSteeringSeparationForce());

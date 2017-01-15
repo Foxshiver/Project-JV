@@ -34,29 +34,23 @@ public class UnitPrefab : MonoBehaviour
 
         // Instanciate 2 neutral fox
         foxClone = Instantiate(foxPrefab) as FoxUnit;
-        foxClone.setSimpleTarget(foxSpawner);
         foxSpawner._nbCurrentUnit++;
         foxClone.updatePosition(new Vector2(7.0f,-2.0f));
         foxClone = Instantiate(foxPrefab) as FoxUnit;
-        foxClone.setSimpleTarget(foxSpawner);
         foxSpawner._nbCurrentUnit++;
 
         // Instanciate 2 neutral chicken
         chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
-        chickenClone.setSimpleTarget(chickenSpawner);
         chickenSpawner._nbCurrentUnit++;
         chickenClone.updatePosition(new Vector2(3.5f,14.0f));
         chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
-        chickenClone.setSimpleTarget(chickenSpawner);
         chickenSpawner._nbCurrentUnit++;
 
         // Instanciate 2 neutral snake
         snakeClone = Instantiate(snakePrefab) as SnakeUnit;
-        snakeClone.setSimpleTarget(snakeSpawner);
         snakeSpawner._nbCurrentUnit++;
         snakeClone.updatePosition(new Vector2(15.0f,-8.0f));
         snakeClone = Instantiate(snakePrefab) as SnakeUnit;
-        snakeClone.setSimpleTarget(snakeSpawner);
         snakeSpawner._nbCurrentUnit++;
     }
 

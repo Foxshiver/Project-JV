@@ -3,29 +3,26 @@ using System.Collections;
 
 public class Spawner : Buildings
 {
-    private int _nbMaxUnit = 3;
-
     public NPCUnit unitPrefab;
     NPCUnit unitClone;
+    public NPCUnit newUnit = null;
 
-    void Start()
-    {
-        position = Vector3TOVector2(this.transform.position);
-    }
+    private int _nbMaxUnit = 3;
+    public bool _isCreatingUnit = false;
 
-    void Update ()
+    public void update()
     {
 	    if(_nbCurrentUnit < _nbMaxUnit)
-        {
             InvokeRepeating("createUnit", 5.0f, 1.0f);
-        }
 	}
 
-    private void createUnit()
+    public void createUnit()
     {
         unitClone = Instantiate(unitPrefab) as NPCUnit;
-        unitClone.updatePosition(nearToSpawner());
-        unitClone.setSimpleTarget(this);
+        unitClone.init(this, nearToSpawner());
+        newUnit = unitClone;
+
+        _isCreatingUnit = true;
         _nbCurrentUnit++;
 
         CancelInvoke("createUnit");
@@ -33,10 +30,8 @@ public class Spawner : Buildings
 
     private Vector2 nearToSpawner()
     {
-        Vector3 spawnerPosition = this.position;
-
-        float x = Random.Range(spawnerPosition.x - 1, spawnerPosition.x + 1);
-        float y = Random.Range(spawnerPosition.z - 1, spawnerPosition.z + 1);
+        float x = Random.Range(position.x - 2, position.x + 2);
+        float y = Random.Range(position.y - 2, position.y + 2);
 
         return new Vector2(x, y);
     }

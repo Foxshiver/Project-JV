@@ -8,7 +8,7 @@ public class Buildings : MonoBehaviour
 
     public int _nbCurrentUnit = 0;
 
-    void Start()
+    public void start()
     {
         position = Vector3TOVector2(this.transform.position);
     }

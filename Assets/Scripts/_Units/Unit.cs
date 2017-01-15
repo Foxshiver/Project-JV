@@ -14,6 +14,11 @@ public class Unit : MonoBehaviour
     public Vector2 _velocity;
     public Vector2 _steering;
 
+    [HideInInspector]
+    public float sizeRadius;
+    [HideInInspector]
+    public float timeBeforeChangePos;
+
     protected string _name;
     protected string _unitType;
     protected ArrayList _behaviors;
@@ -50,12 +55,12 @@ public class Unit : MonoBehaviour
     {
         _behaviors = new ArrayList();
 
-        _behaviors.Add(new SeekBehavior(this));         // [0] >>> Seek
-        _behaviors.Add(new FleeBehavior(this));         // [1] >>> Flee
-        _behaviors.Add(new PursuitBehavior(this));      // [2] >>> Pursuit
-        _behaviors.Add(new EvasionBehavior(this));      // [3] >>> Evasion
-        _behaviors.Add(new WaitBehavior(this));         // [4] >>> Wait        
-        _behaviors.Add(new LeaderBehavior(this));       // [5] >>> Leader
+        //_behaviors.Add(new SeekBehavior(this));         // [0] >>> Seek
+        //_behaviors.Add(new FleeBehavior(this));         // [1] >>> Flee
+        //_behaviors.Add(new PursuitBehavior(this));      // [2] >>> Pursuit
+        //_behaviors.Add(new EvasionBehavior(this));      // [3] >>> Evasion
+        //_behaviors.Add(new WaitBehavior(this));         // [4] >>> Wait        
+        //_behaviors.Add(new LeaderBehavior(this));       // [5] >>> Leader
 
         Debug.Log("Unit constructor called");
     }

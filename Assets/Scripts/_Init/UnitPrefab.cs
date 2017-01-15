@@ -38,11 +38,6 @@ public class UnitPrefab : MonoBehaviour
 
         // Instanciate 2 neutral fox
         foxClone = Instantiate(foxPrefab) as FoxUnit;
-<<<<<<< HEAD
-        foxSpawner._nbCurrentUnit++;
-        foxClone.updatePosition(new Vector2(7.0f,-2.0f));
-        foxClone = Instantiate(foxPrefab) as FoxUnit;
-=======
         foxClone.setSimpleTarget(foxSpawner);
         foxClone.gameObject.transform.parent = World.gameObject.transform;
         foxSpawner._nbCurrentUnit++;
@@ -50,16 +45,10 @@ public class UnitPrefab : MonoBehaviour
         foxClone = Instantiate(foxPrefab) as FoxUnit;
         foxClone.setSimpleTarget(foxSpawner);
         foxClone.gameObject.transform.parent = World.gameObject.transform;
->>>>>>> ffb495081a7cee26c4fb40b3762d7f9dd741f35a
         foxSpawner._nbCurrentUnit++;
 
         // Instanciate 2 neutral chicken
         chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
-<<<<<<< HEAD
-        chickenSpawner._nbCurrentUnit++;
-        chickenClone.updatePosition(new Vector2(3.5f,14.0f));
-        chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
-=======
         chickenClone.setSimpleTarget(chickenSpawner);
         chickenClone.gameObject.transform.parent = World.gameObject.transform;
         chickenSpawner._nbCurrentUnit++;
@@ -67,16 +56,10 @@ public class UnitPrefab : MonoBehaviour
         chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
         chickenClone.setSimpleTarget(chickenSpawner);
         chickenClone.gameObject.transform.parent = World.gameObject.transform;
->>>>>>> ffb495081a7cee26c4fb40b3762d7f9dd741f35a
         chickenSpawner._nbCurrentUnit++;
 
         // Instanciate 2 neutral snake
         snakeClone = Instantiate(snakePrefab) as SnakeUnit;
-<<<<<<< HEAD
-        snakeSpawner._nbCurrentUnit++;
-        snakeClone.updatePosition(new Vector2(15.0f,-8.0f));
-        snakeClone = Instantiate(snakePrefab) as SnakeUnit;
-=======
         snakeClone.setSimpleTarget(snakeSpawner);
         snakeClone.gameObject.transform.parent = World.gameObject.transform;
         snakeSpawner._nbCurrentUnit++;
@@ -84,7 +67,6 @@ public class UnitPrefab : MonoBehaviour
         snakeClone = Instantiate(snakePrefab) as SnakeUnit;
         snakeClone.setSimpleTarget(snakeSpawner);
         snakeClone.gameObject.transform.parent = World.gameObject.transform;
->>>>>>> ffb495081a7cee26c4fb40b3762d7f9dd741f35a
         snakeSpawner._nbCurrentUnit++;
     }
 

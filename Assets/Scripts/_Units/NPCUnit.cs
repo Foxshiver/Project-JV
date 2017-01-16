@@ -12,7 +12,7 @@ public class NPCUnit : Unit {
     public StatePatternUnit statePattern;
     public string currentState;
 
-    public void init(Spawner spawner, Vector2 pos)
+    public void init(Buildings spawner, Vector2 pos)
     {
         this._simpleTarget = spawner;
 
@@ -31,9 +31,11 @@ public class NPCUnit : Unit {
     {
         if (this._healPoint <= 0.0f)
             Destroy(this.gameObject);
-
-        statePattern.updateState();
-        currentState = statePattern.currentState.ToString();
+        else
+        {
+            statePattern.updateState();
+            currentState = statePattern.currentState.ToString();
+        }
     }
 
     public void triggeringUpdate()

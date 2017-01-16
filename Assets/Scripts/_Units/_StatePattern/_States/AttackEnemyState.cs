@@ -18,12 +18,13 @@ public class AttackEnemyState : IUnitState {
     {
         checkAround();
         actionFight();
+        Pursuit();
     }
 
     public void TriggeringUpdate()
     {
         // Si l'ennemie chassé est détruit ou trop éloigné du joueur Alors l'unité retourne vers le joueur
-        ToFollowLeaderState();
+        //ToFollowLeaderState();
     }
 
     public void ToWaitState()
@@ -55,17 +56,17 @@ public class AttackEnemyState : IUnitState {
         state._NPCUnit._currentPosition = pursuit.computeNewPosition(steering - pursuit.computeSteeringSeparationForce());
 
         state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
-
-
-
     }
 
     private void checkAround()
     {
-        float distance = (state._NPCUnit._unitTarget._currentPosition - state._NPCUnit._currentPosition).magnitude;
+        float distance = (state._NPCUnit._unitTarget._currentPosition - state._NPCUnit.general._currentPosition).magnitude;
 
-        if (distance > state._NPCUnit._unitTarget._fieldOfView)
-            ToFollowLeaderState(); 
+        if (distance > state._NPCUnit.general._fieldOfView)
+        {
+            state._NPCUnit._unitTarget = state._NPCUnit.general;
+            ToFollowLeaderState();
+        }
     }
 
     private void actionFight()
@@ -75,8 +76,6 @@ public class AttackEnemyState : IUnitState {
             timeFirstCall = Time.time;
             fight();
         }
-
-        Pursuit();
     }
 
     // Fight function
@@ -85,18 +84,22 @@ public class AttackEnemyState : IUnitState {
         if (state._NPCUnit._unitTarget == null) // If enemy is already dead
         {
             state._NPCUnit._unitTarget = state._NPCUnit.general;
-
             ToFollowLeaderState();
         }
         else
         {
             Unit enemy = state._NPCUnit._unitTarget;
 
-            float healPointRemaining = enemy.getHealPoint() - state._NPCUnit._damagePoint;
-            Debug.Log("HIT : " + healPointRemaining);
-            enemy.setHealPoint(healPointRemaining);
+            float distance = (state._NPCUnit._currentPosition - state._NPCUnit._unitTarget._currentPosition).magnitude;
+            if (distance < state._NPCUnit._fieldOfView)
+            {
+                float healPointRemaining = enemy.getHealPoint() - state._NPCUnit._damagePoint;
+                Debug.Log("NAME ENEMY : " + enemy.gameObject.name);
+                Debug.Log("ENEMY HP : " + enemy.getHealPoint());
+                enemy.setHealPoint(healPointRemaining);
+            }
 
-            if (healPointRemaining <= 0.0f)
+            if (enemy.getHealPoint() <= 0.0f)
             {
                 state._NPCUnit._unitTarget = state._NPCUnit.general;
                 ToFollowLeaderState();

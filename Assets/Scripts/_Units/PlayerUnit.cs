@@ -22,7 +22,7 @@ public class PlayerUnit : Unit {
 
         _name = "Player";
         _faction = 1;
-        _fieldOfVision = 8.0f;
+        _fieldOfView = 8.0f;
         _healPoint = 50.0f;
 
         listOfUnits = new List<NPCUnit> { };
@@ -81,6 +81,7 @@ public class PlayerUnit : Unit {
 
                     listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
                     listOfUnits[newUnitIndex]._unitTarget = this;
+                    listOfUnits[newUnitIndex].general = this;
                     listOfUnits[newUnitIndex].triggeringUpdate();
 
                     _money--;
@@ -181,21 +182,21 @@ public class PlayerUnit : Unit {
             listOfWorkerUnits[newUnitIndex].triggeringUpdate();
         }
 
-        //        // Engage units in combat
-        //        if(listOfNeighboor.Length != 0)
-        //        {
-        //            for(int i=0; i<listOfNeighboor.Length; i++)
-        //            {
-        //                if(listOfNeighboor[i].getFaction() == 2)
-        //                {
-        //                    for(int j=0; j<listOfUnits.Count; j++)
-        //                    {
-        //                        listOfUnits[j]._targetUnit  = listOfNeighboor[i];
-        //                        listOfUnits[j]._stateUnit   = Unit.State.Fight;
-        //                    }
-        //                }
-        //            }
-        //        }
+        // Engage units in combat
+        if (listOfNeighboor.Length != 0)
+        {
+            for (int i = 0; i < listOfNeighboor.Length; i++)
+            {
+                if (listOfNeighboor[i].getFaction() == 2)
+                {
+                    for (int j = 0; j < listOfUnits.Count; j++)
+                    {
+                        listOfUnits[j]._unitTarget = listOfNeighboor[i];
+                        listOfUnits[j].triggeringUpdate();
+                    }
+                }
+            }
+        }
 
     }
 
@@ -231,7 +232,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfUnit[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfVision && listOfUnit[i].statePattern.currentState == listOfUnit[i].statePattern.waitState)
+                if (distance < this._fieldOfView && listOfUnit[i].statePattern.currentState == listOfUnit[i].statePattern.waitState)
                 {
                     isInRadius[i] = true;
                     nbNeighboors++;
@@ -271,7 +272,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfField[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfVision)
+                if (distance < this._fieldOfView)
                 {
                     isInRadius[i] = true;
                     nbFields++;

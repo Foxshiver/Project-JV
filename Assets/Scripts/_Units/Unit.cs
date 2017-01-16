@@ -29,10 +29,10 @@ public class Unit : MonoBehaviour
     //      > 1 = ally
     //      > 2 = enemy
     protected int _faction;
-    protected float _fieldOfVision;
+    public float _fieldOfView;
 
-    protected float _healPoint;
-    protected float _damagePoint;
+    public float _healPoint;
+    public float _damagePoint;
 
     public Buildings _simpleTarget = null;
     public Unit _unitTarget = null;

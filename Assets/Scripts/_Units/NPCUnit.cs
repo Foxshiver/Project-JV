@@ -29,6 +29,9 @@ public class NPCUnit : Unit {
 
     public void update()
     {
+        if (this._healPoint <= 0.0f)
+            Destroy(this.gameObject);
+
         statePattern.updateState();
         currentState = statePattern.currentState.ToString();
     }

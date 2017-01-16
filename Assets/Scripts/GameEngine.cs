@@ -24,7 +24,7 @@ public class GameEngine : MonoBehaviour {
     public Spawner snakeSpawner;
 
     // ENEMY FARM --- DEBUG
-    public Farm enemyQG;
+    // public Farm enemyQG;
 
     // OBJECTS LISTS
     private Object[] _famrsList;

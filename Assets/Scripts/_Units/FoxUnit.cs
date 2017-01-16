@@ -15,13 +15,4 @@ public class FoxUnit : NPCUnit
 
         Debug.Log("FoxUnit constructor called");
     }
-
-	// Update is called once per frame
-	void Update()
-    {
-        _currentPosition = Vector3TOVector2(this.transform.position);
-        _currentPosition = computePosition(_stateUnit);
-
-        this.updatePosition(_currentPosition);
-    }
 }

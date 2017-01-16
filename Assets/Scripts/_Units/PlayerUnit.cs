@@ -6,11 +6,14 @@ using System.Collections.Generic;
 public class PlayerUnit : Unit {
     
     public List<NPCUnit> listOfUnits;
+    private List<NPCUnit> listOfWorkerUnits;
     private List< List<NPCUnit> > listOfHoldPositionUnits;
     private List<Buildings> listOfPositions;
 
     public int _nbWorkingUnit = 0;
     public int _nbHoldingUnit = 0;
+
+    private LeaderBehavior leader;
 
     // Constructor
     public PlayerUnit()
@@ -23,64 +26,69 @@ public class PlayerUnit : Unit {
         _healPoint = 50.0f;
 
         listOfUnits = new List<NPCUnit> { };
+        listOfWorkerUnits = new List<NPCUnit> { };
         listOfHoldPositionUnits = new List<List<NPCUnit>> { };
         listOfPositions = new List<Buildings> { };
+
+        leader = new LeaderBehavior(this);
 
         Debug.Log("PlayerUnit constructor called");
 	}
 		
 
 	// Update is called once per frame
-	void Update()
+	public void update()
 	{
         // Update behind point and current player position 
         _currentPosition = Vector3TOVector2(this.transform.position);
-        _behindPosition = ((LeaderBehavior)_behaviors[5]).getBehindLeader();
-        _currentPosition = ((LeaderBehavior)_behaviors[5]).computeNewPosition( ((LeaderBehavior)_behaviors [5]).controllerMovement() );
+        _behindPosition = leader.getBehindLeader();
+        _currentPosition = leader.computeNewPosition(leader.controllerMovement() );
         updatePosition(_currentPosition);
 
         // Seeking all the unit around the player
         Unit[] listOfNeighboor = ListOfNeighboors();
-        Field[] listOfField    = ListOfFields();
+        Field[] listOfField = ListOfFields();
 
-        ChangeMaterialColorHighlight[] hList = GameObject.FindObjectsOfType<ChangeMaterialColorHighlight>();
+        //      ChangeMaterialColorHighlight[] hList = GameObject.FindObjectsOfType<ChangeMaterialColorHighlight>();
 
-		foreach (ChangeMaterialColorHighlight h in hList) // Allow to highlight in blue all the neighboors of the player
-		{
-			if (h != null) {
-				//if (isInNeighboors (listOfNeighboor, h.gameObject)) 
-				if (isInUnits (h.gameObject)) { 
-					//h.HighlightColor = Color.blue;
-					h.Highlight (true);
-				} else {
-					//h.HighlightColor = Color.red;
-					h.Highlight (false);
-				}
-			}
-		}
+        //foreach (ChangeMaterialColorHighlight h in hList) // Allow to highlight in blue all the neighboors of the player
+        //{
+        //	if (h != null) {
+        //		//if (isInNeighboors (listOfNeighboor, h.gameObject)) 
+        //		if (isInUnits (h.gameObject)) { 
+        //			//h.HighlightColor = Color.blue;
+        //			h.Highlight (true);
+        //		} else {
+        //			//h.HighlightColor = Color.red;
+        //			h.Highlight (false);
+        //		}
+        //	}
+        //}
 
-		// Take unit on if player push 'space' button and unit is in radius (Or 'A' button on 360 controler)
+        // Take unit on if player push 'space' button and unit is in radius (Or 'A' button on 360 controler)
         if(Input.GetButtonDown("TakeUnitOn"))
         {
             if(listOfNeighboor.Length != 0)
             {
-				NPCUnit nearestUnit = (NPCUnit)getNearestUnit(listOfNeighboor);
+                NPCUnit nearestUnit = (NPCUnit)getNearestUnit(listOfNeighboor);
 
-				if (nearestUnit.getFaction() == 0 && _money >=1) {
-					listOfUnits.Add (nearestUnit);
 
-					int newUnitIndex = listOfUnits.LastIndexOf((NPCUnit)getNearestUnit(listOfNeighboor));
+                if (_money >= 1)
+                {
+                    listOfUnits.Add(nearestUnit);
+
+                    int newUnitIndex = listOfUnits.LastIndexOf(nearestUnit);
 
                     listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
-                    listOfUnits[newUnitIndex].setGeneral(this);
-					listOfUnits[newUnitIndex].setState(Unit.State.Seek);
+                    listOfUnits[newUnitIndex]._unitTarget = this;
+                    listOfUnits[newUnitIndex].triggeringUpdate();
 
-					_money--;
-				}
+                    _money--;
+                }
             }
         }
 
-		// Unit hold position if player push 'c' button (Or 'B' button on 360 controler)
+        // Unit hold position if player push 'c' button (Or 'B' button on 360 controler)
         if(Input.GetButtonDown("HoldPosition"))
         {
             int indiceHoldPositionUnitsList = listOfHoldPositionUnits.Count;
@@ -94,13 +102,13 @@ public class PlayerUnit : Unit {
 
             List<NPCUnit> listTampon = new List<NPCUnit> { };
 
-            for(int i=0; i<listOfUnits.Count; i++)
-            {              
+            for(int i = 0; i < listOfUnits.Count; i++)
+            {
                 listOfUnits[i].setSimpleTarget(listOfPositions[newPositionIndex]);
-				listOfUnits[i].setNbHolders(listOfUnits.Count);
-                listOfUnits[i].setState(Unit.State.Defend);
+                listOfUnits[i].setNbHolders(listOfUnits.Count);
+                listOfUnits[i].triggeringUpdate();
 
-                listTampon.Add(listOfUnits[i]);  
+                listTampon.Add(listOfUnits[i]);
             }
 
             listOfHoldPositionUnits.Add(listTampon);
@@ -110,14 +118,14 @@ public class PlayerUnit : Unit {
             listOfUnits.Clear();
         }
 
-		// Call units back if player push 'v' button (Or 'X' button on 360 controler)
+        // Call units back if player push 'v' button (Or 'X' button on 360 controler)
         if(Input.GetButtonDown("CallBack"))
         {
-            for (int i=0; i<listOfHoldPositionUnits.Count; i++)
+            for(int i = 0; i < listOfHoldPositionUnits.Count; i++)
             {
-                for (int j = 0; j < listOfHoldPositionUnits[i].Count; j++)
+                for(int j = 0; j < listOfHoldPositionUnits[i].Count; j++)
                 {
-                    listOfHoldPositionUnits[i][j].setState(Unit.State.Seek);
+                    listOfHoldPositionUnits[i][j].triggeringUpdate();
                     listOfUnits.Add(listOfHoldPositionUnits[i][j]);
                 }
 
@@ -125,14 +133,22 @@ public class PlayerUnit : Unit {
                 listOfPositions.RemoveAt(0);
             }
 
+            for(int i = 0; i < listOfWorkerUnits.Count; i++)
+            {
+                listOfWorkerUnits[i].getSimpleTarget()._nbCurrentUnit--;
+                listOfWorkerUnits[i].triggeringUpdate();
+                listOfUnits.Add(listOfWorkerUnits[i]);
+            }
+
             listOfHoldPositionUnits.Clear();
             _nbHoldingUnit = 0;
+            listOfWorkerUnits.Clear();
         }
 
         // Unit works if player push 'n' button (Or '?' button on 360 controler)
-        if (Input.GetButtonDown("Work"))
+        if(Input.GetButtonDown("Work"))
         {
-            if (listOfUnits.Count == 0 || listOfField.Length == 0)
+            if(listOfUnits.Count == 0 || listOfField.Length == 0)
                 return;
 
             if(listOfField[0]._nbCurrentUnit == listOfField[0]._nbMaxUnit)
@@ -141,11 +157,11 @@ public class PlayerUnit : Unit {
             float lessHPUnit = listOfUnits[0].getHealPoint();
             NPCUnit weakestUnit = listOfUnits[0];
 
-            for (int i = 1; i < listOfUnits.Count; i++)
+            for(int i = 1; i < listOfUnits.Count; i++)
             {
                 float HPUnit = listOfUnits[i].getHealPoint();
 
-                if (HPUnit < lessHPUnit)
+                if(HPUnit < lessHPUnit)
                 {
                     lessHPUnit = HPUnit;
                     weakestUnit = listOfUnits[i];
@@ -153,11 +169,16 @@ public class PlayerUnit : Unit {
             }
 
             listOfUnits.Remove(weakestUnit);
+            listOfWorkerUnits.Add(weakestUnit);
+
+            int newUnitIndex = listOfWorkerUnits.LastIndexOf(weakestUnit);
 
             listOfField[0]._nbCurrentUnit++;
-            weakestUnit.setSimpleTarget(listOfField[0]);
-            weakestUnit.setState(Unit.State.Work);
+
             _nbWorkingUnit++;
+
+            listOfWorkerUnits[newUnitIndex].setSimpleTarget(listOfField[0]);
+            listOfWorkerUnits[newUnitIndex].triggeringUpdate();
         }
 
         //        // Engage units in combat
@@ -197,9 +218,9 @@ public class PlayerUnit : Unit {
 	}
 
     // Return the tab containing all the neighboors of the player
-    public Unit[] ListOfNeighboors() 
+    public Unit[] ListOfNeighboors()
     {
-        Unit[] listOfUnit = GameObject.FindObjectsOfType<Unit>();
+        NPCUnit[] listOfUnit = GameObject.FindObjectsOfType<NPCUnit>();
         bool[] isInRadius = new bool[listOfUnit.Length];
 
         int nbNeighboors = 0;
@@ -210,7 +231,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfUnit[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfVision && listOfUnit[i].getState() == Unit.State.Wait)
+                if (distance < this._fieldOfVision && listOfUnit[i].statePattern.currentState == listOfUnit[i].statePattern.waitState)
                 {
                     isInRadius[i] = true;
                     nbNeighboors++;

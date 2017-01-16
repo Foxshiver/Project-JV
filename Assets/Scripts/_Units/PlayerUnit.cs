@@ -94,7 +94,8 @@ public class PlayerUnit : Unit {
         {
             int indiceHoldPositionUnitsList = listOfHoldPositionUnits.Count;
 
-            Buildings positionToHold = new Buildings();
+            PositionToHold positionToHold = new PositionToHold();
+            positionToHold.init(this.getFaction());
             positionToHold.name = "Position to hold n°" + indiceHoldPositionUnitsList;
             positionToHold.position = new Vector2(this._currentPosition[0], this._currentPosition[1]);
 
@@ -197,6 +198,9 @@ public class PlayerUnit : Unit {
                 }
             }
         }
+
+        foreach(PositionToHold p in listOfPositions)
+            p.update();
 
     }
 

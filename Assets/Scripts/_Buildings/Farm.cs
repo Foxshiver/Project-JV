@@ -14,21 +14,6 @@ public class Farm : Buildings
         }
 	}
 
-    public void createUnit(NPCUnit unitPrefab, NPCUnit unitClone)
-    {
-        unitClone = Instantiate(unitPrefab) as NPCUnit;
-        unitClone.init(this, nearToSpawner());
-        unitClone.setFaction(2);
-    }
-
-    private Vector2 nearToSpawner()
-    {
-        float x = Random.Range(position.x - 2, position.x + 2);
-        float y = Random.Range(position.y - 2, position.y + 2);
-
-        return new Vector2(x, y);
-    }
-
     private PlayerUnit getPlayer(int faction)
     {
         PlayerUnit[] listOfPlayerUnit = GameObject.FindObjectsOfType<PlayerUnit>();

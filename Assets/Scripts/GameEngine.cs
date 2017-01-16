@@ -35,6 +35,7 @@ public class GameEngine : MonoBehaviour {
 
     // ENEMY FARM --- DEBUG
     public Farm enemyQG;
+    private PositionToHold positionEnemy;
 
     // OBJECTS LISTS
     private Object[] _famrsList;
@@ -73,6 +74,10 @@ public class GameEngine : MonoBehaviour {
             field.start();
 
         enemyQG.start();
+        positionEnemy = this.gameObject.AddComponent<PositionToHold>();
+        positionEnemy.start();
+        positionEnemy.init(2);
+        positionEnemy.position = enemyQG.position;
     }
 
     void initUnits()
@@ -102,13 +107,13 @@ public class GameEngine : MonoBehaviour {
     void addEnnemy()
     {
         if (Input.GetKeyDown("f"))
-            enemyQG.createUnit(foxPrefab, foxClone);
+            positionEnemy.createUnit(foxPrefab, foxClone);
 
         if (Input.GetKeyDown("h"))
-            enemyQG.createUnit(chickenPrefab, chickenClone);
+            positionEnemy.createUnit(chickenPrefab, chickenClone);
 
         if (Input.GetKeyDown("g"))
-            enemyQG.createUnit(snakePrefab, snakeClone);
+            positionEnemy.createUnit(snakePrefab, snakeClone);
     }
 
     void endGame()
@@ -169,7 +174,8 @@ public class GameEngine : MonoBehaviour {
                     //    spawner._isCreatingUnit = false;
                     //}
                 }
-                
+
+                positionEnemy.update();
 
                 _neutralsUnitsList = FindObjectsOfType(typeof(NPCUnit)) as NPCUnit[];
                 foreach(NPCUnit unit in _neutralsUnitsList)

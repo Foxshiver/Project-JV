@@ -9,10 +9,13 @@ public class PlayerUnit : Unit {
     private List< List<NPCUnit> > listOfHoldPositionUnits;
     private List<Buildings> listOfPositions;
 
+    public int _nbWorkingUnit = 0;
+    public int _nbHoldingUnit = 0;
+
     // Constructor
     public PlayerUnit()
 	{
-		_money = 100;
+		_money = 2;  
 
         _name = "Player";
         _faction = 1;
@@ -63,7 +66,7 @@ public class PlayerUnit : Unit {
             {
 				NPCUnit nearestUnit = (NPCUnit)getNearestUnit(listOfNeighboor);
 
-				if (nearestUnit.getFaction() == 0) {
+				if (nearestUnit.getFaction() == 0 && _money >=1) {
 					listOfUnits.Add (nearestUnit);
 
 					int newUnitIndex = listOfUnits.LastIndexOf((NPCUnit)getNearestUnit(listOfNeighboor));
@@ -102,13 +105,15 @@ public class PlayerUnit : Unit {
 
             listOfHoldPositionUnits.Add(listTampon);
 
+            _nbHoldingUnit += listOfUnits.Count;
+
             listOfUnits.Clear();
         }
 
 		// Call units back if player push 'v' button (Or 'X' button on 360 controler)
         if(Input.GetButtonDown("CallBack"))
         {
-            for(int i=0; i<listOfHoldPositionUnits.Count; i++)
+            for (int i=0; i<listOfHoldPositionUnits.Count; i++)
             {
                 for (int j = 0; j < listOfHoldPositionUnits[i].Count; j++)
                 {
@@ -121,6 +126,7 @@ public class PlayerUnit : Unit {
             }
 
             listOfHoldPositionUnits.Clear();
+            _nbHoldingUnit = 0;
         }
 
         // Unit works if player push 'n' button (Or '?' button on 360 controler)
@@ -151,6 +157,7 @@ public class PlayerUnit : Unit {
             listOfField[0]._nbCurrentUnit++;
             weakestUnit.setSimpleTarget(listOfField[0]);
             weakestUnit.setState(Unit.State.Work);
+            _nbWorkingUnit++;
         }
 
         //        // Engage units in combat

@@ -10,7 +10,6 @@ public class PositionToHold : Buildings {
     public void init(int faction)
     {
         _faction = faction;
-        _EnemiesUnitsList = FindObjectsOfType(typeof(NPCUnit)) as NPCUnit[];
     }
 
     public void update()
@@ -20,21 +19,19 @@ public class PositionToHold : Buildings {
 
     public void getNearestEnemy()
     {
+        _EnemiesUnitsList = FindObjectsOfType(typeof(NPCUnit)) as NPCUnit[];
+        float minDistance = float.MaxValue;
         List<NPCUnit> ListEnemies = new List<NPCUnit>();
         foreach(NPCUnit u in _EnemiesUnitsList)
             if (u.getFaction() != this._faction && u.getFaction() != 0)
-                ListEnemies.Add(u);
-
-        float minDistance = float.MaxValue;
-        foreach (NPCUnit u in ListEnemies)
-        {
-            float distance = (this.position - u._currentPosition).magnitude;
-            if (distance < minDistance)
             {
-                this.nearestEnemy = u;
-                minDistance = distance;
+                float distance = (this.position - u._currentPosition).magnitude;
+                if (distance < minDistance)
+                {
+                    this.nearestEnemy = u;
+                    minDistance = distance;
+                }
             }
-        }
     }
 
     // DEBUG

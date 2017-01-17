@@ -15,6 +15,7 @@ public class WorkState : IUnitState {
     public void UpdateState()
     {
         Work();
+        EarnCoin();
     }
 
     public void TriggeringUpdate()
@@ -53,5 +54,13 @@ public class WorkState : IUnitState {
         state._NPCUnit._currentPosition = wait.computeNewPosition(steering - wait.computeSteeringSeparationForce());
 
         state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
+    }
+
+    private void EarnCoin()
+    {
+        if(Random.Range(0.0f, 1.0f) < 0.005)
+        {
+            state._NPCUnit.createCoin();
+        }
     }
 }

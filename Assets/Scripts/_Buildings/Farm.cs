@@ -6,7 +6,7 @@ public class Farm : Buildings
     protected float _healPoint;
     protected int _faction;
 	
-	void Update ()
+	public void update ()
     {
 	    if(_healPoint < 0.0f)
         {

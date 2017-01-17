@@ -4,8 +4,6 @@ using System.Collections;
 public class WaitBehavior : SeekBehavior
 {
 	// Attributes
-	public float CoefRadiusTarget = 2.0f;
-
 	protected Vector2 _currentTarget = Vector2.zero;
 
 	private Vector2 _randomTarget;
@@ -17,11 +15,12 @@ public class WaitBehavior : SeekBehavior
 		Debug.Log("WaitBehavior constructor called");
 	}
 
-
 	public Vector2 computeWaitSteering(Vector2 centerTargetPosition, float distance, float timeBeforeChangePos)
 	{
-		if ((centerTargetPosition != _currentTarget) || ((Time.time - _startTime) > timeBeforeChangePos)) {
-			_startTime = Time.time;
+		if ((centerTargetPosition != _currentTarget) || ((Time.time - _startTime) > timeBeforeChangePos))
+        {
+            _unit.timeBeforeChangePos = Random.Range(3.0f, 6.0f);
+            _startTime = Time.time;
 
 			_currentTarget = centerTargetPosition;
 
@@ -31,7 +30,7 @@ public class WaitBehavior : SeekBehavior
 			_randomTarget = new Vector2 (newPositionOnX, newPositionOnY);
 		}
 
-		return computeSeekSteering (_randomTarget);
+		return computeSeekSteering(_randomTarget);
 	}
 //
 //	// Functions

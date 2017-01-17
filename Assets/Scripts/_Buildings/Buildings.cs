@@ -5,10 +5,12 @@ public class Buildings : MonoBehaviour
 {
     public Vector2 position;
     public string name;
+    public float defendingArea = 8.0f;
+    public NPCUnit nearestEnemy = null;
 
     public int _nbCurrentUnit = 0;
 
-    void Start()
+    public void start()
     {
         position = Vector3TOVector2(this.transform.position);
     }

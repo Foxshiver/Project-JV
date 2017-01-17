@@ -8,54 +8,25 @@ public class ChickenUnit : NPCUnit
     {
         _name = "Chicken";
         _faction = 0;
-        _fieldOfVision = 3.0f;
-        _healPoint = 5.0f;
-        _damagePoint = 2.5f;
-        _stateUnit = Unit.State.Wait;
+        _fieldOfView = 3.0f;
+        _healPoint = 10.0f;
 
         Debug.Log("ChickenUnit constructor called");
     }
 
-    // Update is called once per frame
-    void Update()
+    public float getDamage(string name)
     {
-        _currentPosition = Vector3TOVector2(this.transform.position);
-
-        _currentPosition = computePosition(_stateUnit);
-
-        //switch (_stateUnit)
-        //{
-        //case Unit.State.WaitFree: 
-        //	_currentPosition = useWaitBehavior(_simpleTarget, 7.0f, 4.0f);
-        //	if (Input.GetButtonDown("JoystickA"))
-        //		&& (new Vector2(_simpleTarget.transform.position.x,_simpleTarget.transform.position.z) - _targetUnit._currentPosition).magnitude < 5.0f)
-        //	{
-        //		_stateUnit = Unit.State.PursuitLeader;
-        //	}
-        //	break;
-        //case Unit.State.PursuitLeader:
-        //	_currentPosition = useFleeBehavior();
-        //	if (Input.GetButtonDown("JoystickB"))
-        //	{
-        //		_stateUnit = Unit.State.WaitFree;
-        //	}
-        //	break;
-
-        //}
-
-
-        //		if(Input.GetButtonDown("JoystickA"))
-        //		{
-        //			Debug.Log("PRESS A");
-        //			_stateUnit = Unit.State.WaitFree;
-        //		}
-        //
-        //		if(Input.GetButtonDown("JoystickB"))
-        //		{
-        //			Debug.Log("PRESS B");
-        //			_stateUnit = Unit.State.SeekLeader;
-        //		}
-
-        this.updatePosition(_currentPosition);
+        switch (name)
+        {
+            case "Fox":
+                return 1.0f;
+            case "Chicken":
+                return 2.0f;
+            case "Snake":
+                return 5.0f;
+            default:
+                Debug.Log("ERROR DAMAGE - WRONG NAME");
+                return 0.0f;
+        }
     }
 }

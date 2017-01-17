@@ -95,7 +95,7 @@ public class DefendPositionState : IUnitState {
             float distance = (state._NPCUnit._currentPosition - state._NPCUnit._unitTarget._currentPosition).magnitude;
             if (distance < state._NPCUnit._fieldOfView)
             {
-                float healPointRemaining = enemy.getHealPoint() - state._NPCUnit._damagePoint;
+                float healPointRemaining = enemy.getHealPoint() - getDamagePoint(state._NPCUnit.getName(), enemy.getName());
                 Debug.Log("ENEMY HP : " + enemy.getHealPoint());
                 enemy.setHealPoint(healPointRemaining);
             }
@@ -106,5 +106,56 @@ public class DefendPositionState : IUnitState {
                 ToHoldPositionState();
             }
         }
+    }
+
+    private float getDamagePoint(string unitName, string enemyName)
+    {
+        if (unitName == "Fox")
+        {
+            switch (enemyName)
+            {
+                case "Fox":
+                    return 2.0f;
+                case "Chicken":
+                    return 5.0f;
+                case "Snake":
+                    return 1.0f;
+                default:
+                    Debug.Log("ERROR DAMAGE - WRONG NAME");
+                    return 0.0f;
+            }
+        }
+        else if (unitName == "Chicken")
+        {
+            switch (enemyName)
+            {
+                case "Fox":
+                    return 1.0f;
+                case "Chicken":
+                    return 2.0f;
+                case "Snake":
+                    return 5.0f;
+                default:
+                    Debug.Log("ERROR DAMAGE - WRONG NAME");
+                    return 0.0f;
+            }
+        }
+        else if (unitName == "Snake")
+        {
+            switch (enemyName)
+            {
+                case "Fox":
+                    return 5.0f;
+                case "Chicken":
+                    return 1.0f;
+                case "Snake":
+                    return 2.0f;
+                default:
+                    Debug.Log("ERROR DAMAGE - WRONG NAME");
+                    return 0.0f;
+            }
+        }
+        else
+            return 0.0f;
     }
 }

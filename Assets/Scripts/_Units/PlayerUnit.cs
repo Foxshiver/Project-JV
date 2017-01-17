@@ -72,16 +72,15 @@ public class PlayerUnit : Unit {
             {
                 NPCUnit nearestUnit = (NPCUnit)getNearestUnit(listOfNeighboor);
 
-
-                if (_money >= 1)
+                if (_money >= 1 && nearestUnit != null)
                 {
                     listOfUnits.Add(nearestUnit);
 
                     int newUnitIndex = listOfUnits.LastIndexOf(nearestUnit);
-
                     listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
                     listOfUnits[newUnitIndex]._unitTarget = this;
                     listOfUnits[newUnitIndex].general = this;
+                    listOfUnits[newUnitIndex].setFaction(this.getFaction());
                     listOfUnits[newUnitIndex].triggeringUpdate();
 
                     _money--;
@@ -212,11 +211,15 @@ public class PlayerUnit : Unit {
 
 		foreach (Unit u in listOfNeighboor)
 		{
-			float distance = (this._currentPosition - u._currentPosition).magnitude;
-			if (distance < minDistance) {
-				nearestUnit = u;
-				minDistance = distance;
-			}
+            if(u.getFaction() == 0)
+            {
+                float distance = (this._currentPosition - u._currentPosition).magnitude;
+                if (distance < minDistance)
+                {
+                    nearestUnit = u;
+                    minDistance = distance;
+                }
+            }
 		}
 
 		return nearestUnit;
@@ -236,7 +239,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfUnit[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfView && listOfUnit[i].statePattern.currentState == listOfUnit[i].statePattern.waitState)
+                if (distance < this._fieldOfView)
                 {
                     isInRadius[i] = true;
                     nbNeighboors++;

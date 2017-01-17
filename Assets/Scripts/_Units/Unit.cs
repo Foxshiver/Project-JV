@@ -28,7 +28,7 @@ public class Unit : MonoBehaviour
     //      > 0 = neutral
     //      > 1 = ally
     //      > 2 = enemy
-    protected int _faction;
+    public int _faction;
     public float _fieldOfView;
 
     public float _healPoint;

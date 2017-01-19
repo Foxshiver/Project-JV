@@ -24,7 +24,10 @@ public class Coin : MonoBehaviour {
 
         float distance = (player._currentPosition - this.position).magnitude;
         if(distance < 1.0f)
+        {
+            player._money++;
             toDestroy = true;
+        }
     }
 
     protected Vector2 Vector3TOVector2(Vector3 position)

@@ -4,7 +4,6 @@ using System.Collections;
 public class NPCUnit : Unit {
 
     public Unit general;
-    public Coin coinPrefab;
         
     private int nbHolders = 0;
 
@@ -40,13 +39,6 @@ public class NPCUnit : Unit {
     public void triggeringUpdate()
     {
         statePattern.triggeringUpdate();
-    }
-
-    public void createCoin()
-    {
-        Coin coin = Instantiate(coinPrefab) as Coin;
-        coin.start();
-        coin.position = _simpleTarget.position;
     }
 
 /*

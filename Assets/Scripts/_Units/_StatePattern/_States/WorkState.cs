@@ -5,6 +5,7 @@ public class WorkState : IUnitState {
 
     private readonly StatePatternUnit state;
     private WaitBehavior wait;
+    private Field field;
 
     public WorkState(StatePatternUnit statePatternUnit, WaitBehavior waitBehavior)
     {
@@ -58,9 +59,9 @@ public class WorkState : IUnitState {
 
     private void EarnCoin()
     {
+        field = (Field)state._NPCUnit._simpleTarget;
+
         if(Random.Range(0.0f, 1.0f) < 0.005)
-        {
-            state._NPCUnit.createCoin();
-        }
+            field.createCoin();
     }
 }

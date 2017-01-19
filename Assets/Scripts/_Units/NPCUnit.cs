@@ -4,15 +4,14 @@ using System.Collections;
 public class NPCUnit : Unit {
 
     public Unit general;
-    //private State previousState;
-
-    //private bool isAttacking = false;
+    public Coin coinPrefab;
+        
     private int nbHolders = 0;
 
     public StatePatternUnit statePattern;
     public string currentState;
 
-    public void init(Spawner spawner, Vector2 pos)
+    public void init(Buildings spawner, Vector2 pos)
     {
         this._simpleTarget = spawner;
 
@@ -29,13 +28,25 @@ public class NPCUnit : Unit {
 
     public void update()
     {
-        statePattern.updateState();
-        currentState = statePattern.currentState.ToString();
+        if (this._healPoint <= 0.0f)
+            Destroy(this.gameObject);
+        else
+        {
+            statePattern.updateState();
+            currentState = statePattern.currentState.ToString();
+        }
     }
 
     public void triggeringUpdate()
     {
         statePattern.triggeringUpdate();
+    }
+
+    public void createCoin()
+    {
+        Coin coin = Instantiate(coinPrefab) as Coin;
+        coin.start();
+        coin.position = _simpleTarget.position;
     }
 
 /*

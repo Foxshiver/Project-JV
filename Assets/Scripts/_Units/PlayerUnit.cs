@@ -10,16 +10,19 @@ public class PlayerUnit : Unit {
     private List< List<NPCUnit> > listOfHoldPositionUnits;
     private List<Buildings> listOfPositions;
 
+    public int _nbWorkingUnit = 0;
+    public int _nbHoldingUnit = 0;
+
     private LeaderBehavior leader;
 
     // Constructor
     public PlayerUnit()
 	{
-		_money = 100;
+		_money = 2;  
 
         _name = "Player";
         _faction = 1;
-        _fieldOfVision = 8.0f;
+        _fieldOfView = 8.0f;
         _healPoint = 50.0f;
 
         listOfUnits = new List<NPCUnit> { };
@@ -69,15 +72,19 @@ public class PlayerUnit : Unit {
             {
                 NPCUnit nearestUnit = (NPCUnit)getNearestUnit(listOfNeighboor);
 
-                listOfUnits.Add(nearestUnit);
+                if (_money >= 1 && nearestUnit != null)
+                {
+                    listOfUnits.Add(nearestUnit);
 
-                int newUnitIndex = listOfUnits.LastIndexOf(nearestUnit);
+                    int newUnitIndex = listOfUnits.LastIndexOf(nearestUnit);
+                    listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
+                    listOfUnits[newUnitIndex]._unitTarget = this;
+                    listOfUnits[newUnitIndex].general = this;
+                    listOfUnits[newUnitIndex].setFaction(this.getFaction());
+                    listOfUnits[newUnitIndex].triggeringUpdate();
 
-                listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
-                listOfUnits[newUnitIndex]._unitTarget = this;
-                listOfUnits[newUnitIndex].triggeringUpdate();
-
-                _money--;
+                    _money--;
+                }
             }
         }
 
@@ -86,7 +93,8 @@ public class PlayerUnit : Unit {
         {
             int indiceHoldPositionUnitsList = listOfHoldPositionUnits.Count;
 
-            Buildings positionToHold = new Buildings();
+            PositionToHold positionToHold = new PositionToHold();
+            positionToHold.init(this.getFaction());
             positionToHold.name = "Position to hold n°" + indiceHoldPositionUnitsList;
             positionToHold.position = new Vector2(this._currentPosition[0], this._currentPosition[1]);
 
@@ -105,6 +113,8 @@ public class PlayerUnit : Unit {
             }
 
             listOfHoldPositionUnits.Add(listTampon);
+
+            _nbHoldingUnit += listOfUnits.Count;
 
             listOfUnits.Clear();
         }
@@ -132,6 +142,7 @@ public class PlayerUnit : Unit {
             }
 
             listOfHoldPositionUnits.Clear();
+            _nbHoldingUnit = 0;
             listOfWorkerUnits.Clear();
         }
 
@@ -164,25 +175,31 @@ public class PlayerUnit : Unit {
             int newUnitIndex = listOfWorkerUnits.LastIndexOf(weakestUnit);
 
             listOfField[0]._nbCurrentUnit++;
+
+            _nbWorkingUnit++;
+
             listOfWorkerUnits[newUnitIndex].setSimpleTarget(listOfField[0]);
             listOfWorkerUnits[newUnitIndex].triggeringUpdate();
         }
 
-        //        // Engage units in combat
-        //        if(listOfNeighboor.Length != 0)
-        //        {
-        //            for(int i=0; i<listOfNeighboor.Length; i++)
-        //            {
-        //                if(listOfNeighboor[i].getFaction() == 2)
-        //                {
-        //                    for(int j=0; j<listOfUnits.Count; j++)
-        //                    {
-        //                        listOfUnits[j]._targetUnit  = listOfNeighboor[i];
-        //                        listOfUnits[j]._stateUnit   = Unit.State.Fight;
-        //                    }
-        //                }
-        //            }
-        //        }
+        // Engage units in combat
+        if (listOfNeighboor.Length != 0)
+        {
+            for (int i = 0; i < listOfNeighboor.Length; i++)
+            {
+                if (listOfNeighboor[i].getFaction() == 2)
+                {
+                    for (int j = 0; j < listOfUnits.Count; j++)
+                    {
+                        listOfUnits[j]._unitTarget = listOfNeighboor[i];
+                        listOfUnits[j].triggeringUpdate();
+                    }
+                }
+            }
+        }
+
+        foreach(PositionToHold p in listOfPositions)
+            p.update();
 
     }
 
@@ -194,11 +211,15 @@ public class PlayerUnit : Unit {
 
 		foreach (Unit u in listOfNeighboor)
 		{
-			float distance = (this._currentPosition - u._currentPosition).magnitude;
-			if (distance < minDistance) {
-				nearestUnit = u;
-				minDistance = distance;
-			}
+            if(u.getFaction() == 0)
+            {
+                float distance = (this._currentPosition - u._currentPosition).magnitude;
+                if (distance < minDistance)
+                {
+                    nearestUnit = u;
+                    minDistance = distance;
+                }
+            }
 		}
 
 		return nearestUnit;
@@ -218,7 +239,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfUnit[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfVision && listOfUnit[i].statePattern.currentState == listOfUnit[i].statePattern.waitState)
+                if (distance < this._fieldOfView)
                 {
                     isInRadius[i] = true;
                     nbNeighboors++;
@@ -258,7 +279,7 @@ public class PlayerUnit : Unit {
             {
                 float distance = (listOfField[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfVision)
+                if (distance < this._fieldOfView)
                 {
                     isInRadius[i] = true;
                     nbFields++;

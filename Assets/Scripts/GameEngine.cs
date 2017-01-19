@@ -18,6 +18,16 @@ public class GameEngine : MonoBehaviour {
     public PlayerUnit playerPrefab;
     PlayerUnit playerClone;
 
+    // UNITS
+    public FoxUnit foxPrefab;
+    FoxUnit foxClone;
+
+    public ChickenUnit chickenPrefab;
+    ChickenUnit chickenClone;
+
+    public SnakeUnit snakePrefab;
+    SnakeUnit snakeClone;
+
     // SPAWNERS
     public Spawner foxSpawner;
     public Spawner chickenSpawner;
@@ -25,6 +35,7 @@ public class GameEngine : MonoBehaviour {
 
     // ENEMY FARM --- DEBUG
     public Farm enemyQG;
+    private PositionToHold positionEnemy;
 
     // OBJECTS LISTS
     private Object[] _famrsList;
@@ -61,6 +72,12 @@ public class GameEngine : MonoBehaviour {
 
         foreach(Field field in _fieldsList)
             field.start();
+
+        enemyQG.start();
+        positionEnemy = this.gameObject.AddComponent<PositionToHold>();
+        positionEnemy.start();
+        positionEnemy.init(2);
+        positionEnemy.position = enemyQG.position;
     }
 
     void initUnits()
@@ -69,25 +86,34 @@ public class GameEngine : MonoBehaviour {
         playerClone = Instantiate(playerPrefab) as PlayerUnit;
         //playerClone.updatePosition(new Vector2(22.0f, -16.0f));
 
-        // Instanciate 2 neutral fox
+        // Instanciate 3 neutral fox
         foxSpawner.createUnit();
         foxSpawner.createUnit();
         foxSpawner.createUnit();
-        //foxClone.updatePosition(new Vector2(7.0f, -2.0f));
 
-        // Instanciate 2 neutral chicken
+        // Instanciate 3 neutral chicken
         chickenSpawner.createUnit();
         chickenSpawner.createUnit();
         chickenSpawner.createUnit();
-        //chickenClone.updatePosition(new Vector2(3.5f, 14.0f));
 
-        // Instanciate 2 neutral snake
+        // Instanciate 3 neutral snake
         snakeSpawner.createUnit();
         snakeSpawner.createUnit();
         snakeSpawner.createUnit();
-        //snakeClone.updatePosition(new Vector2(15.0f, -8.0f));
 
         _neutralsUnitsList = FindObjectsOfType(typeof(NPCUnit)) as NPCUnit[];
+    }
+
+    void addEnnemy()
+    {
+        if (Input.GetKeyDown("f"))
+            positionEnemy.createUnit(foxPrefab, foxClone);
+
+        if (Input.GetKeyDown("h"))
+            positionEnemy.createUnit(chickenPrefab, chickenClone);
+
+        if (Input.GetKeyDown("g"))
+            positionEnemy.createUnit(snakePrefab, snakeClone);
     }
 
     void endGame()
@@ -148,12 +174,15 @@ public class GameEngine : MonoBehaviour {
                     //    spawner._isCreatingUnit = false;
                     //}
                 }
-                
-                foreach(NPCUnit unit in _neutralsUnitsList)
-                    unit.update();
+
+                positionEnemy.update();
 
                 _neutralsUnitsList = FindObjectsOfType(typeof(NPCUnit)) as NPCUnit[];
+                foreach(NPCUnit unit in _neutralsUnitsList)
+                    unit.update();
                 playerClone.update();
+
+                addEnnemy();
 
                 break;
 

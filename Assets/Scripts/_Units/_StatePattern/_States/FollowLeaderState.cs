@@ -23,12 +23,23 @@ public class FollowLeaderState : IUnitState {
         // 3 scénarios possibles
         // - Si le joueur appuie sur 'B' Alors l'unité qui le suit garde la position
         if(Input.GetButtonDown("HoldPosition"))
+        {
             ToHoldPositionState();
+            return;
+        }
+
         // - Si le joueur appuie sur 'Y' ET qu'il est à proximité d'un champ Alors l'unité va travailler au champ
-        if(Input.GetButtonDown("Work"))
+        if (Input.GetButtonDown("Work"))
+        {
             ToWorkState();
+            return;
+        }
+
         // - Si le joueur est à proximité d'un ennemie Alors l'unité va attaquer
-        //ToAttackEnemyState();
+        float distance = (state._NPCUnit._unitTarget._currentPosition - state._NPCUnit.general._currentPosition).magnitude;
+
+        if (distance <= state._NPCUnit.general._fieldOfView)
+            ToAttackEnemyState();
     }
 
     public void ToWaitState()

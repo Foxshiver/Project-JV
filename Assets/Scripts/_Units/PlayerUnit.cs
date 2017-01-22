@@ -6,20 +6,15 @@ using System.Collections.Generic;
 public class PlayerUnit : Unit {
     
     public List<NPCUnit> listOfUnits;
-    private List<NPCUnit> listOfWorkerUnits;
-    private List< List<NPCUnit> > listOfHoldPositionUnits;
+    public List<NPCUnit> listOfWorkerUnits;
+    public List< List<NPCUnit> > listOfHoldPositionUnits;
     private List<Buildings> listOfPositions;
-
-    public int _nbWorkingUnit = 0;
-    public int _nbHoldingUnit = 0;
 
     private LeaderBehavior leader;
 
     // Constructor
     public PlayerUnit()
 	{
-		_money = 2;  
-
         _name = "Player";
         _faction = 1;
         _fieldOfView = 8.0f;
@@ -91,6 +86,9 @@ public class PlayerUnit : Unit {
         // Unit hold position if player push 'c' button (Or 'B' button on 360 controler)
         if(Input.GetButtonDown("HoldPosition"))
         {
+            if(listOfUnits.Count == 0)
+                return;
+
             int indiceHoldPositionUnitsList = listOfHoldPositionUnits.Count;
 
             PositionToHold positionToHold = new PositionToHold();
@@ -113,8 +111,6 @@ public class PlayerUnit : Unit {
             }
 
             listOfHoldPositionUnits.Add(listTampon);
-
-            _nbHoldingUnit += listOfUnits.Count;
 
             listOfUnits.Clear();
         }
@@ -142,7 +138,6 @@ public class PlayerUnit : Unit {
             }
 
             listOfHoldPositionUnits.Clear();
-            _nbHoldingUnit = 0;
             listOfWorkerUnits.Clear();
         }
 
@@ -175,8 +170,6 @@ public class PlayerUnit : Unit {
             int newUnitIndex = listOfWorkerUnits.LastIndexOf(weakestUnit);
 
             listOfField[0]._nbCurrentUnit++;
-
-            _nbWorkingUnit++;
 
             listOfWorkerUnits[newUnitIndex].setSimpleTarget(listOfField[0]);
             listOfWorkerUnits[newUnitIndex].triggeringUpdate();

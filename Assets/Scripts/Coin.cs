@@ -4,24 +4,34 @@ using System.Collections;
 public class Coin : MonoBehaviour {
 
     public Vector2 position;
-    public Rigidbody rgc;
+    private Field field;
+    private PlayerUnit player;
 
-    public void start()
+    public bool toDestroy = false;
+
+    public void start(Vector2 position, Field field)
     {
-        position = Vector3TOVector2(this.transform.position);
+        this.field = field;
+        this.position = position;
+        this.transform.position = new Vector3(this.position.x, this.transform.position.y, this.position.y);
+
+        player = FindObjectOfType(typeof(PlayerUnit)) as PlayerUnit;
+    }
+
+    public void update()
+    {
+        this.position = Vector3TOVector2(this.transform.position);
+
+        float distance = (player._currentPosition - this.position).magnitude;
+        if(distance < 1.0f)
+        {
+            player._money++;
+            toDestroy = true;
+        }
     }
 
     protected Vector2 Vector3TOVector2(Vector3 position)
     {
         return new Vector2(position.x, position.z);
     }
-
-    void OnColliderEnter(Collider col)
-    {
-        if(col.gameObject.tag == "Player")
-        {
-            Destroy(this.gameObject);  
-        }
-    }
-
 }

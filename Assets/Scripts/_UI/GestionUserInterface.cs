@@ -27,8 +27,8 @@ public class GestionUserInterface : MonoBehaviour {
 
 		_moneyText.text = "MONEY : " + _player._money;
         _nbUnitFollowingText.text = _player.listOfUnits.Count + " Following Units";
-        _nbHoldingText.text = _player._nbHoldingUnit + " Holding Units";
-        _nbWorkingText.text = _player._nbWorkingUnit + " Working Units";
+        _nbHoldingText.text = _player.listOfHoldPositionUnits.Count + " Holding Units";
+        _nbWorkingText.text = _player.listOfWorkerUnits.Count + " Working Units";
 
     }
 }

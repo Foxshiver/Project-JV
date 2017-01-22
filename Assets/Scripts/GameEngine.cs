@@ -175,6 +175,11 @@ public class GameEngine : MonoBehaviour {
                     //}
                 }
 
+                foreach(Field field in _fieldsList)
+                {
+                    field.update();
+                }
+
                 positionEnemy.update();
 
                 _neutralsUnitsList = FindObjectsOfType(typeof(NPCUnit)) as NPCUnit[];

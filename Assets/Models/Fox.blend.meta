@@ -33,6 +33,22 @@ ModelImporter:
     100050: Chest_002
     100052: Head_001
     100054: Head_002
+    100056: Arm_IK
+    100058: Arm_IK_002
+    100060: Bone
+    100062: Bone_002
+    100064: Chest_003
+    100066: Foot_L_001
+    100068: Leg_IK
+    100070: Leg_IK_002
+    100072: Neck
+    100074: Tail
+    100076: Tail1
+    100078: Tail2
+    100080: Upper_Arm1_L
+    100082: Upper_Arm1_R
+    100084: Upper_Leg1_L
+    100086: Upper_Leg1_R
     400000: //RootNode
     400002: Arm_IK_L
     400004: Arm_IK_R
@@ -61,6 +77,22 @@ ModelImporter:
     400050: Chest_002
     400052: Head_001
     400054: Head_002
+    400056: Arm_IK
+    400058: Arm_IK_002
+    400060: Bone
+    400062: Bone_002
+    400064: Chest_003
+    400066: Foot_L_001
+    400068: Leg_IK
+    400070: Leg_IK_002
+    400072: Neck
+    400074: Tail
+    400076: Tail1
+    400078: Tail2
+    400080: Upper_Arm1_L
+    400082: Upper_Arm1_R
+    400084: Upper_Leg1_L
+    400086: Upper_Leg1_R
     2300000: //RootNode
     3300000: //RootNode
     4300000: Cylinder

@@ -33,6 +33,15 @@ ModelImporter:
     100050: Chest_002
     100052: Head_001
     100054: Head_002
+    100056: Neck
+    100058: Tail
+    100060: Tail1
+    100062: Tail2
+    100064: Tail_IK
+    100066: Upper_Arm1_L
+    100068: Upper_Arm1_R
+    100070: Upper_Leg1_L
+    100072: Upper_Leg1_R
     400000: //RootNode
     400002: Arm_IK_L
     400004: Arm_IK_R
@@ -61,10 +70,20 @@ ModelImporter:
     400050: Chest_002
     400052: Head_001
     400054: Head_002
+    400056: Neck
+    400058: Tail
+    400060: Tail1
+    400062: Tail2
+    400064: Tail_IK
+    400066: Upper_Arm1_L
+    400068: Upper_Arm1_R
+    400070: Upper_Leg1_L
+    400072: Upper_Leg1_R
     2300000: //RootNode
     3300000: //RootNode
     4300000: Cylinder
     7400000: Default Take
+    7400002: Fox_Walk
     9500000: //RootNode
     13700000: Cylinder
   materials:
@@ -113,6 +132,7 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -123,7 +143,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1

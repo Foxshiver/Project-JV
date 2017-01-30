@@ -33,22 +33,15 @@ ModelImporter:
     100050: Chest_002
     100052: Head_001
     100054: Head_002
-    100056: Arm_IK
-    100058: Arm_IK_002
-    100060: Bone
-    100062: Bone_002
-    100064: Chest_003
-    100066: Foot_L_001
-    100068: Leg_IK
-    100070: Leg_IK_002
-    100072: Neck
-    100074: Tail
-    100076: Tail1
-    100078: Tail2
-    100080: Upper_Arm1_L
-    100082: Upper_Arm1_R
-    100084: Upper_Leg1_L
-    100086: Upper_Leg1_R
+    100056: Neck
+    100058: Tail
+    100060: Tail1
+    100062: Tail2
+    100064: Tail_IK
+    100066: Upper_Arm1_L
+    100068: Upper_Arm1_R
+    100070: Upper_Leg1_L
+    100072: Upper_Leg1_R
     400000: //RootNode
     400002: Arm_IK_L
     400004: Arm_IK_R
@@ -77,26 +70,24 @@ ModelImporter:
     400050: Chest_002
     400052: Head_001
     400054: Head_002
-    400056: Arm_IK
-    400058: Arm_IK_002
-    400060: Bone
-    400062: Bone_002
-    400064: Chest_003
-    400066: Foot_L_001
-    400068: Leg_IK
-    400070: Leg_IK_002
-    400072: Neck
-    400074: Tail
-    400076: Tail1
-    400078: Tail2
-    400080: Upper_Arm1_L
-    400082: Upper_Arm1_R
-    400084: Upper_Leg1_L
-    400086: Upper_Leg1_R
+    400056: Neck
+    400058: Tail
+    400060: Tail1
+    400062: Tail2
+    400064: Tail_IK
+    400066: Upper_Arm1_L
+    400068: Upper_Arm1_R
+    400070: Upper_Leg1_L
+    400072: Upper_Leg1_R
     2300000: //RootNode
     3300000: //RootNode
     4300000: Cylinder
     7400000: Default Take
+    7400002: Fox_Walk
+    7400004: Fox_Attack
+    7400006: Fox_Death
+    7400008: Fox_Work
+    7400010: Fox_Work2
     9500000: //RootNode
     13700000: Cylinder
   materials:

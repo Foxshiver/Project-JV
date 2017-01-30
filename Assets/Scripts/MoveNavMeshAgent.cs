@@ -3,12 +3,12 @@ using System.Collections;
 
 public class MoveNavMeshAgent : MonoBehaviour {
 
-    NavMeshAgent agent;
-    public NavMeshAgent target;
+    UnityEngine.AI.NavMeshAgent agent;
+    public UnityEngine.AI.NavMeshAgent target;
 	// Use this for initialization
 	void Start ()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 	}
 	
 	// Update is called once per frame

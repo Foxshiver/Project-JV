@@ -28,9 +28,18 @@ public class UnitPrefab : MonoBehaviour
     // 
     public GameObject World;
 
+    private float timeAttack;
+    private int nbFoxAttack;
+    private int nbSnakeAttack;
+    private int nbChickenAttack;
+    private float timeBeforeNextAttack;
+
     // Use this for initialization
     void Start()
     {
+        timeAttack = Time.time;
+        timeBeforeNextAttack = 30.0f;
+
         // Instanciate 1 player
         playerClone = Instantiate(playerPrefab) as PlayerUnit;
         playerClone.updatePosition(new Vector2(17.0f, -33.0f));
@@ -72,28 +81,67 @@ public class UnitPrefab : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("f"))
+        Debug.Log("time : " + (Time.time - timeAttack) + " -- > -- " + timeBeforeNextAttack);
+        if ((Time.time - timeAttack) > timeBeforeNextAttack)
         {
-            foxClone = Instantiate(foxPrefab) as FoxUnit;
-            foxClone.setSimpleTarget(enemyFarm);
+            nbFoxAttack = (int)Random.Range(1.0f, 4.0f);
+            nbSnakeAttack = (int)Random.Range(1.0f, 4.0f);
+            nbChickenAttack = (int)Random.Range(1.0f, 4.0f);
 
-            foxClone.setFaction(2);
+            timeBeforeNextAttack = Random.Range(25.0f, 50.0f);
+
+            timeAttack = Time.time;
+
+            Debug.Log("ATTACK !!");
+
+            for(int f=0; f < nbFoxAttack;f++)
+            {
+                foxClone = Instantiate(foxPrefab) as FoxUnit;
+                foxClone.setSimpleTarget(enemyFarm);
+
+                foxClone.setFaction(2);
+            }
+
+            for (int c = 0; c < nbChickenAttack; c++)
+            {
+                chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
+                chickenClone.setSimpleTarget(enemyFarm);
+
+                chickenClone.setFaction(2);
+            }
+
+            for (int s = 0; s < nbSnakeAttack; s++)
+            {
+                snakeClone = Instantiate(snakePrefab) as SnakeUnit;
+                snakeClone.setSimpleTarget(enemyFarm);
+
+                snakeClone.setFaction(2);
+            }
+
         }
 
-        if (Input.GetKeyDown("h"))
-        {
-            chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
-            chickenClone.setSimpleTarget(enemyFarm);
+        //if (Input.GetKeyDown("f"))
+        //{
+        //    foxClone = Instantiate(foxPrefab) as FoxUnit;
+        //    foxClone.setSimpleTarget(enemyFarm);
 
-            chickenClone.setFaction(2);
-        }
+        //    foxClone.setFaction(2);
+        //}
 
-        if (Input.GetKeyDown("g"))
-        {
-            snakeClone = Instantiate(snakePrefab) as SnakeUnit;
-            snakeClone.setSimpleTarget(enemyFarm);
+        //if (Input.GetKeyDown("h"))
+        //{
+        //    chickenClone = Instantiate(chickenPrefab) as ChickenUnit;
+        //    chickenClone.setSimpleTarget(enemyFarm);
 
-            snakeClone.setFaction(2);
-        }
+        //    chickenClone.setFaction(2);
+        //}
+
+        //if (Input.GetKeyDown("g"))
+        //{
+        //    snakeClone = Instantiate(snakePrefab) as SnakeUnit;
+        //    snakeClone.setSimpleTarget(enemyFarm);
+
+        //    snakeClone.setFaction(2);
+        //}
     }
 }

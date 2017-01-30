@@ -42,6 +42,8 @@ public class PositionToHold : Buildings {
         unitClone.setFaction(2);
 
         // DEBUG
+        //unitClone._unitTarget = nearestEnemy;
+        //unitClone.statePattern.currentState = unitClone.statePattern.attackEnemyState;//   unitClone.statePattern.holdPositionState;
         unitClone.statePattern.currentState = unitClone.statePattern.holdPositionState;
     }
 

@@ -46,12 +46,22 @@ public class GameEngine : MonoBehaviour {
     private Object[] _enemyUnitsList;
     private Object[] _allyUnitsList;
 
+    // ATTACK GESTION
+    private float timeAttack;
+    private int nbFoxAttack;
+    private int nbSnakeAttack;
+    private int nbChickenAttack;
+    private float timeBeforeNextAttack;
+
     void Start()
     {
         loadScene();
         initUnits();
 
         _substate = Substate.WaitForStart;
+
+        timeAttack = Time.time;
+        timeBeforeNextAttack = 30.0f;
     }
 
     // Update is called once per frame
@@ -106,14 +116,43 @@ public class GameEngine : MonoBehaviour {
 
     void addEnnemy()
     {
-        if (Input.GetKeyDown("f"))
-            positionEnemy.createUnit(foxPrefab, foxClone);
+        if ((Time.time - timeAttack) > timeBeforeNextAttack)
+        {
+            nbFoxAttack = (int)Random.Range(1.0f, 4.0f);
+            nbSnakeAttack = (int)Random.Range(1.0f, 4.0f);
+            nbChickenAttack = (int)Random.Range(1.0f, 4.0f);
 
-        if (Input.GetKeyDown("h"))
-            positionEnemy.createUnit(chickenPrefab, chickenClone);
+            timeBeforeNextAttack = Random.Range(25.0f, 50.0f);
 
-        if (Input.GetKeyDown("g"))
-            positionEnemy.createUnit(snakePrefab, snakeClone);
+            timeAttack = Time.time;
+
+            Debug.Log("ATTACK !!   nbFox : " + nbFoxAttack + " - nbchick : " + nbChickenAttack + "  - nbSnak : " + nbSnakeAttack);
+
+            for (int f = 0; f < nbFoxAttack; f++)
+            {
+                positionEnemy.createUnit(foxPrefab, foxClone);
+            }
+
+            for (int c = 0; c < nbChickenAttack; c++)
+            {
+                positionEnemy.createUnit(chickenPrefab, chickenClone);
+            }
+
+            for (int s = 0; s < nbSnakeAttack; s++)
+            {
+                positionEnemy.createUnit(snakePrefab, snakeClone);
+            }
+
+        }
+
+        //if (Input.GetKeyDown("f"))
+        //    positionEnemy.createUnit(foxPrefab, foxClone);
+
+        //if (Input.GetKeyDown("h"))
+        //    positionEnemy.createUnit(chickenPrefab, chickenClone);
+
+        //if (Input.GetKeyDown("g"))
+        //    positionEnemy.createUnit(snakePrefab, snakeClone);
     }
 
     void endGame()

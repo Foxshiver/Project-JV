@@ -57,6 +57,9 @@ public class GameEngine : MonoBehaviour {
     private bool pause = false;
     public Canvas CanvPause;
 
+    // MUSIC GESTION
+    public AudioSource SourceMusic;
+
     void Start()
     {
         loadScene();
@@ -75,11 +78,17 @@ public class GameEngine : MonoBehaviour {
     {
         if(Input.GetButtonDown("JoystickStart"))
         {
-            Debug.Log("PAUSE");
             if (!pause)
+            {
                 CanvPause.enabled = true;
+                SourceMusic.Pause();
+            }
             else
+            {
                 CanvPause.enabled = false;
+                SourceMusic.Play();
+            }
+
 
             pause = !pause;
         }

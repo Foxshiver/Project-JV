@@ -53,6 +53,10 @@ public class GameEngine : MonoBehaviour {
     private int nbChickenAttack;
     private float timeBeforeNextAttack;
 
+    // PAUSE GESTION
+    private bool pause = false;
+    public Canvas CanvPause;
+
     void Start()
     {
         loadScene();
@@ -62,13 +66,29 @@ public class GameEngine : MonoBehaviour {
 
         timeAttack = Time.time;
         timeBeforeNextAttack = 30.0f;
+
+        CanvPause.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _substate = checkChangeSubstate();
-        executeSubstate();        
+        if(Input.GetButtonDown("JoystickStart"))
+        {
+            Debug.Log("PAUSE");
+            if (!pause)
+                CanvPause.enabled = true;
+            else
+                CanvPause.enabled = false;
+
+            pause = !pause;
+        }
+
+        if(!pause)
+        {
+            _substate = checkChangeSubstate();
+            executeSubstate();
+        }
     }
 
     void loadScene()

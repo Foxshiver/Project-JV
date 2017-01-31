@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class NPCUnit : Unit {
 
@@ -9,6 +10,8 @@ public class NPCUnit : Unit {
 
     public StatePatternUnit statePattern;
     public string currentState;
+
+    public Scrollbar healthBar;
 
     public void init(Buildings spawner, Vector2 pos)
     {
@@ -35,8 +38,18 @@ public class NPCUnit : Unit {
         {
             statePattern.updateState();
             currentState = statePattern.currentState.ToString();
+
+            ChangeSizeOfHealthBar(this._healPoint);
         }
     }
+
+    public void ChangeSizeOfHealthBar(float healthPoint)
+    {
+        healthBar.size = healthPoint / 10.0f;
+        if (healthPoint != 10.0f)
+            healthBar.size -= 0.1f;
+    }
+
 
     public void triggeringUpdate()
     {

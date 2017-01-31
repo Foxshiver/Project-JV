@@ -7,6 +7,8 @@ public class Coin : MonoBehaviour {
     private Field field;
     private PlayerUnit player;
 
+    public AudioClip CoinSound;
+
     public bool toDestroy = false;
 
     public void start(Vector2 position, Field field)
@@ -26,6 +28,7 @@ public class Coin : MonoBehaviour {
         if(distance < 1.0f)
         {
             player._money++;
+            AudioSource.PlayClipAtPoint(CoinSound, this.transform.position,0.01f);
             toDestroy = true;
         }
     }

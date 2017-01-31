@@ -61,7 +61,7 @@ public class WorkState : IUnitState {
     {
         field = (Field)state._NPCUnit._simpleTarget;
 
-        if(Random.Range(0.0f, 1.0f) < 0.005)
+        if(Random.Range(0.0f, 1.0f) < 0.001f)
             field.createCoin();
     }
 }

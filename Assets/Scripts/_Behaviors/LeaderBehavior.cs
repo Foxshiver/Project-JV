@@ -8,7 +8,6 @@ public class LeaderBehavior : GeneralBehavior
 
     public LeaderBehavior(Unit unit) : base(unit)
     {
-        Debug.Log("LeaderBehavior constructor called");
     }
 
 	public Vector2 controllerMovement()

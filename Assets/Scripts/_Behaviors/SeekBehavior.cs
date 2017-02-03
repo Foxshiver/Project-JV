@@ -9,7 +9,7 @@ public class SeekBehavior : GeneralBehavior
     // Constructor
     public SeekBehavior(Unit unit) : base(unit)
     {
-        Debug.Log("SeekBehavior constructor called");
+
     }
 
     // Functions

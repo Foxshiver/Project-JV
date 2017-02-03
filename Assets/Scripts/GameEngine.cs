@@ -76,28 +76,8 @@ public class GameEngine : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("JoystickStart"))
-        {
-            if (!pause)
-            {
-                CanvPause.enabled = true;
-                SourceMusic.Pause();
-            }
-            else
-            {
-                CanvPause.enabled = false;
-                SourceMusic.Play();
-            }
-
-
-            pause = !pause;
-        }
-
-        if(!pause)
-        {
-            _substate = checkChangeSubstate();
-            executeSubstate();
-        }
+        _substate = checkChangeSubstate();
+        executeSubstate();
     }
 
     void loadScene()
@@ -155,8 +135,6 @@ public class GameEngine : MonoBehaviour {
 
             timeAttack = Time.time;
 
-            Debug.Log("ATTACK !!   nbFox : " + nbFoxAttack + " - nbchick : " + nbChickenAttack + "  - nbSnak : " + nbSnakeAttack);
-
             for (int f = 0; f < nbFoxAttack; f++)
             {
                 positionEnemy.createUnit(foxPrefab, foxClone);
@@ -171,17 +149,7 @@ public class GameEngine : MonoBehaviour {
             {
                 positionEnemy.createUnit(snakePrefab, snakeClone);
             }
-
         }
-
-        //if (Input.GetKeyDown("f"))
-        //    positionEnemy.createUnit(foxPrefab, foxClone);
-
-        //if (Input.GetKeyDown("h"))
-        //    positionEnemy.createUnit(chickenPrefab, chickenClone);
-
-        //if (Input.GetKeyDown("g"))
-        //    positionEnemy.createUnit(snakePrefab, snakeClone);
     }
 
     void endGame()
@@ -195,16 +163,24 @@ public class GameEngine : MonoBehaviour {
         {
             case Substate.WaitForStart:
                 //return Substate.Game;
+
+                if (Input.GetButtonDown("JoystickStart"))
+                {
+                    CanvPause.enabled = true;
+                    SourceMusic.Pause();
+                    return Substate.Pause;
+                }
+
                 break;
 
             case Substate.Game:
                //return Substate.WaitForEnd;
 
-                if(Input.GetButtonDown("Start"))
-                {
-                    //PauseCanvas.enabled = true;
-                    return Substate.Pause;
-                }
+                //if(Input.GetButtonDown("Start"))
+                //{
+                //    //PauseCanvas.enabled = true;
+                //    return Substate.Pause;
+                //}
                 break;
 
             case Substate.WaitForEnd:
@@ -212,13 +188,19 @@ public class GameEngine : MonoBehaviour {
                 break;
 
             case Substate.Pause:
-                if(Input.GetButtonDown("Start"))
+                //if(Input.GetButtonDown("Start"))
+                //{
+                //    //PauseCanvas.enabled = false;
+                //    return Substate.Game;
+                //}
+                if (Input.GetButtonDown("JoystickStart"))
                 {
-                    //PauseCanvas.enabled = false;
-                    return Substate.Game;
+                    CanvPause.enabled = false;
+                    SourceMusic.Play();
+                    return Substate.WaitForStart;
                 }
 
-                if(Input.GetButtonDown("Exit"))
+                if (Input.GetButtonDown("CallBack")) // Exit with button 'X'
                     Application.Quit();
                 break;
         }

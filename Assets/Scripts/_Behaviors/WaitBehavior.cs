@@ -12,7 +12,7 @@ public class WaitBehavior : SeekBehavior
 	// Constructor
 	public WaitBehavior(Unit unit) : base(unit)
 	{
-		Debug.Log("WaitBehavior constructor called");
+
 	}
 
 	public Vector2 computeWaitSteering(Vector2 centerTargetPosition, float distance, float timeBeforeChangePos)

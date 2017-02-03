@@ -26,8 +26,6 @@ public class PlayerUnit : Unit {
         listOfPositions = new List<Buildings> { };
 
         leader = new LeaderBehavior(this);
-
-        Debug.Log("PlayerUnit constructor called");
 	}
 		
 
@@ -141,7 +139,7 @@ public class PlayerUnit : Unit {
             listOfWorkerUnits.Clear();
         }
 
-        // Unit works if player push 'n' button (Or '?' button on 360 controler)
+        // Unit works if player push 'n' button (Or 'Y' button on 360 controler)
         if(Input.GetButtonDown("Work"))
         {
             if(listOfUnits.Count == 0 || listOfField.Length == 0)

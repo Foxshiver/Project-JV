@@ -1,51 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DefendPositionState : IUnitState {
-
-    private readonly StatePatternUnit state;
+public class AttackUnitState : IEnemyState
+{
+    private readonly StatePatternEnemy state;
     private PursuitBehavior pursuit;
 
     private double timeFirstCall = Time.time;
 
-    public DefendPositionState(StatePatternUnit statePatternUnit, PursuitBehavior pursuitBehavior)
+    public AttackUnitState(StatePatternEnemy statePatternEnemy, PursuitBehavior pursuitBehavior)
     {
-        state = statePatternUnit;
+        state = statePatternEnemy;
         pursuit = pursuitBehavior;
     }
 
     public void UpdateState()
     {
-        Pursuit();
-        checkDistanceBase();
+        checkAround();
         actionFight();
+        Pursuit();
     }
 
-    public void TriggeringUpdate()
-    {
-        // Si l'ennemie chassé est détruit ou trop éloigné du spawner Alors l'unité retourne au point à défendre
-        // - Si le joueur appuie sur 'X' Alors l'unité repasse en état de poursuite du joueur
-        if (Input.GetButtonDown("CallBack"))
-            ToFollowLeaderState();
-    }
-
-    public void ToWaitState()
-    { Debug.Log("Can't return to wait state"); }
-
-    public void ToFollowLeaderState()
-    { state.currentState = state.followLeaderState; }
-
-    public void ToHoldPositionState()
-    { state.currentState = state.holdPositionState; }
-
-    public void ToDefendPositionState()
+    public void ToAttackUnitState()
     { Debug.Log("Can't transition to same state"); }
 
-    public void ToAttackEnemyState()
-    { Debug.Log("Can't transition to atack state from defend state"); }
+    public void ToReachTargetState()
+    { state.currentState = state.reachTargetState; }
 
-    public void ToWorkState()
-    { Debug.Log("Can't transition to work state from defend state"); }
+    public void ToAttackTargetState()
+    { Debug.Log("Can't transition to Attack target state from attack state"); }
 
     /*
      * Pursuit behavior
@@ -60,14 +43,14 @@ public class DefendPositionState : IUnitState {
         state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
     }
 
-    private void checkDistanceBase()
+    private void checkAround()
     {
-        float distance = (state._NPCUnit._currentPosition - state._NPCUnit._simpleTarget.position).magnitude;
+        float distance = (state._NPCUnit._unitTarget._currentPosition - state._NPCUnit.general._currentPosition).magnitude;
 
-        if (distance > state._NPCUnit._simpleTarget.defendingArea)
+        if (distance > state._NPCUnit.general._fieldOfView)
         {
             state._NPCUnit._unitTarget = state._NPCUnit.general;
-            ToHoldPositionState();
+            ToReachTargetState();
         }
     }
 
@@ -86,7 +69,7 @@ public class DefendPositionState : IUnitState {
         if (state._NPCUnit._unitTarget == null) // If enemy is already dead
         {
             state._NPCUnit._unitTarget = state._NPCUnit.general;
-            ToHoldPositionState();
+            ToReachTargetState();
         }
         else
         {
@@ -102,7 +85,7 @@ public class DefendPositionState : IUnitState {
             if (enemy.getHealPoint() <= 0.0f)
             {
                 state._NPCUnit._unitTarget = state._NPCUnit.general;
-                ToHoldPositionState();
+                ToReachTargetState();
             }
         }
     }

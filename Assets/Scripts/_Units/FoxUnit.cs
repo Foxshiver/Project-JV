@@ -10,8 +10,6 @@ public class FoxUnit : NPCUnit
         _faction = 0;
         _fieldOfView = 3.0f;
         _healPoint = 10.0f;
-
-        Debug.Log("FoxUnit constructor called");
     }
 
     public float getDamage(string name)

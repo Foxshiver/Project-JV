@@ -11,7 +11,6 @@ public class ChickenUnit : NPCUnit
         _fieldOfView = 3.0f;
         _healPoint = 10.0f;
 
-        Debug.Log("ChickenUnit constructor called");
     }
 
     public float getDamage(string name)

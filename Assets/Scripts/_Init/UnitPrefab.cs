@@ -81,7 +81,6 @@ public class UnitPrefab : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("time : " + (Time.time - timeAttack) + " -- > -- " + timeBeforeNextAttack);
         if ((Time.time - timeAttack) > timeBeforeNextAttack)
         {
             nbFoxAttack = (int)Random.Range(1.0f, 4.0f);
@@ -91,8 +90,6 @@ public class UnitPrefab : MonoBehaviour
             timeBeforeNextAttack = Random.Range(25.0f, 50.0f);
 
             timeAttack = Time.time;
-
-            Debug.Log("ATTACK !!");
 
             for(int f=0; f < nbFoxAttack;f++)
             {

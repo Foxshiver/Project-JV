@@ -6,7 +6,6 @@ public class FleeBehavior : GeneralBehavior
     // Constructor
     public FleeBehavior(Unit unit) : base(unit)
     {
-        Debug.Log("FleeBehavior constructor called");
     }
 
     // Functions

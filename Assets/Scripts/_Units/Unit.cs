@@ -61,8 +61,6 @@ public class Unit : MonoBehaviour
         //_behaviors.Add(new EvasionBehavior(this));      // [3] >>> Evasion
         //_behaviors.Add(new WaitBehavior(this));         // [4] >>> Wait        
         //_behaviors.Add(new LeaderBehavior(this));       // [5] >>> Leader
-
-        Debug.Log("Unit constructor called");
     }
 
     void Start()

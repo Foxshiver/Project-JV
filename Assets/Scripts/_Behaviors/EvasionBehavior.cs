@@ -9,7 +9,6 @@ public class EvasionBehavior : GeneralBehavior
     // Constructor
     public EvasionBehavior(Unit unit) : base(unit)
     {
-        Debug.Log("EvasionBehavior constructor called");
     }
 
     // Functions

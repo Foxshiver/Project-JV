@@ -94,7 +94,6 @@ public class AttackEnemyState : IUnitState {
             if (distance < state._NPCUnit._fieldOfView)
             {
                 float healPointRemaining = enemy.getHealPoint() - getDamagePoint(state._NPCUnit.getName(), enemy.getName());
-                Debug.Log("ENEMY HP : " + enemy.getHealPoint());
                 enemy.setHealPoint(healPointRemaining);
             }
 

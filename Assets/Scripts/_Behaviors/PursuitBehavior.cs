@@ -10,7 +10,7 @@ public class PursuitBehavior : GeneralBehavior
     // Constructor
     public PursuitBehavior(Unit unit) : base(unit)
     {
-        Debug.Log("PursuitBehavior constructor called");
+
     }
 
     // Functions

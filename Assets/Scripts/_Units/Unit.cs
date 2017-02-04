@@ -52,6 +52,8 @@ public class Unit : MovableEntity {
 
     public void update()
     {
+        Vector2 prevPosition = this._currentPosition;
+
         if(this._healPoint <= 0.0f)
         {
             Destroy(this.gameObject);
@@ -70,6 +72,10 @@ public class Unit : MovableEntity {
             }
 
             ChangeSizeOfHealthBar(this._healPoint);
+
+            Vector2 vector = this._currentPosition - prevPosition;
+            float angle = AngleBetweenVector2(vector, new Vector2(0.0f, 0.0f));
+            transform.localEulerAngles = new Vector3(0.0f, -angle, 0.0f);
         }
     }
 

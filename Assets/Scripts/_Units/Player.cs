@@ -34,11 +34,18 @@ public class Player : MovableEntity {
 	// Update is called once per frame
 	public void update()
 	{
+        Vector2 prevPosition = this._currentPosition;
+
         // Update behind point and current player position 
         _currentPosition = Vector3TOVector2(this.transform.position);
         _behindPosition = leader.getBehindLeader();
         _currentPosition = leader.computeNewPosition(leader.controllerMovement());
         updatePosition(_currentPosition);
+
+        // Orientation du joueur
+        //Vector2 vector = this._currentPosition - prevPosition;
+        //float angle = AngleBetweenVector2(vector, new Vector2(0.0f, 0.0f));
+        //this.transform.localEulerAngles = new Vector3(0.0f, -angle, 0.0f);
 
         // Seeking all the unit around the player
         Unit[] listOfNeighboor = ListOfNeighboors();

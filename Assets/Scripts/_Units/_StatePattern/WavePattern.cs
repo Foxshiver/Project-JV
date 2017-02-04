@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StatePatternEnemy {
+public class WavePattern {
     
     [HideInInspector] public IEnemyState currentState;
 
@@ -12,15 +12,15 @@ public class StatePatternEnemy {
     [HideInInspector] public AttackTargetState attackTargetState;
     [HideInInspector] public AttackUnitState attackUnitState;
 
-    [HideInInspector] public NPCUnit _NPCUnit;
+    [HideInInspector] public Unit _unit;
 
     // Constructor
-    public StatePatternEnemy(NPCUnit NPCUnit)
+    public WavePattern(Unit unit)
     {
-        _NPCUnit = NPCUnit;
+        _unit = unit;
 
-        seekBehavior = new SeekBehavior(_NPCUnit);
-        pursuitBehavior = new PursuitBehavior(_NPCUnit);
+        seekBehavior = new SeekBehavior(_unit);
+        pursuitBehavior = new PursuitBehavior(_unit);
 
         reachTargetState = new ReachTargetState(this, seekBehavior);
         attackTargetState = new AttackTargetState(this, seekBehavior);

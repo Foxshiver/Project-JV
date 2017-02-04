@@ -3,11 +3,11 @@ using System.Collections;
 
 public class FollowLeaderState : IUnitState {
 
-    private readonly StatePatternUnit state;
+    private readonly RecruitmentPattern state;
     private SeekBehavior seek;
 
     // Constructor
-    public FollowLeaderState(StatePatternUnit statePatternUnit, SeekBehavior seekBehavior)
+    public FollowLeaderState(RecruitmentPattern statePatternUnit, SeekBehavior seekBehavior)
     {
         state = statePatternUnit;
         seek = seekBehavior;
@@ -36,9 +36,9 @@ public class FollowLeaderState : IUnitState {
         }
 
         // - Si le joueur est à proximité d'un ennemie Alors l'unité va attaquer
-        float distance = (state._NPCUnit._unitTarget._currentPosition - state._NPCUnit.general._currentPosition).magnitude;
+        float distance = (state._unit._unitTarget._currentPosition - state._unit.general._currentPosition).magnitude;
 
-        if (distance <= state._NPCUnit.general._fieldOfView)
+        if (distance <= state._unit.general._fieldOfView)
             ToAttackEnemyState();
     }
 
@@ -67,9 +67,9 @@ public class FollowLeaderState : IUnitState {
      */
     private void Seek()
     {
-        Vector2 steering = seek.computeSeekSteering(state._NPCUnit._unitTarget._currentPosition);
-        state._NPCUnit._currentPosition = seek.computeNewPosition(steering - seek.computeSteeringSeparationForce());
+        Vector2 steering = seek.computeSeekSteering(state._unit._unitTarget._currentPosition);
+        state._unit._currentPosition = seek.computeNewPosition(steering - seek.computeSteeringSeparationForce());
 
-        state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
+        state._unit.updatePosition(state._unit._currentPosition);
     }
 }

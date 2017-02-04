@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FoxUnit : NPCUnit
-{
-    // Constructor
-    public FoxUnit()
+public class Fox : Unit {
+
+    public Fox()
     {
         _name = "Fox";
         _faction = 0;

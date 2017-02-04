@@ -3,10 +3,10 @@ using System.Collections;
 
 public class HoldPositionState : IUnitState {
 
-    private readonly StatePatternUnit state;
+    private readonly RecruitmentPattern state;
     private WaitBehavior wait;
 
-    public HoldPositionState(StatePatternUnit statePatternUnit, WaitBehavior waitBehavior)
+    public HoldPositionState(RecruitmentPattern statePatternUnit, WaitBehavior waitBehavior)
     {
         state = statePatternUnit;
         wait = waitBehavior;
@@ -52,23 +52,23 @@ public class HoldPositionState : IUnitState {
      */
     private void Wait()
     {
-        Vector2 steering = wait.computeWaitSteering(state._NPCUnit._simpleTarget.position, state._NPCUnit.sizeRadius, state._NPCUnit.timeBeforeChangePos);
-        state._NPCUnit._currentPosition = wait.computeNewPosition(steering - wait.computeSteeringSeparationForce());
+        Vector2 steering = wait.computeWaitSteering(state._unit._simpleTarget.position, state._unit.sizeRadius, state._unit.timeBeforeChangePos);
+        state._unit._currentPosition = wait.computeNewPosition(steering - wait.computeSteeringSeparationForce());
 
-        state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
+        state._unit.updatePosition(state._unit._currentPosition);
     }
 
     private void checkAround()
     {
-        if(state._NPCUnit._simpleTarget.nearestEnemy == null)
+        if(state._unit._simpleTarget.nearestEnemy == null)
             return;
 
 
-        float distance = (state._NPCUnit._simpleTarget.position - state._NPCUnit._simpleTarget.nearestEnemy._currentPosition).magnitude;
+        float distance = (state._unit._simpleTarget.position - state._unit._simpleTarget.nearestEnemy._currentPosition).magnitude;
 
-        if (distance < state._NPCUnit._simpleTarget.defendingArea)
+        if (distance < state._unit._simpleTarget.defendingArea)
         {
-            state._NPCUnit._unitTarget = state._NPCUnit._simpleTarget.nearestEnemy;
+            state._unit._unitTarget = state._unit._simpleTarget.nearestEnemy;
             ToDefendPositionState();
         }
     }

@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SnakeUnit : NPCUnit
-{
-    // Constructor
-    public SnakeUnit()
+public class Snake : Unit {
+
+    public Snake()
     {
         _name = "Snake";
         _faction = 0;
         _fieldOfView = 3.0f;
         _healPoint = 10.0f;
-
     }
 
     public float getDamage(string name)

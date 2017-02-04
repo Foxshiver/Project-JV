@@ -3,23 +3,23 @@ using System.Collections;
 
 public class GeneralBehavior {
 
-    protected Unit _unit;
+    protected MovableEntity _mc;
 
 	private float CoefSteeringSeparation = 0.8f;
 	private float _radiusUnit = 5.0f;
     
-    public GeneralBehavior(Unit unit)
+    public GeneralBehavior(MovableEntity mc)
     {
-        _unit = unit;
+        _mc = mc;
     }
 
 	public Vector2 computeNewPosition(Vector2 steering)
     {
-        _unit._steering = Vector2.ClampMagnitude(steering, _unit._maxSteeringForce); // steering return the force corresponding at the behavior send by param
-        Vector2 acceleration = _unit._steering / _unit._masse;
-        _unit._velocity = Vector2.ClampMagnitude(_unit._velocity + acceleration /* *Time.deltaTime*/, _unit._maxSpeed);
+        _mc._steering = Vector2.ClampMagnitude(steering, _mc._maxSteeringForce); // steering return the force corresponding at the behavior send by param
+        Vector2 acceleration = _mc._steering / _mc._masse;
+        _mc._velocity = Vector2.ClampMagnitude(_mc._velocity + acceleration /* *Time.deltaTime*/, _mc._maxSpeed);
         
-		return _unit._currentPosition + _unit._velocity * Time.deltaTime;
+		return _mc._currentPosition + _mc._velocity * Time.deltaTime;
     }
 
 	public Vector2 computeSteeringSeparationForce()
@@ -32,7 +32,7 @@ public class GeneralBehavior {
 			{
 
 				//Debug.Log ("Voisin of " + _unit.name + " " + i + " = " + listOfNeighboors [i].name);
-				Vector2 vecDistance = (listOfNeighboors [i]._currentPosition - this._unit._currentPosition);  //this._position);
+				Vector2 vecDistance = (listOfNeighboors [i]._currentPosition - this._mc._currentPosition);  //this._position);
 				float distance = vecDistance.magnitude;
 
 				steeringSeparation += vecDistance / distance;
@@ -51,9 +51,9 @@ public class GeneralBehavior {
 
 		for (int i = 0; i < listOfUnit.Length; i++) 
 		{
-			if (listOfUnit [i].gameObject != _unit.gameObject) // this.gameObject)
+			if (listOfUnit [i].gameObject != _mc.gameObject)
 			{
-				float distance = (listOfUnit [i].gameObject.transform.position - _unit.transform.position).magnitude;
+				float distance = (listOfUnit [i].gameObject.transform.position - _mc.transform.position).magnitude;
 
 				if (distance < _radiusUnit) {
 					isInRadius [i] = true;

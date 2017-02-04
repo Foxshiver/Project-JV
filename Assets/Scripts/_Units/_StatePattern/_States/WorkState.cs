@@ -3,11 +3,11 @@ using System.Collections;
 
 public class WorkState : IUnitState {
 
-    private readonly StatePatternUnit state;
+    private readonly RecruitmentPattern state;
     private WaitBehavior wait;
     private Field field;
 
-    public WorkState(StatePatternUnit statePatternUnit, WaitBehavior waitBehavior)
+    public WorkState(RecruitmentPattern statePatternUnit, WaitBehavior waitBehavior)
     {
         state = statePatternUnit;
         wait = waitBehavior;
@@ -51,15 +51,15 @@ public class WorkState : IUnitState {
      */
     private void Work()
     {
-        Vector2 steering = wait.computeWaitSteering(state._NPCUnit._simpleTarget.position, state._NPCUnit.sizeRadius, state._NPCUnit.timeBeforeChangePos);
-        state._NPCUnit._currentPosition = wait.computeNewPosition(steering - wait.computeSteeringSeparationForce());
+        Vector2 steering = wait.computeWaitSteering(state._unit._simpleTarget.position, state._unit.sizeRadius, state._unit.timeBeforeChangePos);
+        state._unit._currentPosition = wait.computeNewPosition(steering - wait.computeSteeringSeparationForce());
 
-        state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
+        state._unit.updatePosition(state._unit._currentPosition);
     }
 
     private void EarnCoin()
     {
-        field = (Field)state._NPCUnit._simpleTarget;
+        field = (Field)state._unit._simpleTarget;
 
         if(Random.Range(0.0f, 1.0f) < 0.001f)
             field.createCoin();

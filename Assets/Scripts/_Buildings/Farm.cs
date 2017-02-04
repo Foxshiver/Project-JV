@@ -1,27 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Farm : Buildings
+public class Farm : FixedEntity
 {
-    protected float _healPoint;
     protected int _faction;
-	
-	public void update ()
-    {
-	    if(_healPoint < 0.0f)
-        {
-            getPlayer(this._faction).lose();
-        }
-	}
 
-    private PlayerUnit getPlayer(int faction)
-    {
-        PlayerUnit[] listOfPlayerUnit = GameObject.FindObjectsOfType<PlayerUnit>();
+    public void update()
+    {}
 
-        foreach(PlayerUnit playerUnit in listOfPlayerUnit)
+    private Player getPlayer(int faction)
+    {
+        Player[] listOfPlayerUnit = GameObject.FindObjectsOfType<Player>();
+
+        foreach(Player player in listOfPlayerUnit)
         {
-            if(playerUnit.getFaction() == faction)
-                return playerUnit;
+            if(player._faction == faction)
+                return player;
         }
 
         return null;

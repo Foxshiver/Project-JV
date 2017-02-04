@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Field : Buildings
+public class Field : FixedEntity
 {
     [HideInInspector] public int _nbMaxUnit = 1;
     public int _nbMaxCoin = 1;

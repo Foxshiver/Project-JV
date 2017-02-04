@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StatePatternUnit {
+public class RecruitmentPattern {
     
     [HideInInspector] public IUnitState currentState;
 
@@ -16,16 +16,16 @@ public class StatePatternUnit {
     [HideInInspector] public AttackEnemyState attackEnemyState;
     [HideInInspector] public WorkState workState;
 
-    [HideInInspector] public NPCUnit _NPCUnit;
+    [HideInInspector] public Unit _unit;
 
     // Constructor
-    public StatePatternUnit(NPCUnit NPCUnit)
+    public RecruitmentPattern(Unit unit)
     {
-        _NPCUnit = NPCUnit;
+        _unit = unit;
 
-        waitBehavior = new WaitBehavior(_NPCUnit);
-        seekBehavior = new SeekBehavior(_NPCUnit);
-        pursuitBehavior = new PursuitBehavior(_NPCUnit);
+        waitBehavior = new WaitBehavior(_unit);
+        seekBehavior = new SeekBehavior(_unit);
+        pursuitBehavior = new PursuitBehavior(_unit);
 
         waitState = new WaitState(this, waitBehavior);
         followLeaderState = new FollowLeaderState(this, seekBehavior);

@@ -3,27 +3,29 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class PlayerUnit : Unit {
+public class Player : MovableEntity {
     
-    public List<NPCUnit> listOfUnits;
-    public List<NPCUnit> listOfWorkerUnits;
-    public List< List<NPCUnit> > listOfHoldPositionUnits;
-    private List<Buildings> listOfPositions;
+    public List<Unit> listOfUnits;
+    public List<Unit> listOfWorkerUnits;
+    public List< List<Unit> > listOfHoldPositionUnits;
+    private List<FixedEntity> listOfPositions;
 
     private LeaderBehavior leader;
 
+    public Vector2 _behindPosition;
+    public int _money;
+
     // Constructor
-    public PlayerUnit()
+    public Player()
 	{
-        _name = "Player";
         _faction = 1;
         _fieldOfView = 8.0f;
         _healPoint = 50.0f;
 
-        listOfUnits = new List<NPCUnit> { };
-        listOfWorkerUnits = new List<NPCUnit> { };
-        listOfHoldPositionUnits = new List<List<NPCUnit>> { };
-        listOfPositions = new List<Buildings> { };
+        listOfUnits = new List<Unit> { };
+        listOfWorkerUnits = new List<Unit> { };
+        listOfHoldPositionUnits = new List<List<Unit>> { };
+        listOfPositions = new List<FixedEntity> { };
 
         leader = new LeaderBehavior(this);
 	}
@@ -35,7 +37,7 @@ public class PlayerUnit : Unit {
         // Update behind point and current player position 
         _currentPosition = Vector3TOVector2(this.transform.position);
         _behindPosition = leader.getBehindLeader();
-        _currentPosition = leader.computeNewPosition(leader.controllerMovement() );
+        _currentPosition = leader.computeNewPosition(leader.controllerMovement());
         updatePosition(_currentPosition);
 
         // Seeking all the unit around the player
@@ -63,7 +65,7 @@ public class PlayerUnit : Unit {
         {
             if(listOfNeighboor.Length != 0)
             {
-                NPCUnit nearestUnit = (NPCUnit)getNearestUnit(listOfNeighboor);
+                Unit nearestUnit = (Unit)getNearestUnit(listOfNeighboor);
 
                 if (_money >= 1 && nearestUnit != null)
                 {
@@ -73,7 +75,7 @@ public class PlayerUnit : Unit {
                     listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
                     listOfUnits[newUnitIndex]._unitTarget = this;
                     listOfUnits[newUnitIndex].general = this;
-                    listOfUnits[newUnitIndex].setFaction(this.getFaction());
+                    listOfUnits[newUnitIndex].setFaction(this._faction);
                     listOfUnits[newUnitIndex].triggeringUpdate();
 
                     _money--;
@@ -90,19 +92,18 @@ public class PlayerUnit : Unit {
             int indiceHoldPositionUnitsList = listOfHoldPositionUnits.Count;
 
             PositionToHold positionToHold = new PositionToHold();
-            positionToHold.init(this.getFaction());
-            positionToHold.name = "Position to hold n°" + indiceHoldPositionUnitsList;
+            positionToHold.init(this._faction);
+            //positionToHold.name = "Position to hold n°" + indiceHoldPositionUnitsList;
             positionToHold.position = new Vector2(this._currentPosition[0], this._currentPosition[1]);
 
             listOfPositions.Add(positionToHold);
             int newPositionIndex = listOfPositions.LastIndexOf(positionToHold);
 
-            List<NPCUnit> listTampon = new List<NPCUnit> { };
+            List<Unit> listTampon = new List<Unit> { };
 
             for(int i = 0; i < listOfUnits.Count; i++)
             {
                 listOfUnits[i].setSimpleTarget(listOfPositions[newPositionIndex]);
-                listOfUnits[i].setNbHolders(listOfUnits.Count);
                 listOfUnits[i].triggeringUpdate();
 
                 listTampon.Add(listOfUnits[i]);
@@ -149,7 +150,7 @@ public class PlayerUnit : Unit {
                 return;
 
             float lessHPUnit = listOfUnits[0].getHealPoint();
-            NPCUnit weakestUnit = listOfUnits[0];
+            Unit weakestUnit = listOfUnits[0];
 
             for(int i = 1; i < listOfUnits.Count; i++)
             {
@@ -219,7 +220,7 @@ public class PlayerUnit : Unit {
     // Return the tab containing all the neighboors of the player
     public Unit[] ListOfNeighboors()
     {
-        NPCUnit[] listOfUnit = GameObject.FindObjectsOfType<NPCUnit>();
+        Unit[] listOfUnit = GameObject.FindObjectsOfType<Unit>();
         bool[] isInRadius = new bool[listOfUnit.Length];
 
         int nbNeighboors = 0;
@@ -322,16 +323,4 @@ public class PlayerUnit : Unit {
 		}
 		return false;
 	}
-
-    // Call when player destroyed enemy QG
-    public void win()
-    {
-        Debug.Log("VICTORY !");
-    }
-
-    // Call when player QG is destroyed
-    public void lose()
-    {
-        Debug.Log("DEFEAT !");
-    }
 }

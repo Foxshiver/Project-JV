@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spawner : Buildings
-{
-    public NPCUnit unitPrefab;
-    NPCUnit unitClone;
-    public NPCUnit newUnit = null;
+public class NestSpawner : FixedEntity {
+
+    public Unit unitPrefab;
+    Unit unitClone;
+    public Unit newUnit = null;
     
     private int _nbMaxUnit = 3;
-    public bool _isCreatingUnit = false;
 
     public void update()
     {
@@ -18,13 +17,10 @@ public class Spawner : Buildings
 
     public void createUnit()
     {
-        unitClone = Instantiate(unitPrefab) as NPCUnit;
-        unitClone.init(this, nearToSpawner());
-        
+        unitClone = Instantiate(unitPrefab) as Unit;
+        unitClone.init(this, nearToSpawner(), new RecruitmentPattern(unitClone));
+
         newUnit = unitClone;
-
-        _isCreatingUnit = true;
-
         _nbCurrentUnit++;
 
         CancelInvoke("createUnit");

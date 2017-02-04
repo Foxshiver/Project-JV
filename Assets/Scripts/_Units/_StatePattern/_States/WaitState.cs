@@ -3,11 +3,11 @@ using System.Collections;
 
 public class WaitState : IUnitState {
 
-    private readonly StatePatternUnit state;
+    private readonly RecruitmentPattern state;
     private WaitBehavior wait;
 
     // Constructor
-    public WaitState(StatePatternUnit statePatternUnit, WaitBehavior waitBehavior)
+    public WaitState(RecruitmentPattern statePatternUnit, WaitBehavior waitBehavior)
     {
         state = statePatternUnit;
         wait = waitBehavior;
@@ -49,9 +49,9 @@ public class WaitState : IUnitState {
      */
     private void Wait()
     {
-        Vector2 steering = wait.computeWaitSteering(state._NPCUnit._simpleTarget.position, state._NPCUnit.sizeRadius, state._NPCUnit.timeBeforeChangePos);
-        state._NPCUnit._currentPosition = wait.computeNewPosition(steering - wait.computeSteeringSeparationForce());
+        Vector2 steering = wait.computeWaitSteering(state._unit._simpleTarget.position, state._unit.sizeRadius, state._unit.timeBeforeChangePos);
+        state._unit._currentPosition = wait.computeNewPosition(steering - wait.computeSteeringSeparationForce());
 
-        state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
+        state._unit.updatePosition(state._unit._currentPosition);
     }
 }

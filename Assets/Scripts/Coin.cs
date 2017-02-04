@@ -5,7 +5,7 @@ public class Coin : MonoBehaviour {
 
     public Vector2 position;
     private Field field;
-    private PlayerUnit player;
+    private Player player;
 
     public AudioClip CoinSound;
 
@@ -17,7 +17,7 @@ public class Coin : MonoBehaviour {
         this.position = position;
         this.transform.position = new Vector3(this.position.x, this.transform.position.y, this.position.y);
 
-        player = FindObjectOfType(typeof(PlayerUnit)) as PlayerUnit;
+        player = FindObjectOfType(typeof(Player)) as Player;
     }
 
     public void update()

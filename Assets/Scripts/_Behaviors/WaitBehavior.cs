@@ -10,16 +10,14 @@ public class WaitBehavior : SeekBehavior
 	private float _startTime;
 
 	// Constructor
-	public WaitBehavior(Unit unit) : base(unit)
-	{
-
-	}
+	public WaitBehavior(MovableEntity mc) : base(mc)
+    { }
 
 	public Vector2 computeWaitSteering(Vector2 centerTargetPosition, float distance, float timeBeforeChangePos)
 	{
 		if ((centerTargetPosition != _currentTarget) || ((Time.time - _startTime) > timeBeforeChangePos))
         {
-            _unit.timeBeforeChangePos = Random.Range(3.0f, 6.0f);
+            _mc.timeBeforeChangePos = Random.Range(3.0f, 6.0f);
             _startTime = Time.time;
 
 			_currentTarget = centerTargetPosition;

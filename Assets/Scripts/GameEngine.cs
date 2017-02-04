@@ -15,31 +15,25 @@ public class GameEngine : MonoBehaviour {
     private Substate _substate;
 
     // PLAYER
-    public PlayerUnit playerPrefab;
-    PlayerUnit playerClone;
-
-    // UNITS
-    public FoxUnit foxPrefab;
-    FoxUnit foxClone;
-
-    public ChickenUnit chickenPrefab;
-    ChickenUnit chickenClone;
-
-    public SnakeUnit snakePrefab;
-    SnakeUnit snakeClone;
+    public Player playerPrefab;
+    Player playerClone;
 
     // SPAWNERS
-    public Spawner foxSpawner;
-    public Spawner chickenSpawner;
-    public Spawner snakeSpawner;
+    public NestSpawner foxSpawner;
+    public NestSpawner chickenSpawner;
+    public NestSpawner snakeSpawner;
 
-    // ENEMY FARM --- DEBUG
-    public Farm enemyQG;
-    private PositionToHold positionEnemy;
+    public EvilNestSpawner evilFoxSpawner;
+    public EvilNestSpawner evilChickenSpawner;
+    public EvilNestSpawner evilSnakeSpawner;
+
+    // FARM
+    public Farm allyQG;
 
     // OBJECTS LISTS
     private Object[] _famrsList;
     private Object[] _spawnersList;
+    private Object[] _evilSpawnersList;
     private Object[] _fieldsList;
 
     private Object[] _neutralsUnitsList;
@@ -48,14 +42,14 @@ public class GameEngine : MonoBehaviour {
 
     // ATTACK GESTION
     private float timeAttack;
+    private float timeBeforeNextAttack;
     private int nbFoxAttack;
     private int nbSnakeAttack;
     private int nbChickenAttack;
-    private float timeBeforeNextAttack;
 
     // PAUSE GESTION
     private bool pause = false;
-    public Canvas CanvPause;
+    public Canvas PauseCanvas;
 
     // MUSIC GESTION
     public AudioSource SourceMusic;
@@ -70,7 +64,7 @@ public class GameEngine : MonoBehaviour {
         timeAttack = Time.time;
         timeBeforeNextAttack = 30.0f;
 
-        CanvPause.enabled = false;
+        PauseCanvas.enabled = false;
     }
 
     // Update is called once per frame
@@ -83,27 +77,26 @@ public class GameEngine : MonoBehaviour {
     void loadScene()
     {
         _famrsList = FindObjectsOfType(typeof(Farm)) as Farm[];
-        _spawnersList = FindObjectsOfType(typeof(Spawner)) as Spawner[];
+        _spawnersList = FindObjectsOfType(typeof(NestSpawner)) as NestSpawner[];
+        _evilSpawnersList = FindObjectsOfType(typeof(EvilNestSpawner)) as EvilNestSpawner[];
         _fieldsList = FindObjectsOfType(typeof(Field)) as Field[];
 
-        foreach(Spawner spawner in _spawnersList)
+        foreach(NestSpawner spawner in _spawnersList)
             spawner.start();
+
+        foreach(EvilNestSpawner evilSpawner in _evilSpawnersList)
+            evilSpawner.start();
 
         foreach(Field field in _fieldsList)
             field.start();
 
-        enemyQG.start();
-        positionEnemy = this.gameObject.AddComponent<PositionToHold>();
-        positionEnemy.start();
-        positionEnemy.init(2);
-        positionEnemy.position = enemyQG.position;
+        allyQG.start();
     }
 
     void initUnits()
     {
         // Instanciate 1 player
-        playerClone = Instantiate(playerPrefab) as PlayerUnit;
-        //playerClone.updatePosition(new Vector2(22.0f, -16.0f));
+        playerClone = Instantiate(playerPrefab) as Player;
 
         // Instanciate 3 neutral fox
         foxSpawner.createUnit();
@@ -120,41 +113,25 @@ public class GameEngine : MonoBehaviour {
         snakeSpawner.createUnit();
         snakeSpawner.createUnit();
 
-        _neutralsUnitsList = FindObjectsOfType(typeof(NPCUnit)) as NPCUnit[];
+        _neutralsUnitsList = FindObjectsOfType(typeof(Unit)) as Unit[];
     }
 
     void addEnnemy()
     {
         if ((Time.time - timeAttack) > timeBeforeNextAttack)
         {
-            nbFoxAttack = (int)Random.Range(1.0f, 4.0f);
-            nbSnakeAttack = (int)Random.Range(1.0f, 4.0f);
-            nbChickenAttack = (int)Random.Range(1.0f, 4.0f);
-
             timeBeforeNextAttack = Random.Range(25.0f, 50.0f);
-
             timeAttack = Time.time;
-
-            for (int f = 0; f < nbFoxAttack; f++)
-            {
-                positionEnemy.createUnit(foxPrefab, foxClone);
-            }
-
-            for (int c = 0; c < nbChickenAttack; c++)
-            {
-                positionEnemy.createUnit(chickenPrefab, chickenClone);
-            }
-
-            for (int s = 0; s < nbSnakeAttack; s++)
-            {
-                positionEnemy.createUnit(snakePrefab, snakeClone);
-            }
+            
+            evilFoxSpawner.createUnit(allyQG);
+            evilChickenSpawner.createUnit(allyQG);
+            evilSnakeSpawner.createUnit(allyQG);
         }
     }
 
     void endGame()
     {
-
+        Debug.Log("You lose");
     }
 
     Substate checkChangeSubstate()
@@ -162,25 +139,19 @@ public class GameEngine : MonoBehaviour {
         switch(_substate)
         {
             case Substate.WaitForStart:
-                //return Substate.Game;
-
-                if (Input.GetButtonDown("JoystickStart"))
+                if(Input.GetButtonDown("JoystickStart"))
                 {
-                    CanvPause.enabled = true;
+                    PauseCanvas.enabled = true;
                     SourceMusic.Pause();
                     return Substate.Pause;
                 }
 
+                if(allyQG._healPoint <= 0.0f)
+                    return Substate.WaitForEnd;
+
                 break;
 
             case Substate.Game:
-               //return Substate.WaitForEnd;
-
-                //if(Input.GetButtonDown("Start"))
-                //{
-                //    //PauseCanvas.enabled = true;
-                //    return Substate.Pause;
-                //}
                 break;
 
             case Substate.WaitForEnd:
@@ -188,14 +159,9 @@ public class GameEngine : MonoBehaviour {
                 break;
 
             case Substate.Pause:
-                //if(Input.GetButtonDown("Start"))
-                //{
-                //    //PauseCanvas.enabled = false;
-                //    return Substate.Game;
-                //}
                 if (Input.GetButtonDown("JoystickStart"))
                 {
-                    CanvPause.enabled = false;
+                    PauseCanvas.enabled = false;
                     SourceMusic.Play();
                     return Substate.WaitForStart;
                 }
@@ -213,27 +179,17 @@ public class GameEngine : MonoBehaviour {
         switch(_substate)
         {
             case Substate.WaitForStart:
-
-                foreach(Spawner spawner in _spawnersList)
-                {
+                foreach(NestSpawner spawner in _spawnersList)
                     spawner.update();
-                    
-                    //if(spawner._isCreatingUnit)
-                    //{
-                    //    _neutralsUnitsList.SetValue(spawner.newUnit, _neutralsUnitsList.Length-1);
-                    //    spawner._isCreatingUnit = false;
-                    //}
-                }
+
+                foreach(EvilNestSpawner evilSpawner in _evilSpawnersList)
+                    evilSpawner.update();
 
                 foreach(Field field in _fieldsList)
-                {
                     field.update();
-                }
 
-                positionEnemy.update();
-
-                _neutralsUnitsList = FindObjectsOfType(typeof(NPCUnit)) as NPCUnit[];
-                foreach(NPCUnit unit in _neutralsUnitsList)
+                _neutralsUnitsList = FindObjectsOfType(typeof(Unit)) as Unit[];
+                foreach(Unit unit in _neutralsUnitsList)
                     unit.update();
                 playerClone.update();
 

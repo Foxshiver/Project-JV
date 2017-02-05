@@ -11,8 +11,8 @@ public class StartEngine : MonoBehaviour {
     public Button buttonStart;
     public Button buttonHTP;
 
-    public Color selectedColorButton;
     public Color unselectedColorTextButton;
+    public Color selectedColorButton;
 
     private string ActiveNextScene;
 

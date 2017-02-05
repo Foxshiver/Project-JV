@@ -90,6 +90,7 @@ public class Unit : MovableEntity {
         healthBar.size = healthPoint / 10.0f;
         if (healthPoint != 10.0f)
             healthBar.size -= 0.1f;
+
     }
 
     /////////////////////

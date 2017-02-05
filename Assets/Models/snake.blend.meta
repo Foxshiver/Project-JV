@@ -15,6 +15,17 @@ ModelImporter:
     100014: //RootNode
     100016: Tail
     100018: Tail_001
+    100020: BezierCurve
+    100022: Bone
+    100024: Bone_001
+    100026: Bone_005
+    100028: Bone_006
+    100030: Bone_007
+    100032: Bone_008
+    100034: Bone_009
+    100036: Bone_010
+    100038: Bone_011
+    100040: Bone_012
     400000: Armature
     400002: Body
     400004: Bone_002
@@ -25,8 +36,23 @@ ModelImporter:
     400014: //RootNode
     400016: Tail
     400018: Tail_001
+    400020: BezierCurve
+    400022: Bone
+    400024: Bone_001
+    400026: Bone_005
+    400028: Bone_006
+    400030: Bone_007
+    400032: Bone_008
+    400034: Bone_009
+    400036: Bone_010
+    400038: Bone_011
+    400040: Bone_012
+    2300000: BezierCurve
+    3300000: BezierCurve
     4300000: Cylinder
+    4300002: BezierCurve
     7400000: Default Take
+    7400002: ArmatureAction_008
     9500000: //RootNode
     13700000: Cylinder
   materials:
@@ -75,6 +101,7 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -85,7 +112,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1

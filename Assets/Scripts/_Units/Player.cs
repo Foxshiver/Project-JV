@@ -211,7 +211,10 @@ public class Player : MovableEntity {
 
         for(int i=0; i<listOfWorkerUnits.Count; i++)
             if(listOfWorkerUnits[i] == null)
+            {
+                listOfWorkerUnits[i]._simpleTarget._nbCurrentUnit--;
                 listOfWorkerUnits.Remove(listOfWorkerUnits[i]);
+            }
 
         for(int i=0; i<listOfHoldPositionUnits.Count; i++)
             for(int j=0; j<listOfHoldPositionUnits[i].Count; j++)
@@ -293,19 +296,16 @@ public class Player : MovableEntity {
 
         for (int i = 0; i < listOfField.Length; i++)
         {
-            if (listOfField[i].gameObject != this.gameObject)
-            {
-                float distance = (listOfField[i].gameObject.transform.position - this.transform.position).magnitude;
+            float distance = (listOfField[i].gameObject.transform.position - this.transform.position).magnitude;
 
-                if (distance < this._fieldOfView)
-                {
-                    isInRadius[i] = true;
-                    nbFields++;
-                }
-                else
-                {
-                    isInRadius[i] = false;
-                }
+            if (distance < this._fieldOfView)
+            {
+                isInRadius[i] = true;
+                nbFields++;
+            }
+            else
+            {
+                isInRadius[i] = false;
             }
         }
 

@@ -7,7 +7,7 @@ public class Chicken : Unit {
     {
         _name = "Chicken";
         _faction = 0;
-        _fieldOfView = 3.0f;
+        _fieldOfView = 10.0f;
         _healPoint = 10.0f;
     }
 

@@ -21,11 +21,11 @@ public class AttackUnitState : IEnemyState
         Pursuit();
     }
 
-    public void ToAttackUnitState()
-    { Debug.Log("Can't transition to same state"); }
-
     public void ToReachTargetState()
     { state.currentState = state.reachTargetState; }
+
+    public void ToAttackUnitState()
+    { Debug.Log("Can't transition to same state"); }
 
     public void ToAttackTargetState()
     { Debug.Log("Can't transition to attack target state from attack state"); }
@@ -37,19 +37,21 @@ public class AttackUnitState : IEnemyState
      */
     private void Pursuit()
     {
+        if(state._unit._unitTarget == null)
+            return;
+
         Vector2 steering = pursuit.computePursuitSteering(state._unit._unitTarget._currentPosition, state._unit._unitTarget._velocity);
         state._unit._currentPosition = pursuit.computeNewPosition(steering - pursuit.computeSteeringSeparationForce());
 
         state._unit.updatePosition(state._unit._currentPosition);
     }
-
+    
     private void checkAround()
     {
-        float distance = (state._unit._unitTarget._currentPosition - state._unit.general._currentPosition).magnitude;
+        float distance = (state._unit._currentPosition - state._unit._unitTarget._currentPosition).magnitude;
 
-        if (distance > state._unit.general._fieldOfView)
+        if (distance > state._unit._fieldOfView)
         {
-            state._unit._unitTarget = state._unit.general;
             ToReachTargetState();
         }
     }

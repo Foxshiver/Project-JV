@@ -14,7 +14,7 @@ public class EvilNestSpawner : FixedEntity {
 
     public void createUnit(FixedEntity target)
     {
-        _nbUnitAttack = (int)Random.Range(2.0f, 6.0f);
+        _nbUnitAttack = (int)Random.Range(1.0f, 3.0f);
 
         for(int f=0; f<_nbUnitAttack; f++)
         {

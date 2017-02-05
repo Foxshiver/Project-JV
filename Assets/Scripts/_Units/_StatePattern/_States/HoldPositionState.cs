@@ -62,8 +62,7 @@ public class HoldPositionState : IUnitState {
     {
         if(state._unit._simpleTarget.nearestEnemy == null)
             return;
-
-
+        
         float distance = (state._unit._simpleTarget.position - state._unit._simpleTarget.nearestEnemy._currentPosition).magnitude;
 
         if (distance < state._unit._simpleTarget.defendingArea)

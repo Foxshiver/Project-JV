@@ -1,94 +1,114 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public class Unit : MonoBehaviour
-{
-    public float _masse;
-    public float _maxSpeed;
-    public float _maxSteeringForce;
+public class Unit : MovableEntity {
 
-    public Vector2 _currentPosition;
-    public Vector2 _behindPosition;
+    [HideInInspector] public float sizeRadius;
+    
 
-    public Vector2 _direction;
-    public Vector2 _velocity;
-    public Vector2 _steering;
-
-    [HideInInspector]
-    public float sizeRadius;
-    [HideInInspector]
-    public float timeBeforeChangePos;
-
-    protected string _name;
-    protected string _unitType;
-    protected ArrayList _behaviors;
-
-	public int _money;
-    // Faction:
-    //      > 0 = neutral
-    //      > 1 = ally
-    //      > 2 = enemy
-    public int _faction;
-    public float _fieldOfView;
-
-    public float _healPoint;
     public float _damagePoint;
 
-    public Buildings _simpleTarget = null;
-    public Unit _unitTarget = null;
+    public FixedEntity _simpleTarget = null;
+    public MovableEntity _unitTarget = null;
 
-	public enum State
-	{
-        Seek,
-        Flee,
-        Pursuit,
-        Evade,
-        Wait,
-        Work,
-        Defend,
-        Fight        
-    }
+    //
+    public string _name;
+    public Player general;
 
-    protected State _stateUnit;
+    RecruitmentPattern recruitmentPattern = null;
+    WavePattern wavePattern = null;
+    public string currentState;
 
-    public Unit()
+    public Scrollbar healthBar;
+
+    public void init(FixedEntity spawner, Vector2 pos, RecruitmentPattern pattern)
     {
-        _behaviors = new ArrayList();
+        this._simpleTarget = spawner;
+        this._currentPosition = pos;
+        this.updatePosition(this._currentPosition);
 
-        //_behaviors.Add(new SeekBehavior(this));         // [0] >>> Seek
-        //_behaviors.Add(new FleeBehavior(this));         // [1] >>> Flee
-        //_behaviors.Add(new PursuitBehavior(this));      // [2] >>> Pursuit
-        //_behaviors.Add(new EvasionBehavior(this));      // [3] >>> Evasion
-        //_behaviors.Add(new WaitBehavior(this));         // [4] >>> Wait        
-        //_behaviors.Add(new LeaderBehavior(this));       // [5] >>> Leader
+        sizeRadius = 2.0f;
+        timeBeforeChangePos = Random.Range(3.0f, 6.0f);
+
+        recruitmentPattern = pattern;
     }
 
-    void Start()
+    public void init(FixedEntity spawner, Vector2 pos, WavePattern pattern)
     {
-		_currentPosition = new Vector2(this.transform.position.x, this.transform.position.z);
-        //Debug.Log(_name + " POSITION = " + _currentPosition);
+        this._simpleTarget = spawner;
+        this._currentPosition = pos;
+        this.updatePosition(this._currentPosition);
+        this._faction = 2;
+
+        this._maxSpeed = 2.0f;
+        this._maxSteeringForce = 2.0f;
+
+        sizeRadius = 2.0f;
+        timeBeforeChangePos = Random.Range(3.0f, 6.0f);
+
+        wavePattern = pattern;
     }
 
-    public void updatePosition(Vector2 position)
+    public void update()
     {
-		this.transform.position = new Vector3(position.x, this.transform.position.y, position.y);
+        Vector2 prevPosition = this._currentPosition;
+
+        if(this._healPoint <= 0.0f)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            if(recruitmentPattern != null)
+            {
+                recruitmentPattern.updateState();
+                currentState = recruitmentPattern.currentState.ToString();
+            }
+            else
+            {
+                wavePattern.updateState();
+                currentState = wavePattern.currentState.ToString();
+            }
+
+            ChangeSizeOfHealthBar(this._healPoint);
+
+            Vector2 vector = this._currentPosition - prevPosition;
+            float angle = AngleBetweenVector2(vector, new Vector2(0.0f, 0.0f));
+            transform.localEulerAngles = new Vector3(0.0f, -angle, 0.0f);
+        }
     }
 
-    protected Vector2 Vector3TOVector2(Vector3 position)
+    public void triggeringUpdate()
     {
-        return new Vector2(position.x, position.z);
+        if(recruitmentPattern != null)
+            recruitmentPattern.triggeringUpdate();
     }
 
-    // Setter and Getter
+    public void ChangeSizeOfHealthBar(float healthPoint)
+    {
+        healthBar.size = healthPoint / 10.0f;
+        if (healthPoint != 10.0f)
+            healthBar.size -= 0.1f;
+    }
+
+    /////////////////////
+    // SETTER - GETTER //
+    /////////////////////
+
     public string getName()
     { return _name; }
     public void setName(string newName)
     { _name = newName; }
 
-    public string getUnitType()
-    { return _unitType; }
-    public void setUnitType(string newUnitType)
-    { _unitType = newUnitType; }
+    public Player getGeneral()
+    { return general; }
+    public void setGeneral(Player newGeneral)
+    {
+        general = newGeneral;
+        setUnitTarget(general);
+        setFaction(general._faction);
+    }
 
     public int getFaction()
     { return _faction; }
@@ -100,23 +120,13 @@ public class Unit : MonoBehaviour
     public void setHealPoint(float newHealPoint)
     { _healPoint = newHealPoint; }
 
-    public float getDamagePoint()
-    { return _damagePoint; }
-    public void setDamagePoint(float newDamagePoint)
-    { _damagePoint = newDamagePoint; }
-
-    public State getState()
-    { return this._stateUnit; }
-    public void setState(State newSate)
-    { this._stateUnit = newSate; }
-
-    public Unit getUnitTarget()
+    public MovableEntity getUnitTarget()
     { return this._unitTarget; }
-    public void setUnitTarget(Unit newUnitTarget)
+    public void setUnitTarget(MovableEntity newUnitTarget)
     { this._unitTarget = newUnitTarget; }
 
-    public Buildings getSimpleTarget()
+    public FixedEntity getSimpleTarget()
     { return this._simpleTarget; }
-    public void setSimpleTarget(Buildings newSimpleTarget)
+    public void setSimpleTarget(FixedEntity newSimpleTarget)
     { this._simpleTarget = newSimpleTarget; }
 }

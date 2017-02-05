@@ -3,12 +3,12 @@ using System.Collections;
 
 public class AttackTargetState : IEnemyState
 {
-    private readonly StatePatternEnemy state;
+    private readonly WavePattern state;
     private SeekBehavior seek;
 
     private double timeFirstCall = Time.time;
 
-    public AttackTargetState(StatePatternEnemy statePatternEnemy, SeekBehavior seekBehavior)
+    public AttackTargetState(WavePattern statePatternEnemy, SeekBehavior seekBehavior)
     {
         state = statePatternEnemy;
         seek = seekBehavior;
@@ -31,16 +31,16 @@ public class AttackTargetState : IEnemyState
     { Debug.Log("Can't transition to Attack target state from attack state"); }
 
     /*
-     * Pursuit behavior
+     * Seek behavior
      * 
-     * Allow to hunt enemy
+     * Allow to reach target
      */
     private void Seek()
     {
-        Vector2 steering = seek.computeSeekSteering(state._NPCUnit._simpleTarget.position);
-        state._NPCUnit._currentPosition = seek.computeNewPosition(steering - seek.computeSteeringSeparationForce());
+        Vector2 steering = seek.computeSeekSteering(state._unit._simpleTarget.position);
+        state._unit._currentPosition = seek.computeNewPosition(steering - seek.computeSteeringSeparationForce());
 
-        state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
+        state._unit.updatePosition(state._unit._currentPosition);
     }
 
     //private void CheckAround()
@@ -66,15 +66,14 @@ public class AttackTargetState : IEnemyState
     // Fight function
     private void fight()
     {
-        if (state._NPCUnit._unitTarget != null)
+        if (state._unit._simpleTarget != null)
         {
-            Unit enemy = state._NPCUnit._unitTarget;
+            FixedEntity enemy = state._unit._simpleTarget;
 
-            float distance = (state._NPCUnit._currentPosition - state._NPCUnit._unitTarget._currentPosition).magnitude;
-            if (distance < state._NPCUnit._fieldOfView)
+            float distance = (state._unit._currentPosition - state._unit._simpleTarget.position).magnitude;
+            if (distance < state._unit._fieldOfView)
             {
-                float healPointRemaining = enemy.getHealPoint() - 2.5f;
-                enemy.setHealPoint(healPointRemaining);
+                enemy.setHealPoint(enemy.getHealPoint()-2.0f);
             }
         }
     }

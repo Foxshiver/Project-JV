@@ -3,12 +3,11 @@ using System.Collections;
 
 public class ReachTargetState : IEnemyState
 {
-
-    private readonly StatePatternEnemy state;
+    private readonly WavePattern state;
     private SeekBehavior seek;
 
     // Constructor
-    public ReachTargetState(StatePatternEnemy statePatternEnemy, SeekBehavior seekBehavior)
+    public ReachTargetState(WavePattern statePatternEnemy, SeekBehavior seekBehavior)
     {
         state = statePatternEnemy;
         seek = seekBehavior;
@@ -16,7 +15,8 @@ public class ReachTargetState : IEnemyState
 
     public void UpdateState()
     {
-        //CheckAround();
+        CheckEnemyAround();
+        CheckTargetAround();
         Seek();
     }
 
@@ -25,9 +25,9 @@ public class ReachTargetState : IEnemyState
     { Debug.Log("Can't transition to same state"); }
 
     public void ToAttackTargetState()
-    { /*  Quand rentre dans zone */ }
+    { state.currentState = state.attackTargetState; }
 
-    public void ToAttackUnitState() // TODO
+    public void ToAttackUnitState()
     { state.currentState = state.attackUnitState; }
 
     /*
@@ -37,21 +37,31 @@ public class ReachTargetState : IEnemyState
      */
     private void Seek()
     {
-        Vector2 steering = seek.computeSeekSteering(state._NPCUnit._unitTarget._currentPosition);
-        state._NPCUnit._currentPosition = seek.computeNewPosition(steering - seek.computeSteeringSeparationForce());
+        Vector2 steering = seek.computeSeekSteering(state._unit._simpleTarget.position);
+        state._unit._currentPosition = seek.computeNewPosition(steering - seek.computeSteeringSeparationForce());
 
-        state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
+        state._unit.updatePosition(state._unit._currentPosition);
     }
 
-    //private void CheckAround()
-    //{
-    //    float distance = (state._NPCUnit._currentPosition - /* POSITION BNEAREST ENEMY */ ).magnitude;
+    private void CheckEnemyAround()
+    {
+        //float distance = (state._unit._currentPosition - /* POSITION NEAREST ENEMY */ ).magnitude;
 
-    //    if (distance < state._NPCUnit._fieldOfView)
-    //    {
-    //        state._NPCUnit._simpleTarget = state._NPCUnit. /* NEAREST ENEMY */;
-    //        ToAttackUnitState();
-    //    }
-    //}
+        //if(distance < state._unit._fieldOfView)
+        //{
+        //    state._unit._simpleTarget = state._unit. /* NEAREST ENEMY */;
+        //    ToAttackUnitState();
+        //}
+    }
+
+    private void CheckTargetAround()
+    {
+        float distance = (state._unit._currentPosition - state._unit._simpleTarget.position).magnitude;
+
+        if(distance < state._unit._fieldOfView)
+        {
+            ToAttackTargetState();
+        }
+    }
 }
 

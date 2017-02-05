@@ -7,15 +7,13 @@ public class SeekBehavior : GeneralBehavior
     public float CoefRadiusTarget = 2.0f;
 
     // Constructor
-    public SeekBehavior(Unit unit) : base(unit)
-    {
-
-    }
+    public SeekBehavior(MovableEntity mc) : base(mc)
+    { }
 
     // Functions
     public Vector2 computeSeekSteering(Vector2 targetPosition)
     {
-        Vector2 targetOffset = targetPosition - _unit._currentPosition;
+        Vector2 targetOffset = targetPosition - _mc._currentPosition;
         float distance = targetOffset.magnitude;
         Vector2 desiredVelocity;
 
@@ -24,15 +22,15 @@ public class SeekBehavior : GeneralBehavior
 
         if (distance < targetRadius)
         {
-            float rampedSpeed = _unit._maxSpeed * (distance / (targetRadius * CoefRadiusTarget));
-            float clippedSpeed = Mathf.Min(rampedSpeed, _unit._maxSpeed);
+            float rampedSpeed = _mc._maxSpeed * (distance / (targetRadius * CoefRadiusTarget));
+            float clippedSpeed = Mathf.Min(rampedSpeed, _mc._maxSpeed);
             desiredVelocity = (clippedSpeed / distance) * targetOffset;
         }
         else
         {
-            desiredVelocity = (targetPosition - _unit._currentPosition).normalized * _unit._maxSpeed;
+            desiredVelocity = (targetPosition - _mc._currentPosition).normalized * _mc._maxSpeed;
         }
 
-        return desiredVelocity - _unit._velocity;
+        return desiredVelocity - _mc._velocity;
     }
 }

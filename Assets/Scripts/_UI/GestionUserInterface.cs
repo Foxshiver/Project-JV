@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GestionUserInterface : MonoBehaviour {
 
-	PlayerUnit _player;
+	Player _player;
 
 	public Text _moneyText;
 	public Text _nbUnitFollowingText;
@@ -21,7 +21,7 @@ public class GestionUserInterface : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (first) {
-			_player = FindObjectOfType<PlayerUnit> ();
+			_player = FindObjectOfType<Player> ();
 			first = false;
 		}
 

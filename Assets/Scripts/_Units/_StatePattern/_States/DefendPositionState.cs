@@ -3,12 +3,12 @@ using System.Collections;
 
 public class DefendPositionState : IUnitState {
 
-    private readonly StatePatternUnit state;
+    private readonly RecruitmentPattern state;
     private PursuitBehavior pursuit;
 
     private double timeFirstCall = Time.time;
 
-    public DefendPositionState(StatePatternUnit statePatternUnit, PursuitBehavior pursuitBehavior)
+    public DefendPositionState(RecruitmentPattern statePatternUnit, PursuitBehavior pursuitBehavior)
     {
         state = statePatternUnit;
         pursuit = pursuitBehavior;
@@ -54,19 +54,19 @@ public class DefendPositionState : IUnitState {
      */
     private void Pursuit()
     {
-        Vector2 steering = pursuit.computePursuitSteering(state._NPCUnit._unitTarget._currentPosition, state._NPCUnit._unitTarget._velocity);
-        state._NPCUnit._currentPosition = pursuit.computeNewPosition(steering - pursuit.computeSteeringSeparationForce());
+        Vector2 steering = pursuit.computePursuitSteering(state._unit._unitTarget._currentPosition, state._unit._unitTarget._velocity);
+        state._unit._currentPosition = pursuit.computeNewPosition(steering - pursuit.computeSteeringSeparationForce());
 
-        state._NPCUnit.updatePosition(state._NPCUnit._currentPosition);
+        state._unit.updatePosition(state._unit._currentPosition);
     }
 
     private void checkDistanceBase()
     {
-        float distance = (state._NPCUnit._currentPosition - state._NPCUnit._simpleTarget.position).magnitude;
+        float distance = (state._unit._currentPosition - state._unit._simpleTarget.position).magnitude;
 
-        if (distance > state._NPCUnit._simpleTarget.defendingArea)
+        if (distance > state._unit._simpleTarget.defendingArea)
         {
-            state._NPCUnit._unitTarget = state._NPCUnit.general;
+            state._unit._unitTarget = state._unit.general;
             ToHoldPositionState();
         }
     }
@@ -83,25 +83,26 @@ public class DefendPositionState : IUnitState {
     // Fight function
     private void fight()
     {
-        if (state._NPCUnit._unitTarget == null) // If enemy is already dead
+        if (state._unit._unitTarget == null) // If enemy is already dead
         {
-            state._NPCUnit._unitTarget = state._NPCUnit.general;
+            state._unit._unitTarget = state._unit.general;
             ToHoldPositionState();
         }
         else
         {
-            Unit enemy = state._NPCUnit._unitTarget;
+            Debug.Log(state._unit._unitTarget.name);
+            Unit enemy = (Unit)state._unit._unitTarget;
 
-            float distance = (state._NPCUnit._currentPosition - state._NPCUnit._unitTarget._currentPosition).magnitude;
-            if (distance < state._NPCUnit._fieldOfView)
+            float distance = (state._unit._currentPosition - state._unit._unitTarget._currentPosition).magnitude;
+            if (distance < state._unit._fieldOfView)
             {
-                float healPointRemaining = enemy.getHealPoint() - getDamagePoint(state._NPCUnit.getName(), enemy.getName());
+                float healPointRemaining = enemy.getHealPoint() - getDamagePoint(state._unit.getName(), enemy.getName());
                 enemy.setHealPoint(healPointRemaining);
             }
 
             if (enemy.getHealPoint() <= 0.0f)
             {
-                state._NPCUnit._unitTarget = state._NPCUnit.general;
+                state._unit._unitTarget = state._unit.general;
                 ToHoldPositionState();
             }
         }

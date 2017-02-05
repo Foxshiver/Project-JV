@@ -62,7 +62,7 @@ public class GameEngine : MonoBehaviour {
         _substate = Substate.WaitForStart;
 
         timeAttack = Time.time;
-        timeBeforeNextAttack = 30.0f;
+        timeBeforeNextAttack = 10.0f;
 
         PauseCanvas.enabled = false;
     }

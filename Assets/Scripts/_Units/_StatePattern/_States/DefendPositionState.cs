@@ -90,7 +90,9 @@ public class DefendPositionState : IUnitState {
         }
         else
         {
-            Debug.Log(state._unit._unitTarget.name);
+            if(state._unit._unitTarget == state._unit.general)
+                return;
+            
             Unit enemy = (Unit)state._unit._unitTarget;
 
             float distance = (state._unit._currentPosition - state._unit._unitTarget._currentPosition).magnitude;

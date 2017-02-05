@@ -7,8 +7,8 @@ public class Player : MovableEntity {
     
     public List<Unit> listOfUnits;
     public List<Unit> listOfWorkerUnits;
-    public List< List<Unit> > listOfHoldPositionUnits;
-    private List<FixedEntity> listOfPositions;
+    public List<List<Unit>> listOfHoldPositionUnits;
+    public List<FixedEntity> listOfPositions;
 
     private LeaderBehavior leader;
 
@@ -29,7 +29,6 @@ public class Player : MovableEntity {
 
         leader = new LeaderBehavior(this);
 	}
-		
 
 	// Update is called once per frame
 	public void update()
@@ -200,6 +199,26 @@ public class Player : MovableEntity {
         foreach(PositionToHold p in listOfPositions)
             p.update();
 
+        checkAllUnits();
+    }
+
+    // Update all the unit list
+    private void checkAllUnits()
+    {
+        for(int i=0; i<listOfUnits.Count; i++)
+            if(listOfUnits[i] == null)
+                listOfUnits.Remove(listOfUnits[i]);
+
+        for(int i=0; i<listOfWorkerUnits.Count; i++)
+            if(listOfWorkerUnits[i] == null)
+                listOfWorkerUnits.Remove(listOfWorkerUnits[i]);
+
+        for(int i=0; i<listOfHoldPositionUnits.Count; i++)
+            for(int j=0; j<listOfHoldPositionUnits[i].Count; j++)
+            {
+                if(listOfHoldPositionUnits[i][j] == null)
+                    listOfHoldPositionUnits[i].Remove(listOfHoldPositionUnits[i][j]);
+            }
     }
 
     // Return the nearsest unit of the player

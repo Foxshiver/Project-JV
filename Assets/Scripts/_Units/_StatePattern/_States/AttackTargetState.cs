@@ -16,16 +16,16 @@ public class AttackTargetState : IEnemyState
 
     public void UpdateState()
     {
-        //CheckAround();
+        CheckEnemyAround();
         actionFight();
         Seek();
     }
 
-    public void ToAttackUnitState()
-    { Debug.Log("Can't transition to same state"); }
-
     public void ToReachTargetState()
     { state.currentState = state.reachTargetState; }
+
+    public void ToAttackUnitState()
+    { Debug.Log("Can't transition to same state"); }
 
     public void ToAttackTargetState()
     { Debug.Log("Can't transition to Attack target state from attack state"); }
@@ -43,16 +43,17 @@ public class AttackTargetState : IEnemyState
         state._unit.updatePosition(state._unit._currentPosition);
     }
 
-    //private void CheckAround()
-    //{
-    //    float distance = (state._NPCUnit._currentPosition - /* POSITION BNEAREST ENEMY */ ).magnitude;
+    private void CheckEnemyAround()
+    {
+        Unit[] listOfNeighboor = ListOfNeighboors();
+        Unit nearsestUnit = getNearestUnit(listOfNeighboor);
 
-    //    if (distance < state._NPCUnit._fieldOfView)
-    //    {
-    //        state._NPCUnit._simpleTarget = state._NPCUnit. /* NEAREST ENEMY */;
-    //        ToAttackUnitState();
-    //    }
-    //}
+        if(nearsestUnit == null)
+            return;
+
+        state._unit._unitTarget = nearsestUnit;
+        ToAttackUnitState();
+    }
 
     private void actionFight()
     {
@@ -76,5 +77,68 @@ public class AttackTargetState : IEnemyState
                 enemy.setHealPoint(enemy.getHealPoint()-2.0f);
             }
         }
+    }
+
+    // Return the nearsest unit of the player
+    public Unit getNearestUnit(Unit[] listOfNeighboor)
+    {
+        float minDistance = float.MaxValue;
+        Unit nearestUnit = null;
+
+        foreach(Unit u in listOfNeighboor)
+        {
+            if(u.getFaction() == 1)
+            {
+                float distance = (state._unit._currentPosition - u._currentPosition).magnitude;
+                if(distance < minDistance)
+                {
+                    nearestUnit = u;
+                    minDistance = distance;
+                }
+            }
+        }
+
+        return nearestUnit;
+    }
+
+    // Return the tab containing all the neighboors of the player
+    public Unit[] ListOfNeighboors()
+    {
+        Unit[] listOfUnit = GameObject.FindObjectsOfType<Unit>();
+        bool[] isInRadius = new bool[listOfUnit.Length];
+
+        int nbNeighboors = 0;
+
+        for(int i = 0; i < listOfUnit.Length; i++)
+        {
+            if(listOfUnit[i].gameObject != state._unit.gameObject)
+            {
+                float distance = (listOfUnit[i].gameObject.transform.position - state._unit.transform.position).magnitude;
+
+                if(distance < state._unit._fieldOfView)
+                {
+                    isInRadius[i] = true;
+                    nbNeighboors++;
+                }
+                else
+                {
+                    isInRadius[i] = false;
+                }
+            }
+        }
+
+        int indiceNewList = 0;
+
+        Unit[] listOfNeighboors = new Unit[nbNeighboors];
+        for(int i = 0; i < listOfUnit.Length; i++)
+        {
+            if(isInRadius[i])
+            {
+                listOfNeighboors.SetValue(listOfUnit[i], indiceNewList);
+                indiceNewList++;
+            }
+        }
+
+        return listOfNeighboors;
     }
 }

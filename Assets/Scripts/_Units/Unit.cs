@@ -75,7 +75,7 @@ public class Unit : MovableEntity {
 
             Vector2 vector = this._currentPosition - prevPosition;
             float angle = AngleBetweenVector2(vector, new Vector2(0.0f, 0.0f));
-            transform.localEulerAngles = new Vector3(0.0f, -angle, 0.0f);
+            transform.localEulerAngles = new Vector3(0.0f, -angle-90, 0.0f);
         }
     }
 

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Field : FixedEntity
 {
-    [HideInInspector] public int _nbMaxUnit = 1;
-    public int _nbMaxCoin = 1;
+    public int _nbMaxUnit;
+    public int _nbMaxCoin;
     
     public Coin coinPrefab;
     public List<Coin> coinsList;

@@ -43,9 +43,6 @@ public class GameEngine : MonoBehaviour {
     // ATTACK GESTION
     private float timeAttack;
     private float timeBeforeNextAttack;
-    private int nbFoxAttack;
-    private int nbSnakeAttack;
-    private int nbChickenAttack;
 
     // PAUSE GESTION
     private bool pause = false;

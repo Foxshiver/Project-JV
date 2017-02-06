@@ -23,8 +23,20 @@ public class AttackEnemyState : IUnitState {
 
     public void TriggeringUpdate()
     {
-        // Si l'ennemie chassé est détruit ou trop éloigné du joueur Alors l'unité retourne vers le joueur
-        //ToFollowLeaderState();
+        // 2 scénarios possibles
+        // - Si le joueur appuie sur 'B' Alors l'unité qui le suit garde la position
+        if(Input.GetButtonDown("HoldPosition"))
+        {
+            ToHoldPositionState();
+            return;
+        }
+
+        // - Si le joueur appuie sur 'Y' ET qu'il est à proximité d'un champ Alors l'unité va travailler au champ
+        if(Input.GetButtonDown("Work"))
+        {
+            ToWorkState();
+            return;
+        }
     }
 
     public void ToWaitState()
@@ -34,7 +46,7 @@ public class AttackEnemyState : IUnitState {
     { state.currentState = state.followLeaderState; }
 
     public void ToHoldPositionState()
-    { Debug.Log("Can't transition to hold position state from attack state"); }
+    { state.currentState = state.holdPositionState; }
 
     public void ToDefendPositionState()
     { Debug.Log("Can't transition to defend state from attack state"); }
@@ -43,7 +55,7 @@ public class AttackEnemyState : IUnitState {
     { Debug.Log("Can't transition to same state"); }
 
     public void ToWorkState()
-    { Debug.Log("Can't transition to work state from attack state"); }
+    { state.currentState = state.workState; }
 
     /*
      * Pursuit behavior

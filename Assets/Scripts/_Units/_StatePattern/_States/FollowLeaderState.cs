@@ -6,9 +6,12 @@ public class FollowLeaderState : IUnitState {
     private readonly RecruitmentPattern state;
     private SeekBehavior seek;
 
+    private Animator animator;
     // Constructor
     public FollowLeaderState(RecruitmentPattern statePatternUnit, SeekBehavior seekBehavior)
     {
+        //if (state._unit.gameObject != null)
+        //    animator = state._unit.gameObject.GetComponent<Animator>();
         state = statePatternUnit;
         seek = seekBehavior;
     }
@@ -49,16 +52,29 @@ public class FollowLeaderState : IUnitState {
     { Debug.Log("Can't transition to same state"); }
 
     public void ToHoldPositionState()
-    { state.currentState = state.holdPositionState; }
+    {
+        state.currentState = state.holdPositionState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+
+    }
 
     public void ToDefendPositionState()
     { Debug.Log("Can't transition to defend state from follow leader state"); }
 
     public void ToAttackEnemyState()
-    { state.currentState = state.attackEnemyState; }
+    {
+        state.currentState = state.attackEnemyState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", true);
+    }
 
     public void ToWorkState()
-    { state.currentState = state.workState; }
+    {
+        state.currentState = state.workState;
+        state._unit._animator.SetBool("IsAttacking", false);
+        state._unit._animator.SetBool("IsWorking", true);
+    }
 
     /*
      * Seek behavior

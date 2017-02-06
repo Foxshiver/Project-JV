@@ -8,8 +8,12 @@ public class AttackTargetState : IEnemyState
 
     private double timeFirstCall = Time.time;
 
+    private Animator animator;
+
     public AttackTargetState(WavePattern statePatternEnemy, SeekBehavior seekBehavior)
     {
+        //if (state._unit.gameObject != null)
+        //    animator = state._unit.gameObject.GetComponent<Animator>();
         state = statePatternEnemy;
         seek = seekBehavior;
     }
@@ -22,7 +26,11 @@ public class AttackTargetState : IEnemyState
     }
 
     public void ToReachTargetState()
-    { state.currentState = state.reachTargetState; }
+    {
+        state.currentState = state.reachTargetState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+    }
 
     public void ToAttackUnitState()
     { Debug.Log("Can't transition to same state"); }
@@ -67,6 +75,9 @@ public class AttackTargetState : IEnemyState
     // Fight function
     private void fight()
     {
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", true);
+
         if (state._unit._simpleTarget != null)
         {
             FixedEntity enemy = state._unit._simpleTarget;

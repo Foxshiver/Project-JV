@@ -7,8 +7,12 @@ public class WorkState : IUnitState {
     private WaitBehavior wait;
     private Field field;
 
+    private Animator animator;
+
     public WorkState(RecruitmentPattern statePatternUnit, WaitBehavior waitBehavior)
     {
+        //if (state._unit.gameObject != null)
+        //    animator = state._unit.gameObject.GetComponent<Animator>();
         state = statePatternUnit;
         wait = waitBehavior;
     }
@@ -30,7 +34,11 @@ public class WorkState : IUnitState {
     { Debug.Log("Can't return to wait state"); }
 
     public void ToFollowLeaderState()
-    { state.currentState = state.followLeaderState; }
+    {
+        state.currentState = state.followLeaderState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+    }
 
     public void ToHoldPositionState()
     { Debug.Log("Can't transition to hold position state from work state"); }
@@ -51,6 +59,7 @@ public class WorkState : IUnitState {
      */
     private void Work()
     {
+
         Vector2 steering = wait.computeWaitSteering(state._unit._simpleTarget.position, state._unit.sizeRadius, state._unit.timeBeforeChangePos);
         state._unit._currentPosition = wait.computeNewPosition(steering - wait.computeSteeringSeparationForce());
 

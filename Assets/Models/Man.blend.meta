@@ -8,9 +8,29 @@ ModelImporter:
     100000: //RootNode
     100002: Cube
     100004: Cylinder_001
+    100006: Armature
+    100008: Bone
+    100010: Bone_001
+    100012: Bone_003
+    100014: Bone_004
+    100016: Bone_005
+    100018: Bone_006
+    100020: Bone_007
+    100022: Bone_008
+    100024: Head
     400000: //RootNode
     400002: Cube
     400004: Cylinder_001
+    400006: Armature
+    400008: Bone
+    400010: Bone_001
+    400012: Bone_003
+    400014: Bone_004
+    400016: Bone_005
+    400018: Bone_006
+    400020: Bone_007
+    400022: Bone_008
+    400024: Head
     2300000: //RootNode
     2300002: Cube
     2300004: Cylinder_001

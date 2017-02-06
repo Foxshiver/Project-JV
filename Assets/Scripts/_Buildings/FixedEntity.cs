@@ -12,6 +12,8 @@ public class FixedEntity : MonoBehaviour
 
     public int _nbCurrentUnit = 0;
 
+    public AudioSource damageSound;
+
     public void start()
     {
         _healPoint = 100.0f;
@@ -22,6 +24,9 @@ public class FixedEntity : MonoBehaviour
     {
         return new Vector2(position.x, position.z);
     }
+
+    public void playDamageSound()
+    { damageSound.Play(); }
 
     public float getHealPoint()
     { return _healPoint; }

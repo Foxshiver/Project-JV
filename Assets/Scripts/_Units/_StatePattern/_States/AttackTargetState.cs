@@ -86,6 +86,7 @@ public class AttackTargetState : IEnemyState
             if (distance < state._unit._fieldOfView)
             {
                 enemy.setHealPoint(enemy.getHealPoint()-2.0f);
+                enemy.playDamageSound();
             }
         }
     }

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 4209d7ca73da4234cb29e0d6fee243df
+timeCreated: 1486418505
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: BitLow
+  fontNames:
+  - BitLow
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -20,11 +20,26 @@ public class EndEngine : MonoBehaviour {
 
     public Text scoreMessage;
 
+    public GameObject winningEnd;
+    public GameObject losingEnd;
+
 
     // Use this for initialization
     void Start()
     {
-        scoreMessage.text = "You have survive " + PersistentData.nbOfWaves + " attacks in " + PersistentData.TimeAlive + " secs";
+        if(PersistentData.nbOfWaves >= 10)
+        {
+            winningEnd.SetActive(true);
+            losingEnd.SetActive(false);
+            scoreMessage.text = "You have defend your farm from " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
+        }
+        else
+        {
+            losingEnd.SetActive(true);
+            winningEnd.SetActive(false);
+            scoreMessage.text = "You died after " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
+        }
+
         firstTouch = true;
 
         ActiveNextScene = GameScene;

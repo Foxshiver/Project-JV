@@ -12,8 +12,7 @@ public class AttackEnemyState : IUnitState {
 
     public AttackEnemyState(RecruitmentPattern statePatternUnit, PursuitBehavior pursuitBehavior)
     {
-        //if (state._unit != null)
-        //    animator = state._unit.GetComponent<Animator>();
+        //animator = state._unit.GetComponent<Animator>();
         state = statePatternUnit;
         pursuit = pursuitBehavior;
     }
@@ -47,18 +46,10 @@ public class AttackEnemyState : IUnitState {
     { Debug.Log("Can't return to wait state"); }
 
     public void ToFollowLeaderState()
-    {
-        state.currentState = state.followLeaderState;
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", false);
-    }
+    { state.currentState = state.followLeaderState; }
 
     public void ToHoldPositionState()
-    {
-        state.currentState = state.holdPositionState;
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", false);
-    }
+    { state.currentState = state.holdPositionState; }
 
     public void ToDefendPositionState()
     { Debug.Log("Can't transition to defend state from attack state"); }
@@ -67,12 +58,7 @@ public class AttackEnemyState : IUnitState {
     { Debug.Log("Can't transition to same state"); }
 
     public void ToWorkState()
-    {
-        state.currentState = state.workState;
-        state._unit._animator.SetBool("IsAttacking", false);
-        state._unit._animator.SetBool("IsWorking", true);
-        
-    }
+    { state.currentState = state.workState; }
 
     /*
      * Pursuit behavior

@@ -125,9 +125,12 @@ public class GameEngine : MonoBehaviour {
     {
         if ((Time.time - timeAttack) > timeBeforeNextAttack)
         {
+            if (nbWaves >= 10)
+                endGame();
+            nbWaves++;
+
             timeBeforeNextAttack = Random.Range(25.0f, 50.0f);
             timeAttack = Time.time;
-            nbWaves++;
 
             evilFoxSpawner.createUnit(allyQG);
             evilChickenSpawner.createUnit(allyQG);

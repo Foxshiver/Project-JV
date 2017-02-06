@@ -26,15 +26,15 @@ public class ReachTargetState : IEnemyState
     public void ToAttackUnitState()
     {
         state.currentState = state.attackUnitState;
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", true);
+        state._unit._animatorEntity.SetBool("IsWorking", false);
+        state._unit._animatorEntity.SetBool("IsAttacking", true);
     }
 
     public void ToAttackTargetState()
     {
         state.currentState = state.attackTargetState;
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", true);
+        state._unit._animatorEntity.SetBool("IsWorking", false);
+        state._unit._animatorEntity.SetBool("IsAttacking", true);
     }
     
     /*

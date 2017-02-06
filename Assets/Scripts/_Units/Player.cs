@@ -15,6 +15,7 @@ public class Player : MovableEntity {
     public Vector2 _behindPosition;
     public int _money;
 
+    
     // Constructor
     public Player()
 	{
@@ -40,6 +41,8 @@ public class Player : MovableEntity {
         _behindPosition = leader.getBehindLeader();
         _currentPosition = leader.computeNewPosition(leader.controllerMovement());
         updatePosition(_currentPosition);
+
+        _animatorEntity.SetFloat("Velocity", _velocity.magnitude);
 
         // Orientation du joueur
         //Vector2 vector = this._currentPosition - prevPosition;

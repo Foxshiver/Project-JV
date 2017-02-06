@@ -31,13 +31,21 @@ public class HoldPositionState : IUnitState {
     { Debug.Log("Can't return to wait state"); }
 
     public void ToFollowLeaderState()
-    { state.currentState = state.followLeaderState; }
+    {
+        state.currentState = state.followLeaderState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+    }
 
     public void ToHoldPositionState()
     { Debug.Log("Can't transition to same state"); }
 
     public void ToDefendPositionState()
-    { state.currentState = state.defendPositionState; }
+    {
+        state.currentState = state.defendPositionState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+    }
 
     public void ToAttackEnemyState()
     { Debug.Log("Can't transition to attack state from hold position state"); }

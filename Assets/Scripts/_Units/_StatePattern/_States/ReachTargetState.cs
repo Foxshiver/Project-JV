@@ -24,10 +24,18 @@ public class ReachTargetState : IEnemyState
     { Debug.Log("Can't transition to same state"); }
 
     public void ToAttackUnitState()
-    { state.currentState = state.attackUnitState; }
+    {
+        state.currentState = state.attackUnitState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", true);
+    }
 
     public void ToAttackTargetState()
-    { state.currentState = state.attackTargetState; }
+    {
+        state.currentState = state.attackTargetState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", true);
+    }
     
     /*
      * Seek behavior

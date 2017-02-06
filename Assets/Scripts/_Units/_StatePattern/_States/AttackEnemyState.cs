@@ -12,7 +12,7 @@ public class AttackEnemyState : IUnitState {
 
     public AttackEnemyState(RecruitmentPattern statePatternUnit, PursuitBehavior pursuitBehavior)
     {
-        animator = state._unit.GetComponent<Animator>();
+        //animator = state._unit.GetComponent<Animator>();
         state = statePatternUnit;
         pursuit = pursuitBehavior;
     }

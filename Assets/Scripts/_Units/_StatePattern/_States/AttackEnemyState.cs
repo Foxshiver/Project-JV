@@ -8,8 +8,11 @@ public class AttackEnemyState : IUnitState {
 
     private double timeFirstCall = Time.time;
 
+    private Animator animator;
+
     public AttackEnemyState(RecruitmentPattern statePatternUnit, PursuitBehavior pursuitBehavior)
     {
+        animator = state._unit.GetComponent<Animator>();
         state = statePatternUnit;
         pursuit = pursuitBehavior;
     }
@@ -93,6 +96,7 @@ public class AttackEnemyState : IUnitState {
     // Fight function
     private void fight()
     {
+
         if (state._unit._unitTarget == null) // If enemy is already dead
         {
             state._unit._unitTarget = state._unit.general;

@@ -118,7 +118,679 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|Fox_Attack
+      takeName: Armature|Fox_Attack
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Arm IK.L
+        weight: 1
+      - path: Armature/Arm IK.L/Arm IK.L_end
+        weight: 1
+      - path: Armature/Arm IK.R
+        weight: 1
+      - path: Armature/Arm IK.R/Arm IK.R_end
+        weight: 1
+      - path: Armature/Leg IK.L
+        weight: 1
+      - path: Armature/Leg IK.L/Leg IK.L_end
+        weight: 1
+      - path: Armature/Leg IK.R
+        weight: 1
+      - path: Armature/Leg IK.R/Leg IK.R_end
+        weight: 1
+      - path: Armature/Stomach
+        weight: 1
+      - path: Armature/Stomach/Chest
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L/Hand.L_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R/Hand.R_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Tail
+        weight: 1
+      - path: Armature/Tail/Tail1
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2/Tail2_end
+        weight: 1
+      - path: Armature/Tail IK
+        weight: 1
+      - path: Armature/Tail IK/Tail IK_end
+        weight: 1
+      - path: Cylinder
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Fox_Death
+      takeName: Armature|Fox_Death
+      firstFrame: 0
+      lastFrame: 65
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Arm IK.L
+        weight: 1
+      - path: Armature/Arm IK.L/Arm IK.L_end
+        weight: 1
+      - path: Armature/Arm IK.R
+        weight: 1
+      - path: Armature/Arm IK.R/Arm IK.R_end
+        weight: 1
+      - path: Armature/Leg IK.L
+        weight: 1
+      - path: Armature/Leg IK.L/Leg IK.L_end
+        weight: 1
+      - path: Armature/Leg IK.R
+        weight: 1
+      - path: Armature/Leg IK.R/Leg IK.R_end
+        weight: 1
+      - path: Armature/Stomach
+        weight: 1
+      - path: Armature/Stomach/Chest
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L/Hand.L_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R/Hand.R_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Tail
+        weight: 1
+      - path: Armature/Tail/Tail1
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2/Tail2_end
+        weight: 1
+      - path: Armature/Tail IK
+        weight: 1
+      - path: Armature/Tail IK/Tail IK_end
+        weight: 1
+      - path: Cylinder
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Fox_Idle
+      takeName: Armature|Fox_Idle
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Arm IK.L
+        weight: 1
+      - path: Armature/Arm IK.L/Arm IK.L_end
+        weight: 1
+      - path: Armature/Arm IK.R
+        weight: 1
+      - path: Armature/Arm IK.R/Arm IK.R_end
+        weight: 1
+      - path: Armature/Leg IK.L
+        weight: 1
+      - path: Armature/Leg IK.L/Leg IK.L_end
+        weight: 1
+      - path: Armature/Leg IK.R
+        weight: 1
+      - path: Armature/Leg IK.R/Leg IK.R_end
+        weight: 1
+      - path: Armature/Stomach
+        weight: 1
+      - path: Armature/Stomach/Chest
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L/Hand.L_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R/Hand.R_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Tail
+        weight: 1
+      - path: Armature/Tail/Tail1
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2/Tail2_end
+        weight: 1
+      - path: Armature/Tail IK
+        weight: 1
+      - path: Armature/Tail IK/Tail IK_end
+        weight: 1
+      - path: Cylinder
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Fox_Walk
+      takeName: Armature|Fox_Walk
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Arm IK.L
+        weight: 1
+      - path: Armature/Arm IK.L/Arm IK.L_end
+        weight: 1
+      - path: Armature/Arm IK.R
+        weight: 1
+      - path: Armature/Arm IK.R/Arm IK.R_end
+        weight: 1
+      - path: Armature/Leg IK.L
+        weight: 1
+      - path: Armature/Leg IK.L/Leg IK.L_end
+        weight: 1
+      - path: Armature/Leg IK.R
+        weight: 1
+      - path: Armature/Leg IK.R/Leg IK.R_end
+        weight: 1
+      - path: Armature/Stomach
+        weight: 1
+      - path: Armature/Stomach/Chest
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L/Hand.L_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R/Hand.R_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Tail
+        weight: 1
+      - path: Armature/Tail/Tail1
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2/Tail2_end
+        weight: 1
+      - path: Armature/Tail IK
+        weight: 1
+      - path: Armature/Tail IK/Tail IK_end
+        weight: 1
+      - path: Cylinder
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Fox_Work
+      takeName: Armature|Fox_Work
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Arm IK.L
+        weight: 1
+      - path: Armature/Arm IK.L/Arm IK.L_end
+        weight: 1
+      - path: Armature/Arm IK.R
+        weight: 1
+      - path: Armature/Arm IK.R/Arm IK.R_end
+        weight: 1
+      - path: Armature/Leg IK.L
+        weight: 1
+      - path: Armature/Leg IK.L/Leg IK.L_end
+        weight: 1
+      - path: Armature/Leg IK.R
+        weight: 1
+      - path: Armature/Leg IK.R/Leg IK.R_end
+        weight: 1
+      - path: Armature/Stomach
+        weight: 1
+      - path: Armature/Stomach/Chest
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L/Hand.L_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R/Hand.R_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Tail
+        weight: 1
+      - path: Armature/Tail/Tail1
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2/Tail2_end
+        weight: 1
+      - path: Armature/Tail IK
+        weight: 1
+      - path: Armature/Tail IK/Tail IK_end
+        weight: 1
+      - path: Cylinder
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Fox_Work2
+      takeName: Armature|Fox_Work2
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Arm IK.L
+        weight: 1
+      - path: Armature/Arm IK.L/Arm IK.L_end
+        weight: 1
+      - path: Armature/Arm IK.R
+        weight: 1
+      - path: Armature/Arm IK.R/Arm IK.R_end
+        weight: 1
+      - path: Armature/Leg IK.L
+        weight: 1
+      - path: Armature/Leg IK.L/Leg IK.L_end
+        weight: 1
+      - path: Armature/Leg IK.R
+        weight: 1
+      - path: Armature/Leg IK.R/Leg IK.R_end
+        weight: 1
+      - path: Armature/Stomach
+        weight: 1
+      - path: Armature/Stomach/Chest
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head
+        weight: 1
+      - path: Armature/Stomach/Chest/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.L/Upper Arm1.L/Lower Arm.L/Hand.L/Hand.L_end
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R
+        weight: 1
+      - path: Armature/Stomach/Chest/Upper Arm.R/Upper Arm1.R/Lower Arm.R/Hand.R/Hand.R_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.L/Upper Leg1.L/Lower Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Stomach/Upper Leg.R/Upper Leg1.R/Lower Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Tail
+        weight: 1
+      - path: Armature/Tail/Tail1
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail/Tail1/Tail2/Tail2_end
+        weight: 1
+      - path: Armature/Tail IK
+        weight: 1
+      - path: Armature/Tail IK/Tail IK_end
+        weight: 1
+      - path: Cylinder
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

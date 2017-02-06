@@ -14,7 +14,7 @@ public class FixedEntity : MonoBehaviour
 
     public void start()
     {
-        _healPoint = 20.0f;
+        _healPoint = 100.0f;
         position = Vector3TOVector2(this.transform.position);
     }
 

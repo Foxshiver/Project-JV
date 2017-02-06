@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameEngine : MonoBehaviour {
 
@@ -51,8 +52,15 @@ public class GameEngine : MonoBehaviour {
     // MUSIC GESTION
     public AudioSource SourceMusic;
 
+    // TIME AND SCORE GESTION
+    private float startTime;
+    private int nbWaves;
+
     void Start()
     {
+        startTime = Time.time;
+        nbWaves = 0;
+
         loadScene();
         initUnits();
 
@@ -119,7 +127,8 @@ public class GameEngine : MonoBehaviour {
         {
             timeBeforeNextAttack = Random.Range(25.0f, 50.0f);
             timeAttack = Time.time;
-            
+            nbWaves++;
+
             evilFoxSpawner.createUnit(allyQG);
             evilChickenSpawner.createUnit(allyQG);
             evilSnakeSpawner.createUnit(allyQG);
@@ -128,7 +137,10 @@ public class GameEngine : MonoBehaviour {
 
     void endGame()
     {
-        Debug.Log("You lose");
+        PersistentData.TimeAlive = Time.time - startTime;
+        PersistentData.nbOfWaves = nbWaves;
+    
+        SceneManager.LoadScene("End Scene");
     }
 
     Substate checkChangeSubstate()

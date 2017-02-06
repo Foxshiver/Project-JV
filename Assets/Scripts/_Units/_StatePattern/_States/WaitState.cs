@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WaitState : IUnitState {
+public class WaitState : IUnitState
+{
 
     private readonly RecruitmentPattern state;
     private WaitBehavior wait;
@@ -9,6 +10,9 @@ public class WaitState : IUnitState {
     // Constructor
     public WaitState(RecruitmentPattern statePatternUnit, WaitBehavior waitBehavior)
     {
+        //if(state._unit.gameObject != null)
+        //    animator = state._unit.gameObject.GetComponent<Animator>();
+
         state = statePatternUnit;
         wait = waitBehavior;
     }
@@ -20,7 +24,7 @@ public class WaitState : IUnitState {
 
     public void TriggeringUpdate()
     {
-        if(Input.GetButtonDown("TakeUnitOn"))
+        if (Input.GetButtonDown("TakeUnitOn"))
             ToFollowLeaderState();
     }
 
@@ -28,7 +32,11 @@ public class WaitState : IUnitState {
     { Debug.Log("Can't transition to same state"); }
 
     public void ToFollowLeaderState()
-    { state.currentState = state.followLeaderState; }
+    {
+        state.currentState = state.followLeaderState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+    }
 
     public void ToHoldPositionState()
     { Debug.Log("Can't transition to hold position state from wait state"); }

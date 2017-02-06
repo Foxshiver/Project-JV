@@ -22,7 +22,11 @@ public class AttackTargetState : IEnemyState
     }
 
     public void ToReachTargetState()
-    { state.currentState = state.reachTargetState; }
+    {
+        state.currentState = state.reachTargetState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+    }
 
     public void ToAttackUnitState()
     { Debug.Log("Can't transition to same state"); }
@@ -48,7 +52,7 @@ public class AttackTargetState : IEnemyState
         Unit[] listOfNeighboor = ListOfNeighboors();
         Unit nearsestUnit = getNearestUnit(listOfNeighboor);
 
-        if(nearsestUnit == null)
+        if (nearsestUnit == null)
             return;
 
         state._unit._unitTarget = nearsestUnit;
@@ -67,6 +71,7 @@ public class AttackTargetState : IEnemyState
     // Fight function
     private void fight()
     {
+
         if (state._unit._simpleTarget != null)
         {
             FixedEntity enemy = state._unit._simpleTarget;
@@ -74,7 +79,7 @@ public class AttackTargetState : IEnemyState
             float distance = (state._unit._currentPosition - state._unit._simpleTarget.position).magnitude;
             if (distance < state._unit._fieldOfView)
             {
-                enemy.setHealPoint(enemy.getHealPoint()-2.0f);
+                enemy.setHealPoint(enemy.getHealPoint() - 2.0f);
             }
         }
     }
@@ -85,12 +90,12 @@ public class AttackTargetState : IEnemyState
         float minDistance = float.MaxValue;
         Unit nearestUnit = null;
 
-        foreach(Unit u in listOfNeighboor)
+        foreach (Unit u in listOfNeighboor)
         {
-            if(u.getFaction() == 1)
+            if (u.getFaction() == 1)
             {
                 float distance = (state._unit._currentPosition - u._currentPosition).magnitude;
-                if(distance < minDistance)
+                if (distance < minDistance)
                 {
                     nearestUnit = u;
                     minDistance = distance;
@@ -109,13 +114,13 @@ public class AttackTargetState : IEnemyState
 
         int nbNeighboors = 0;
 
-        for(int i = 0; i < listOfUnit.Length; i++)
+        for (int i = 0; i < listOfUnit.Length; i++)
         {
-            if(listOfUnit[i].gameObject != state._unit.gameObject)
+            if (listOfUnit[i].gameObject != state._unit.gameObject)
             {
                 float distance = (listOfUnit[i].gameObject.transform.position - state._unit.transform.position).magnitude;
 
-                if(distance < state._unit._fieldOfView)
+                if (distance < state._unit._fieldOfView)
                 {
                     isInRadius[i] = true;
                     nbNeighboors++;
@@ -130,9 +135,9 @@ public class AttackTargetState : IEnemyState
         int indiceNewList = 0;
 
         Unit[] listOfNeighboors = new Unit[nbNeighboors];
-        for(int i = 0; i < listOfUnit.Length; i++)
+        for (int i = 0; i < listOfUnit.Length; i++)
         {
-            if(isInRadius[i])
+            if (isInRadius[i])
             {
                 listOfNeighboors.SetValue(listOfUnit[i], indiceNewList);
                 indiceNewList++;

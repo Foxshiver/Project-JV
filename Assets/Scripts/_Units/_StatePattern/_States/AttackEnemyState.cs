@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AttackEnemyState : IUnitState {
+public class AttackEnemyState : IUnitState
+{
 
     private readonly RecruitmentPattern state;
     private PursuitBehavior pursuit;
 
     private double timeFirstCall = Time.time;
-
-    private Animator animator;
 
     public AttackEnemyState(RecruitmentPattern statePatternUnit, PursuitBehavior pursuitBehavior)
     {
@@ -28,14 +27,14 @@ public class AttackEnemyState : IUnitState {
     {
         // 2 scénarios possibles
         // - Si le joueur appuie sur 'B' Alors l'unité qui le suit garde la position
-        if(Input.GetButtonDown("HoldPosition"))
+        if (Input.GetButtonDown("HoldPosition"))
         {
             ToHoldPositionState();
             return;
         }
 
         // - Si le joueur appuie sur 'Y' ET qu'il est à proximité d'un champ Alors l'unité va travailler au champ
-        if(Input.GetButtonDown("Work"))
+        if (Input.GetButtonDown("Work"))
         {
             ToWorkState();
             return;
@@ -46,10 +45,18 @@ public class AttackEnemyState : IUnitState {
     { Debug.Log("Can't return to wait state"); }
 
     public void ToFollowLeaderState()
-    { state.currentState = state.followLeaderState; }
+    {
+        state.currentState = state.followLeaderState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+    }
 
     public void ToHoldPositionState()
-    { state.currentState = state.holdPositionState; }
+    {
+        state.currentState = state.holdPositionState;
+        state._unit._animator.SetBool("IsWorking", false);
+        state._unit._animator.SetBool("IsAttacking", false);
+    }
 
     public void ToDefendPositionState()
     { Debug.Log("Can't transition to defend state from attack state"); }
@@ -58,7 +65,11 @@ public class AttackEnemyState : IUnitState {
     { Debug.Log("Can't transition to same state"); }
 
     public void ToWorkState()
-    { state.currentState = state.workState; }
+    {
+        state.currentState = state.workState;
+        state._unit._animator.SetBool("IsAttacking", false);
+        state._unit._animator.SetBool("IsWorking", true);
+    }
 
     /*
      * Pursuit behavior

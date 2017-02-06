@@ -2,10 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Unit : MovableEntity {
+public class Unit : MovableEntity
+{
 
-    [HideInInspector] public float sizeRadius;
-    
+    [HideInInspector]
+    public float sizeRadius;
+
 
     public float _damagePoint;
 
@@ -22,11 +24,15 @@ public class Unit : MovableEntity {
 
     public Scrollbar healthBar;
 
+    public Animator _animator;
+
     public void init(FixedEntity spawner, Vector2 pos, RecruitmentPattern pattern)
     {
         this._simpleTarget = spawner;
         this._currentPosition = pos;
         this.updatePosition(this._currentPosition);
+
+        _animator = GetComponent<Animator>();
 
         sizeRadius = 2.0f;
         timeBeforeChangePos = Random.Range(3.0f, 6.0f);
@@ -44,6 +50,8 @@ public class Unit : MovableEntity {
         this._maxSpeed = 2.0f;
         this._maxSteeringForce = 2.0f;
 
+        _animator = GetComponent<Animator>();
+
         sizeRadius = 2.0f;
         timeBeforeChangePos = Random.Range(3.0f, 6.0f);
 
@@ -54,13 +62,13 @@ public class Unit : MovableEntity {
     {
         Vector2 prevPosition = this._currentPosition;
 
-        if(this._healPoint <= 0.0f)
+        if (this._healPoint <= 0.0f)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            if(recruitmentPattern != null)
+            if (recruitmentPattern != null)
             {
                 recruitmentPattern.updateState();
                 currentState = recruitmentPattern.currentState.ToString();
@@ -75,13 +83,13 @@ public class Unit : MovableEntity {
 
             Vector2 vector = this._currentPosition - prevPosition;
             float angle = AngleBetweenVector2(vector, new Vector2(0.0f, 0.0f));
-            transform.localEulerAngles = new Vector3(0.0f, -angle-90, 0.0f);
+            transform.localEulerAngles = new Vector3(0.0f, -angle - 90, 0.0f);
         }
     }
 
     public void triggeringUpdate()
     {
-        if(recruitmentPattern != null)
+        if (recruitmentPattern != null)
             recruitmentPattern.triggeringUpdate();
     }
 

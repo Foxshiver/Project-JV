@@ -21,9 +21,12 @@ public class MultiplayerGameEngine : MonoBehaviour {
     Player player2Clone;
 
     // SPAWNERS
-    public NestSpawner foxSpawner;
-    public NestSpawner chickenSpawner;
-    public NestSpawner snakeSpawner;
+    public NestSpawner foxSpawner1;
+    public NestSpawner foxSpawner2;
+    public NestSpawner snakeSpawner1;
+    public NestSpawner snakeSpawner2;
+    public NestSpawner chickenSpawner1;
+    public NestSpawner chickenSpawner2;
 
     // FARM
     public Farm player1QG;
@@ -100,19 +103,31 @@ public class MultiplayerGameEngine : MonoBehaviour {
         player2_Canvas.GetComponentInChildren<GestionUserInterface>()._player = player2Clone;
 
         // Instanciate 3 neutral fox
-        foxSpawner.createUnit();
-        foxSpawner.createUnit();
-        foxSpawner.createUnit();
+        foxSpawner1.createUnit();
+        foxSpawner1.createUnit();
+        foxSpawner1.createUnit();
+
+        foxSpawner2.createUnit();
+        foxSpawner2.createUnit();
+        foxSpawner2.createUnit();
 
         // Instanciate 3 neutral chicken
-        chickenSpawner.createUnit();
-        chickenSpawner.createUnit();
-        chickenSpawner.createUnit();
+        chickenSpawner1.createUnit();
+        chickenSpawner1.createUnit();
+        chickenSpawner1.createUnit();
+
+        chickenSpawner2.createUnit();
+        chickenSpawner2.createUnit();
+        chickenSpawner2.createUnit();
 
         // Instanciate 3 neutral snake
-        snakeSpawner.createUnit();
-        snakeSpawner.createUnit();
-        snakeSpawner.createUnit();
+        snakeSpawner1.createUnit();
+        snakeSpawner1.createUnit();
+        snakeSpawner1.createUnit();
+
+        snakeSpawner2.createUnit();
+        snakeSpawner2.createUnit();
+        snakeSpawner2.createUnit();
 
         _neutralsUnitsList = FindObjectsOfType(typeof(Unit)) as Unit[];
     }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class GameEngine : MonoBehaviour {
+public class SoloplayerGameEngine : MonoBehaviour {
 
     enum Substate
     {
@@ -38,15 +38,12 @@ public class GameEngine : MonoBehaviour {
     private Object[] _fieldsList;
 
     private Object[] _neutralsUnitsList;
-    private Object[] _enemyUnitsList;
-    private Object[] _allyUnitsList;
 
     // ATTACK GESTION
     private float timeAttack;
     private float timeBeforeNextAttack;
 
     // PAUSE GESTION
-    private bool pause = false;
     public Canvas PauseCanvas;
 
     // MUSIC GESTION

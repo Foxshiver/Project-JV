@@ -26,7 +26,7 @@ public class WorkState : IUnitState {
     public void TriggeringUpdate()
     {
         // Si le joueur appuie sur 'X' Alors l'unité repasse en état poursuite du joueur
-        if(Input.GetButtonDown("CallBack"))
+        if(Input.GetButtonDown("CallBack_" + state._unit.general._joystickNumber.ToString()))
             ToFollowLeaderState();
     }
 

@@ -94,7 +94,7 @@ public class AttackTargetState : IEnemyState
 
         foreach(Unit u in listOfNeighboor)
         {
-            if(u.getFaction() == 1)
+            if(u._faction == 1)
             {
                 float distance = (state._unit._currentPosition - u._currentPosition).magnitude;
                 if(distance < minDistance)

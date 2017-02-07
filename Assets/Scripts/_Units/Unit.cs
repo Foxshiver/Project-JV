@@ -109,13 +109,8 @@ public class Unit : MovableEntity {
     {
         general = newGeneral;
         setUnitTarget(general);
-        setFaction(general._faction);
+        this._faction = general._faction;
     }
-
-    public int getFaction()
-    { return _faction; }
-    public void setFaction(int newFaction)
-    { _faction = newFaction; }
 
     public float getHealPoint()
     { return _healPoint; }

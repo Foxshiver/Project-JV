@@ -23,7 +23,7 @@ public class HoldPositionState : IUnitState {
         // 2 scenarios possibles
         // - Si des unités ennemies passent à proximité du point à défendre Alors l'unité attaque
         // - Si le joueur appuie sur 'X' Alors l'unité repasse en état de poursuite du joueur
-        if(Input.GetButtonDown("CallBack"))
+        if(Input.GetButtonDown("CallBack_" + state._unit.general._joystickNumber.ToString()))
             ToFollowLeaderState();
     }
 

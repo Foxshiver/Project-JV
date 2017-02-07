@@ -22,14 +22,14 @@ public class FollowLeaderState : IUnitState {
     {
         // 3 scénarios possibles
         // - Si le joueur appuie sur 'B' Alors l'unité qui le suit garde la position
-        if(Input.GetButtonDown("HoldPosition"))
+        if(Input.GetButtonDown("HoldPosition_" + state._unit.general._joystickNumber.ToString()))
         {
             ToHoldPositionState();
             return;
         }
 
         // - Si le joueur appuie sur 'Y' ET qu'il est à proximité d'un champ Alors l'unité va travailler au champ
-        if (Input.GetButtonDown("Work"))
+        if (Input.GetButtonDown("Work_" + state._unit.general._joystickNumber.ToString()))
         {
             ToWorkState();
             return;

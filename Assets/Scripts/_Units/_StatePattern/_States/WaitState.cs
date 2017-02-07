@@ -25,7 +25,7 @@ public class WaitState : IUnitState {
 
     public void TriggeringUpdate()
     {
-        if(Input.GetButtonDown("TakeUnitOn"))
+        if(Input.GetButtonDown("TakeUnitOn_" + state._unit.general._joystickNumber.ToString()))
             ToFollowLeaderState();
     }
 

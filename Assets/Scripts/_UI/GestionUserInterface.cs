@@ -2,9 +2,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class GestionUserInterface : MonoBehaviour {
-
-	Player _player;
+public class GestionUserInterface : MonoBehaviour
+{
+	public Player _player;
     public Farm _alliesFarm;
 
 	public Text _moneyText;
@@ -17,12 +17,6 @@ public class GestionUserInterface : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if (first)
-        {
-			_player = FindObjectOfType<Player> ();
-			first = false;
-		}
-
         int nbHolders = 0;
         for(int i=0; i<_player.listOfHoldPositionUnits.Count; i++)
             for(int j=0; j<_player.listOfHoldPositionUnits[i].Count; j++)

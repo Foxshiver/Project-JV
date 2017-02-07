@@ -25,7 +25,7 @@ public class DefendPositionState : IUnitState {
     {
         // Si l'ennemie chassé est détruit ou trop éloigné du spawner Alors l'unité retourne au point à défendre
         // - Si le joueur appuie sur 'X' Alors l'unité repasse en état de poursuite du joueur
-        if (Input.GetButtonDown("CallBack"))
+        if (Input.GetButtonDown("CallBack_" + state._unit.general._joystickNumber.ToString()))
             ToFollowLeaderState();
     }
 

@@ -17,7 +17,8 @@ public class MultiplayerGameEngine : MonoBehaviour {
 
     // PLAYER
     public Player playerPrefab;
-    Player playerClone;
+    Player player1Clone;
+    Player player2Clone;
 
     // SPAWNERS
     public NestSpawner foxSpawner;
@@ -35,7 +36,7 @@ public class MultiplayerGameEngine : MonoBehaviour {
 
     private Object[] _neutralsUnitsList;
 
-    // PAUSE GESTION
+    // CANVAS GESTION
     public Canvas player1_Canvas;
     public Canvas player2_Canvas;
 
@@ -86,15 +87,17 @@ public class MultiplayerGameEngine : MonoBehaviour {
     void initScene()
     {
         // Instanciate 2 players
-        playerClone = Instantiate(playerPrefab) as Player;
-        playerClone.init(player1QG, player2QG, 1, 2);
-        player1_Canvas.worldCamera = playerClone.GetComponentInChildren<Camera>();
+        player1Clone = Instantiate(playerPrefab) as Player;
+        player1Clone.init(player1QG, player2QG, 1, 2, 1);
+        player1_Canvas.worldCamera = player1Clone.GetComponentInChildren<Camera>();
         player1_Canvas.worldCamera.rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
+        player1_Canvas.GetComponentInChildren<GestionUserInterface>()._player = player1Clone;
 
-        playerClone = Instantiate(playerPrefab) as Player;
-        playerClone.init(player2QG, player1QG, 2, 1);
-        player2_Canvas.worldCamera = playerClone.GetComponentInChildren<Camera>();
+        player2Clone = Instantiate(playerPrefab) as Player;
+        player2Clone.init(player2QG, player1QG, 2, 1, 2);
+        player2_Canvas.worldCamera = player2Clone.GetComponentInChildren<Camera>();
         player2_Canvas.worldCamera.rect = new Rect(0.5f, 0.0f, 1.0f, 1.0f);
+        player2_Canvas.GetComponentInChildren<GestionUserInterface>()._player = player2Clone;
 
         // Instanciate 3 neutral fox
         foxSpawner.createUnit();
@@ -156,7 +159,7 @@ public class MultiplayerGameEngine : MonoBehaviour {
                     return Substate.WaitForStart;
                 }
 
-                if(Input.GetButtonDown("CallBack")) // Exit with button 'X'
+                if(Input.GetButtonDown("JoystickB"))
                     Application.Quit();
                 break;
         }
@@ -179,7 +182,8 @@ public class MultiplayerGameEngine : MonoBehaviour {
                 foreach(Unit unit in _neutralsUnitsList)
                     unit.update();
 
-                playerClone.update();
+                player1Clone.update();
+                player2Clone.update();
 
                 break;
 

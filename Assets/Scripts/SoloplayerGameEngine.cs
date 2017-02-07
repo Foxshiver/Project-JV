@@ -39,6 +39,9 @@ public class SoloplayerGameEngine : MonoBehaviour {
 
     private Object[] _neutralsUnitsList;
 
+    // CANVAS GESTION
+    public Canvas playerCanvas;
+
     // ATTACK GESTION
     private float timeAttack;
     private float timeBeforeNextAttack;
@@ -99,7 +102,8 @@ public class SoloplayerGameEngine : MonoBehaviour {
     {
         // Instanciate 1 player
         playerClone = Instantiate(playerPrefab) as Player;
-        playerClone.init(allyQG, 1, 2);
+        playerClone.init(allyQG, 1, 2, 1);
+        playerCanvas.GetComponentInChildren<GestionUserInterface>()._player = playerClone;
 
         // Instanciate 3 neutral fox
         foxSpawner.createUnit();
@@ -201,6 +205,7 @@ public class SoloplayerGameEngine : MonoBehaviour {
                 _neutralsUnitsList = FindObjectsOfType(typeof(Unit)) as Unit[];
                 foreach(Unit unit in _neutralsUnitsList)
                     unit.update();
+
                 playerClone.update();
 
                 addEnnemy();

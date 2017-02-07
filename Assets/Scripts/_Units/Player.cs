@@ -12,8 +12,9 @@ public class Player : MovableEntity {
     private LeaderBehavior leader;
 
     public Vector2 _behindPosition;
-    [HideInInspector] public Farm targetToDestroy;
+    [HideInInspector] public Farm targetToDestroy = null;
     [HideInInspector] public bool nearToTarget;
+    [HideInInspector] public int _joystickNumber;
     public int _money;
    
     // Constructor
@@ -23,30 +24,35 @@ public class Player : MovableEntity {
         listOfWorkerUnits = new List<Unit> { };
         listOfHoldPositionUnits = new List<List<Unit>> { };
         listOfPositions = new List<FixedEntity> { };
-
-        leader = new LeaderBehavior(this);
 	}
 
-    public void init(Farm farm, int allyFaction, int enemyFaction)
+    public void init(Farm farm, int allyFaction, int enemyFaction, int joystickNumber)
     {
+        this._joystickNumber = joystickNumber;
+
         this._faction = allyFaction;
         this._enemyFaction = enemyFaction;
 
         this._currentPosition = nearToFarm(farm);
         this.updatePosition(this._currentPosition);
+
+        leader = new LeaderBehavior(this, this._joystickNumber);
     }
 
-    public void init(Farm farm, Farm target, int allyFaction, int enemyFaction)
+    public void init(Farm farm, Farm target, int allyFaction, int enemyFaction, int joystickNumber)
     {
+        this._joystickNumber = joystickNumber;
+
         this.targetToDestroy = target;
         this._faction = allyFaction;
         this._enemyFaction = enemyFaction;
 
         this._currentPosition = nearToFarm(farm);
         this.updatePosition(this._currentPosition);
+
+        leader = new LeaderBehavior(this, this._joystickNumber);
     }
 
-	// Update is called once per frame
 	public void update()
 	{
         Vector2 prevPosition = this._currentPosition;
@@ -87,7 +93,7 @@ public class Player : MovableEntity {
         //}
 
         // Take unit on if player push 'space' button and unit is in radius (Or 'A' button on 360 controler)
-        if(Input.GetButtonDown("TakeUnitOn"))
+        if(Input.GetButtonDown("TakeUnitOn_" + this._joystickNumber.ToString()))
         {
             if(listOfNeighboors.Count != 0)
             {
@@ -101,7 +107,7 @@ public class Player : MovableEntity {
                     listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
                     listOfUnits[newUnitIndex]._unitTarget = this;
                     listOfUnits[newUnitIndex].general = this;
-                    listOfUnits[newUnitIndex].setFaction(this._faction);
+                    listOfUnits[newUnitIndex]._faction = this._faction;
                     listOfUnits[newUnitIndex].triggeringUpdate();
 
                     _money--;
@@ -110,7 +116,7 @@ public class Player : MovableEntity {
         }
 
         // Unit hold position if player push 'c' button (Or 'B' button on 360 controler)
-        if(Input.GetButtonDown("HoldPosition"))
+        if(Input.GetButtonDown("HoldPosition_" + this._joystickNumber.ToString()))
         {
             if(listOfUnits.Count == 0)
                 return;
@@ -141,7 +147,7 @@ public class Player : MovableEntity {
         }
 
         // Call units back if player push 'v' button (Or 'X' button on 360 controler)
-        if(Input.GetButtonDown("CallBack"))
+        if(Input.GetButtonDown("CallBack_" + this._joystickNumber.ToString()))
         {
             for(int i = 0; i < listOfHoldPositionUnits.Count; i++)
             {
@@ -167,7 +173,7 @@ public class Player : MovableEntity {
         }
 
         // Unit works if player push 'n' button (Or 'Y' button on 360 controler)
-        if(Input.GetButtonDown("Work"))
+        if(Input.GetButtonDown("Work_" + this._joystickNumber.ToString()))
         {
             if(listOfUnits.Count == 0 || listOfField.Length == 0)
                 return;
@@ -205,31 +211,31 @@ public class Player : MovableEntity {
         {
             if(listOfNeighboorEnemies.Count != 0)
             {
-                Unit NearestUnit = getNearestUnit(listOfNeighboorEnemies, this._faction);
-
-                if(NearestUnit.getFaction() == this._enemyFaction)
-                {
-                    for(int i=0; i<listOfUnits.Count; i++)
-                    {
-                        listOfUnits[i]._unitTarget = NearestUnit;
-                        listOfUnits[i].triggeringUpdate();
-                    }
-                }
-            }
-
-            float distance = (this._currentPosition - this.targetToDestroy.position).magnitude;
-            if(distance < this._fieldOfView)
-            {
-                nearToTarget = true;
+                Unit NearestUnit = getNearestUnit(listOfNeighboorEnemies, this._enemyFaction);
 
                 for(int i=0; i<listOfUnits.Count; i++)
                 {
-                    listOfUnits[i]._simpleTarget = this.targetToDestroy;
+                    listOfUnits[i]._unitTarget = NearestUnit;
                     listOfUnits[i].triggeringUpdate();
                 }
             }
-            else
-                nearToTarget = false;
+
+            if(this.targetToDestroy != null)
+            {
+                float distance = (this._currentPosition - this.targetToDestroy.position).magnitude;
+                if(distance < this._fieldOfView)
+                {
+                    nearToTarget = true;
+
+                    for(int i=0; i<listOfUnits.Count; i++)
+                    {
+                        listOfUnits[i]._simpleTarget = this.targetToDestroy;
+                        listOfUnits[i].triggeringUpdate();
+                    }
+                }
+                else
+                    nearToTarget = false;
+            }
         }
 
         foreach(PositionToHold p in listOfPositions)
@@ -277,7 +283,7 @@ public class Player : MovableEntity {
 
 		foreach (Unit u in listOfNeighboors)
 		{
-            if(u.getFaction() == faction)
+            if(u._faction == faction)
             {
                 float distance = (this._currentPosition - u._currentPosition).magnitude;
                 if (distance < minDistance)

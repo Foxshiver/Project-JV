@@ -23,7 +23,7 @@ public class PositionToHold : FixedEntity {
         float minDistance = float.MaxValue;
         List<Unit> ListEnemies = new List<Unit>();
         foreach(Unit u in _EnemiesUnitsList)
-            if (u.getFaction() != this._faction && u.getFaction() != 0)
+            if (u._faction != this._faction && u._faction != 0)
             {
                 float distance = (this.position - u._currentPosition).magnitude;
                 if (distance < minDistance)

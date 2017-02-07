@@ -8,15 +8,17 @@ public class EvilNestSpawner : FixedEntity {
     public Unit newUnit = null;
 
     private int _nbUnitAttack;
+    private int nbAttack = 0;
 
     public void update()
     {}
 
     public void createUnit(FixedEntity target)
     {
-        _nbUnitAttack = (int)Random.Range(1.0f, 3.0f);
+        nbAttack++;
+        _nbUnitAttack = (int)Random.Range(1, nbAttack+2);
 
-        for(int f=0; f<_nbUnitAttack; f++)
+        for (int f=0; f<_nbUnitAttack; f++)
         {
             unitClone = Instantiate(unitPrefab) as Unit;
             unitClone.init(target, nearToSpawner(), new WavePattern(unitClone));

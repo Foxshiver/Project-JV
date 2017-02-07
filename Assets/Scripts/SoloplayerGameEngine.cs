@@ -144,7 +144,9 @@ public class SoloplayerGameEngine : MonoBehaviour {
     {
         PersistentData.TimeAlive = Time.time - startTime;
         PersistentData.nbOfWaves = nbWaves;
-    
+        PersistentData.nbPlayer = 2;
+        PersistentData.winner = 1;
+
         SceneManager.LoadScene("End Scene");
     }
 

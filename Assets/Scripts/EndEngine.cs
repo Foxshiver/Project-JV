@@ -22,6 +22,9 @@ public class EndEngine : MonoBehaviour {
 
     public GameObject winningEnd;
     public GameObject losingEnd;
+    public GameObject endFor1v1;
+
+    public AudioSource endSound;
 
 
     // Use this for initialization
@@ -31,20 +34,29 @@ public class EndEngine : MonoBehaviour {
         {
             if (PersistentData.nbOfWaves >= 10)
             {
+                endSound.pitch = 1.2f;
+
                 winningEnd.SetActive(true);
                 losingEnd.SetActive(false);
+                endFor1v1.SetActive(false);
                 scoreMessage.text = "You have defend your farm from " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
             }
             else
             {
+                endSound.pitch = 0.7f;
+
                 losingEnd.SetActive(true);
                 winningEnd.SetActive(false);
+                endFor1v1.SetActive(false);
                 scoreMessage.text = "You died after " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
             }
         }
         else
         {
-            winningEnd.SetActive(true);
+            endSound.pitch = 1.2f;
+
+            endFor1v1.SetActive(true);
+            winningEnd.SetActive(false);
             losingEnd.SetActive(false);
             scoreMessage.text = "Player " + PersistentData.winner + " destroy the farm first !";
         }

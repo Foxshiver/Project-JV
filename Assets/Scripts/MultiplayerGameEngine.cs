@@ -62,6 +62,8 @@ public class MultiplayerGameEngine : MonoBehaviour {
         _substate = Substate.WaitForStart;
 
         PauseCanvas.enabled = false;
+
+        PersistentData.nbPlayer = 2;
     }
 
     // Update is called once per frame
@@ -152,10 +154,16 @@ public class MultiplayerGameEngine : MonoBehaviour {
                 }
 
                 if(player1QG._healPoint <= 0.0f)
+                {
+                    PersistentData.winner = 2;
                     return Substate.WaitForEnd;
+                }
 
                 if(player2QG._healPoint <= 0.0f)
+                {
+                    PersistentData.winner = 1;
                     return Substate.WaitForEnd;
+                }
 
                 break;
 

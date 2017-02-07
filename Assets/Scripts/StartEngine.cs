@@ -44,8 +44,6 @@ public class StartEngine : MonoBehaviour {
                 ActiveNextScene = GameSceneSolo;
             else
                 ActiveNextScene = GameSceneVersus;
-
-            Debug.Log("Active : " + ActiveNextScene);
         }
 
         if (Input.GetAxisRaw("VerticalCross") == -1.0f && firstTouch)
@@ -58,8 +56,6 @@ public class StartEngine : MonoBehaviour {
                 ActiveNextScene = CommandsScene;
             else
                 ActiveNextScene = GameSceneSolo;
-
-            Debug.Log("Active : " + ActiveNextScene);
         }
 
             if (Input.GetAxisRaw("VerticalCross") == 0.0f)

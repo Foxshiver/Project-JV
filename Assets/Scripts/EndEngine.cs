@@ -87,8 +87,6 @@ public class EndEngine : MonoBehaviour {
                 ActiveNextScene = CommandsScene;
             else
                 ActiveNextScene = StartScene;
-
-            Debug.Log("Active : " + ActiveNextScene);
         }
 
         if (Input.GetAxisRaw("VerticalCross") == 0.0f)

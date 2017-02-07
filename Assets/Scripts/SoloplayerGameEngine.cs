@@ -182,7 +182,7 @@ public class SoloplayerGameEngine : MonoBehaviour {
                     return Substate.WaitForStart;
                 }
 
-                if (Input.GetButtonDown("CallBack")) // Exit with button 'X'
+                if (Input.GetButtonDown("JoystickB"))
                     Application.Quit();
                 break;
         }

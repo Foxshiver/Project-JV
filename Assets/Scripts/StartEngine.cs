@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class StartEngine : MonoBehaviour {
 
     public string GameSceneSolo;
-    public string GameScene1v1;
+    public string GameSceneVersus;
     public string CommandsScene;
 
     public Button buttonStartSolo;
@@ -40,10 +40,10 @@ public class StartEngine : MonoBehaviour {
 
             if (ActiveNextScene == GameSceneSolo)
                 ActiveNextScene = CommandsScene;
-            else if (ActiveNextScene == GameScene1v1)
+            else if (ActiveNextScene == GameSceneVersus)
                 ActiveNextScene = GameSceneSolo;
             else
-                ActiveNextScene = GameScene1v1;
+                ActiveNextScene = GameSceneVersus;
 
             Debug.Log("Active : " + ActiveNextScene);
         }
@@ -53,8 +53,8 @@ public class StartEngine : MonoBehaviour {
             firstTouch = false;
 
             if (ActiveNextScene == GameSceneSolo)
-                ActiveNextScene = GameScene1v1;
-            else if (ActiveNextScene == GameScene1v1)
+                ActiveNextScene = GameSceneVersus;
+            else if (ActiveNextScene == GameSceneVersus)
                 ActiveNextScene = CommandsScene;
             else
                 ActiveNextScene = GameSceneSolo;

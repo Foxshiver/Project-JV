@@ -8,11 +8,8 @@ public class AttackEnemyState : IUnitState {
 
     private double timeFirstCall = Time.time;
 
-    private Animator animator;
-
     public AttackEnemyState(RecruitmentPattern statePatternUnit, PursuitBehavior pursuitBehavior)
     {
-        //animator = state._unit.GetComponent<Animator>();
         state = statePatternUnit;
         pursuit = pursuitBehavior;
     }
@@ -60,10 +57,13 @@ public class AttackEnemyState : IUnitState {
     }
 
     public void ToDefendPositionState()
-    { Debug.Log("Can't transition to defend state from attack state"); }
+    { Debug.Log("Can't transition to defend state from attack enemy state"); }
 
     public void ToAttackEnemyState()
     { Debug.Log("Can't transition to same state"); }
+
+    public void ToAttackTargetState()
+    { Debug.Log("Can't transition to attack target state from attack enemy state"); }
 
     public void ToWorkState()
     {

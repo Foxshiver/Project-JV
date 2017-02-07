@@ -47,7 +47,10 @@ public class WorkState : IUnitState {
     { Debug.Log("Can't transition to defend state from work state"); }
 
     public void ToAttackEnemyState()
-    { Debug.Log("Can't transition to atack state from work state"); }
+    { Debug.Log("Can't transition to attack enemy state from work state"); }
+
+    public void ToAttackTargetState()
+    { Debug.Log("Can't transition to attack target state from work state"); }
 
     public void ToWorkState()
     { Debug.Log("Can't transition to same state"); }

@@ -48,7 +48,10 @@ public class HoldPositionState : IUnitState {
     }
 
     public void ToAttackEnemyState()
-    { Debug.Log("Can't transition to attack state from hold position state"); }
+    { Debug.Log("Can't transition to attack enemy state from hold position state"); }
+
+    public void ToAttackTargetState()
+    { Debug.Log("Can't transition to attack target state from hold position state"); }
 
     public void ToWorkState()
     { Debug.Log("Can't transition to work state from hold position state"); }

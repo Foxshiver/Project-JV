@@ -59,7 +59,7 @@ public class SoloplayerGameEngine : MonoBehaviour {
         nbWaves = 0;
 
         loadScene();
-        initUnits();
+        initScene();
 
         _substate = Substate.WaitForStart;
 
@@ -95,10 +95,11 @@ public class SoloplayerGameEngine : MonoBehaviour {
         allyQG.start();
     }
 
-    void initUnits()
+    void initScene()
     {
         // Instanciate 1 player
         playerClone = Instantiate(playerPrefab) as Player;
+        playerClone.init(allyQG, 1, 2);
 
         // Instanciate 3 neutral fox
         foxSpawner.createUnit();

@@ -12,8 +12,6 @@ public class AttackTargetState : IEnemyState
 
     public AttackTargetState(WavePattern statePatternEnemy, SeekBehavior seekBehavior)
     {
-        //if (state._unit.gameObject != null)
-        //    animator = state._unit.gameObject.GetComponent<Animator>();
         state = statePatternEnemy;
         seek = seekBehavior;
     }
@@ -75,9 +73,6 @@ public class AttackTargetState : IEnemyState
     // Fight function
     private void fight()
     {
-        state._unit._animatorEntity.SetBool("IsWorking", false);
-        state._unit._animatorEntity.SetBool("IsAttacking", true);
-
         if (state._unit._simpleTarget != null)
         {
             FixedEntity enemy = state._unit._simpleTarget;

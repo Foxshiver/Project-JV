@@ -14,6 +14,7 @@ public class RecruitmentPattern {
     [HideInInspector] public HoldPositionState holdPositionState;
     [HideInInspector] public DefendPositionState defendPositionState;
     [HideInInspector] public AttackEnemyState attackEnemyState;
+    [HideInInspector] public AttackLeaderTargetState attackTargetState;
     [HideInInspector] public WorkState workState;
 
     [HideInInspector] public Unit _unit;
@@ -32,6 +33,7 @@ public class RecruitmentPattern {
         holdPositionState = new HoldPositionState(this, waitBehavior);
         defendPositionState = new DefendPositionState(this, pursuitBehavior);
         attackEnemyState = new AttackEnemyState(this, pursuitBehavior);
+        attackTargetState = new AttackLeaderTargetState(this, seekBehavior);
         workState = new WorkState(this, waitBehavior);
 
         currentState = waitState;

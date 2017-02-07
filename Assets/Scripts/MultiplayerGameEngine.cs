@@ -36,6 +36,10 @@ public class MultiplayerGameEngine : MonoBehaviour {
     private Object[] _neutralsUnitsList;
 
     // PAUSE GESTION
+    public Canvas player1_Canvas;
+    public Canvas player2_Canvas;
+
+    // PAUSE GESTION
     public Canvas PauseCanvas;
 
     // MUSIC GESTION
@@ -49,7 +53,7 @@ public class MultiplayerGameEngine : MonoBehaviour {
         startTime = Time.time;
 
         loadScene();
-        initUnits();
+        initScene();
 
         _substate = Substate.WaitForStart;
 
@@ -79,14 +83,18 @@ public class MultiplayerGameEngine : MonoBehaviour {
         player2QG.start();
     }
 
-    void initUnits()
+    void initScene()
     {
-        // Instanciate 1 player
+        // Instanciate 2 players
         playerClone = Instantiate(playerPrefab) as Player;
-        //playerClone._currentPosition = player1QG.position;
-        //playerClone = Instantiate(playerPrefab) as Player;
-        //playerClone._currentPosition = player2QG.position;
-        //playerClone._faction = 2;
+        playerClone.init(player1QG, player2QG, 1, 2);
+        player1_Canvas.worldCamera = playerClone.GetComponentInChildren<Camera>();
+        player1_Canvas.worldCamera.rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
+
+        playerClone = Instantiate(playerPrefab) as Player;
+        playerClone.init(player2QG, player1QG, 2, 1);
+        player2_Canvas.worldCamera = playerClone.GetComponentInChildren<Camera>();
+        player2_Canvas.worldCamera.rect = new Rect(0.5f, 0.0f, 1.0f, 1.0f);
 
         // Instanciate 3 neutral fox
         foxSpawner.createUnit();

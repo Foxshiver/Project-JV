@@ -13,12 +13,6 @@ public class GestionUserInterface : MonoBehaviour {
     public Text _nbWorkingText;
     public Text _nbHealPointRemaining;
     private bool first = true;
-
-	// Use this for initialization
-	void Start () {
-		//_player = FindObjectOfType<PlayerUnit> ();
-
-	}
 	
 	// Update is called once per frame
 	void Update ()
@@ -41,6 +35,5 @@ public class GestionUserInterface : MonoBehaviour {
         _nbHoldingText.text = nbHolders + " Holding Units";
         _nbWorkingText.text = _player.listOfWorkerUnits.Count + " Working Units";
         _nbHealPointRemaining.text = _alliesFarm._healPoint + " Heal Points";
-
     }
 }

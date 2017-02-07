@@ -35,8 +35,8 @@ public class WaitState : IUnitState {
     public void ToFollowLeaderState()
     {
         state.currentState = state.followLeaderState;
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", false);
+        state._unit._animatorEntity.SetBool("IsWorking", false);
+        state._unit._animatorEntity.SetBool("IsAttacking", false);
     }
 
     public void ToHoldPositionState()

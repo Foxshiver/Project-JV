@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 6a2509a338443b841acee6aaeef3e3df
+timeCreated: 1486418506
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: How low is low?
+  fontNames:
+  - How low is low?
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 420c1d5e01fe8e0449ddbf332d9729a1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

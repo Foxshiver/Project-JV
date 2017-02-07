@@ -28,8 +28,8 @@ public class AttackTargetState : IEnemyState
     public void ToReachTargetState()
     {
         state.currentState = state.reachTargetState;
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", false);
+        state._unit._animatorEntity.SetBool("IsWorking", false);
+        state._unit._animatorEntity.SetBool("IsAttacking", false);
     }
 
     public void ToAttackUnitState()
@@ -75,8 +75,8 @@ public class AttackTargetState : IEnemyState
     // Fight function
     private void fight()
     {
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", true);
+        state._unit._animatorEntity.SetBool("IsWorking", false);
+        state._unit._animatorEntity.SetBool("IsAttacking", true);
 
         if (state._unit._simpleTarget != null)
         {
@@ -86,6 +86,7 @@ public class AttackTargetState : IEnemyState
             if (distance < state._unit._fieldOfView)
             {
                 enemy.setHealPoint(enemy.getHealPoint()-2.0f);
+                enemy.playDamageSound();
             }
         }
     }

@@ -1,0 +1,511 @@
+fileFormatVersion: 2
+guid: 8b67a99e546272e4abe10e379cb4a178
+timeCreated: 1486460570
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Body
+    100004: Chicken.000
+    100006: //RootNode
+    100008: Down.1
+    100010: Down.2
+    100012: Down.3
+    100014: Down.3_end
+    100016: Foot.L
+    100018: Foot.L_end
+    100020: Foot.R
+    100022: Foot.R_end
+    100024: Head
+    100026: Head_end
+    100028: Leg.ik.L
+    100030: Leg.ik.L_end
+    100032: Leg.ik.R
+    100034: Leg.ik.R_end
+    100036: Leg.L
+    100038: Leg.R
+    100040: Neck
+    100042: Up.1
+    100044: Up.2
+    100046: Up.3
+    400000: Armature
+    400002: Body
+    400004: Chicken.000
+    400006: //RootNode
+    400008: Down.1
+    400010: Down.2
+    400012: Down.3
+    400014: Down.3_end
+    400016: Foot.L
+    400018: Foot.L_end
+    400020: Foot.R
+    400022: Foot.R_end
+    400024: Head
+    400026: Head_end
+    400028: Leg.ik.L
+    400030: Leg.ik.L_end
+    400032: Leg.ik.R
+    400034: Leg.ik.R_end
+    400036: Leg.L
+    400038: Leg.R
+    400040: Neck
+    400042: Up.1
+    400044: Up.2
+    400046: Up.3
+    4300000: Chicken.000
+    7400000: Walk
+    7400002: Work.002
+    7400004: Armature|Walk
+    7400006: Armature|Work
+    7400008: Armature|Work.001
+    9500000: //RootNode
+    13700000: Chicken.000
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walk
+      takeName: Walk
+      firstFrame: 0
+      lastFrame: 1550
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Body
+        weight: 1
+      - path: Armature/Body/Down.1
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3/Down.3_end
+        weight: 1
+      - path: Armature/Body/Leg.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Body/Leg.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Body/Up.1
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Leg.ik.L
+        weight: 1
+      - path: Armature/Leg.ik.L/Leg.ik.L_end
+        weight: 1
+      - path: Armature/Leg.ik.R
+        weight: 1
+      - path: Armature/Leg.ik.R/Leg.ik.R_end
+        weight: 1
+      - path: Chicken.000
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Work.002
+      takeName: Work.002
+      firstFrame: 0
+      lastFrame: 1800
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Body
+        weight: 1
+      - path: Armature/Body/Down.1
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3/Down.3_end
+        weight: 1
+      - path: Armature/Body/Leg.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Body/Leg.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Body/Up.1
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Leg.ik.L
+        weight: 1
+      - path: Armature/Leg.ik.L/Leg.ik.L_end
+        weight: 1
+      - path: Armature/Leg.ik.R
+        weight: 1
+      - path: Armature/Leg.ik.R/Leg.ik.R_end
+        weight: 1
+      - path: Chicken.000
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Walk
+      takeName: Armature|Walk
+      firstFrame: 0
+      lastFrame: 31
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Body
+        weight: 1
+      - path: Armature/Body/Down.1
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3/Down.3_end
+        weight: 1
+      - path: Armature/Body/Leg.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Body/Leg.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Body/Up.1
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Leg.ik.L
+        weight: 1
+      - path: Armature/Leg.ik.L/Leg.ik.L_end
+        weight: 1
+      - path: Armature/Leg.ik.R
+        weight: 1
+      - path: Armature/Leg.ik.R/Leg.ik.R_end
+        weight: 1
+      - path: Chicken.000
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Work
+      takeName: Armature|Work
+      firstFrame: 0
+      lastFrame: 31
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Body
+        weight: 1
+      - path: Armature/Body/Down.1
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3/Down.3_end
+        weight: 1
+      - path: Armature/Body/Leg.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Body/Leg.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Body/Up.1
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Leg.ik.L
+        weight: 1
+      - path: Armature/Leg.ik.L/Leg.ik.L_end
+        weight: 1
+      - path: Armature/Leg.ik.R
+        weight: 1
+      - path: Armature/Leg.ik.R/Leg.ik.R_end
+        weight: 1
+      - path: Chicken.000
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Work.001
+      takeName: Armature|Work.001
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Body
+        weight: 1
+      - path: Armature/Body/Down.1
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3
+        weight: 1
+      - path: Armature/Body/Down.1/Down.2/Down.3/Down.3_end
+        weight: 1
+      - path: Armature/Body/Leg.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L
+        weight: 1
+      - path: Armature/Body/Leg.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Body/Leg.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R
+        weight: 1
+      - path: Armature/Body/Leg.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Body/Up.1
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head
+        weight: 1
+      - path: Armature/Body/Up.1/Up.2/Up.3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Leg.ik.L
+        weight: 1
+      - path: Armature/Leg.ik.L/Leg.ik.L_end
+        weight: 1
+      - path: Armature/Leg.ik.R
+        weight: 1
+      - path: Armature/Leg.ik.R/Leg.ik.R_end
+        weight: 1
+      - path: Chicken.000
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -54,8 +54,8 @@ public class FollowLeaderState : IUnitState {
     public void ToHoldPositionState()
     {
         state.currentState = state.holdPositionState;
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", false);
+        state._unit._animatorEntity.SetBool("IsWorking", false);
+        state._unit._animatorEntity.SetBool("IsAttacking", false);
 
     }
 
@@ -65,15 +65,15 @@ public class FollowLeaderState : IUnitState {
     public void ToAttackEnemyState()
     {
         state.currentState = state.attackEnemyState;
-        state._unit._animator.SetBool("IsWorking", false);
-        state._unit._animator.SetBool("IsAttacking", true);
+        state._unit._animatorEntity.SetBool("IsWorking", false);
+        state._unit._animatorEntity.SetBool("IsAttacking", true);
     }
 
     public void ToWorkState()
     {
         state.currentState = state.workState;
-        state._unit._animator.SetBool("IsAttacking", false);
-        state._unit._animator.SetBool("IsWorking", true);
+        state._unit._animatorEntity.SetBool("IsAttacking", false);
+        state._unit._animatorEntity.SetBool("IsWorking", true);
     }
 
     /*

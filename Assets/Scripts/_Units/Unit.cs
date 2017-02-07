@@ -22,7 +22,7 @@ public class Unit : MovableEntity {
 
     public Scrollbar healthBar;
 
-    public Animator _animator;
+    //public Animator _animator;
 
     public void init(FixedEntity spawner, Vector2 pos, RecruitmentPattern pattern)
     {
@@ -30,7 +30,7 @@ public class Unit : MovableEntity {
         this._currentPosition = pos;
         this.updatePosition(this._currentPosition);
 
-        _animator = GetComponent<Animator>();
+        //_animator = GetComponent<Animator>();
 
         sizeRadius = 2.0f;
         timeBeforeChangePos = Random.Range(3.0f, 6.0f);
@@ -48,7 +48,7 @@ public class Unit : MovableEntity {
         this._maxSpeed = 2.0f;
         this._maxSteeringForce = 2.0f;
 
-        _animator = GetComponent<Animator>();
+        _animatorEntity = GetComponent<Animator>();
 
         sizeRadius = 2.0f;
         timeBeforeChangePos = Random.Range(3.0f, 6.0f);

@@ -24,9 +24,14 @@ public class MovableEntity : MonoBehaviour {
     public int _faction;
     public float _fieldOfView;
     public float _healPoint;
+    public Animator _animatorEntity;
 
+    
     void Start()
-    { _currentPosition = new Vector2(this.transform.position.x, this.transform.position.z); }
+    {
+        _currentPosition = new Vector2(this.transform.position.x, this.transform.position.z);
+        _animatorEntity = gameObject.GetComponent<Animator>();
+    }
 
     public void updatePosition(Vector2 position)
     { this.transform.position = new Vector3(position.x, this.transform.position.y, position.y); }

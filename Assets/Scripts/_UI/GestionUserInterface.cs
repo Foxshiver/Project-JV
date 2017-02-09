@@ -2,9 +2,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class GestionUserInterface : MonoBehaviour {
-
-	Player _player;
+public class GestionUserInterface : MonoBehaviour
+{
+	public Player _player;
     public Farm _alliesFarm;
 
 	public Text _moneyText;
@@ -13,22 +13,10 @@ public class GestionUserInterface : MonoBehaviour {
     public Text _nbWorkingText;
     public Text _nbHealPointRemaining;
     private bool first = true;
-
-	// Use this for initialization
-	void Start () {
-		//_player = FindObjectOfType<PlayerUnit> ();
-
-	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-		if (first)
-        {
-			_player = FindObjectOfType<Player> ();
-			first = false;
-		}
-
         int nbHolders = 0;
         for(int i=0; i<_player.listOfHoldPositionUnits.Count; i++)
             for(int j=0; j<_player.listOfHoldPositionUnits[i].Count; j++)
@@ -41,6 +29,5 @@ public class GestionUserInterface : MonoBehaviour {
         _nbHoldingText.text = nbHolders + " Holding Units";
         _nbWorkingText.text = _player.listOfWorkerUnits.Count + " Working Units";
         _nbHealPointRemaining.text = _alliesFarm._healPoint + " Heal Points";
-
     }
 }

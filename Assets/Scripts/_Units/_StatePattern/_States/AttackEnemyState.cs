@@ -8,11 +8,8 @@ public class AttackEnemyState : IUnitState {
 
     private double timeFirstCall = Time.time;
 
-    private Animator animator;
-
     public AttackEnemyState(RecruitmentPattern statePatternUnit, PursuitBehavior pursuitBehavior)
     {
-        //animator = state._unit.GetComponent<Animator>();
         state = statePatternUnit;
         pursuit = pursuitBehavior;
     }
@@ -28,14 +25,14 @@ public class AttackEnemyState : IUnitState {
     {
         // 2 scénarios possibles
         // - Si le joueur appuie sur 'B' Alors l'unité qui le suit garde la position
-        if(Input.GetButtonDown("HoldPosition"))
+        if(Input.GetButtonDown("HoldPosition_" + state._unit.general._joystickNumber.ToString()))
         {
             ToHoldPositionState();
             return;
         }
 
         // - Si le joueur appuie sur 'Y' ET qu'il est à proximité d'un champ Alors l'unité va travailler au champ
-        if(Input.GetButtonDown("Work"))
+        if(Input.GetButtonDown("Work_" + state._unit.general._joystickNumber.ToString()))
         {
             ToWorkState();
             return;
@@ -60,10 +57,13 @@ public class AttackEnemyState : IUnitState {
     }
 
     public void ToDefendPositionState()
-    { Debug.Log("Can't transition to defend state from attack state"); }
+    { Debug.Log("Can't transition to defend state from attack enemy state"); }
 
     public void ToAttackEnemyState()
     { Debug.Log("Can't transition to same state"); }
+
+    public void ToAttackTargetState()
+    { Debug.Log("Can't transition to attack target state from attack enemy state"); }
 
     public void ToWorkState()
     {

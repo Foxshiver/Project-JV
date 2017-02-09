@@ -23,7 +23,7 @@ public class HoldPositionState : IUnitState {
         // 2 scenarios possibles
         // - Si des unités ennemies passent à proximité du point à défendre Alors l'unité attaque
         // - Si le joueur appuie sur 'X' Alors l'unité repasse en état de poursuite du joueur
-        if(Input.GetButtonDown("CallBack"))
+        if(Input.GetButtonDown("CallBack_" + state._unit.general._joystickNumber.ToString()))
             ToFollowLeaderState();
     }
 
@@ -48,7 +48,10 @@ public class HoldPositionState : IUnitState {
     }
 
     public void ToAttackEnemyState()
-    { Debug.Log("Can't transition to attack state from hold position state"); }
+    { Debug.Log("Can't transition to attack enemy state from hold position state"); }
+
+    public void ToAttackTargetState()
+    { Debug.Log("Can't transition to attack target state from hold position state"); }
 
     public void ToWorkState()
     { Debug.Log("Can't transition to work state from hold position state"); }

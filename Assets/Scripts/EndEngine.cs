@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EndEngine : MonoBehaviour {
 
-    public string GameScene;
+    public string StartScene;
     public string CommandsScene;
 
     public Button buttonStart;
@@ -22,27 +22,49 @@ public class EndEngine : MonoBehaviour {
 
     public GameObject winningEnd;
     public GameObject losingEnd;
+    public GameObject endFor1v1;
+
+    public AudioSource endSound;
 
 
     // Use this for initialization
     void Start()
     {
-        if(PersistentData.nbOfWaves >= 10)
+        if(PersistentData.nbPlayer == 1)
         {
-            winningEnd.SetActive(true);
-            losingEnd.SetActive(false);
-            scoreMessage.text = "You have defend your farm from " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
+            if (PersistentData.nbOfWaves >= 10)
+            {
+                endSound.pitch = 1.2f;
+
+                winningEnd.SetActive(true);
+                losingEnd.SetActive(false);
+                endFor1v1.SetActive(false);
+                scoreMessage.text = "You have defend your farm from " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
+            }
+            else
+            {
+                endSound.pitch = 0.7f;
+
+                losingEnd.SetActive(true);
+                winningEnd.SetActive(false);
+                endFor1v1.SetActive(false);
+                scoreMessage.text = "You died after " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
+            }
         }
         else
         {
-            losingEnd.SetActive(true);
+            endSound.pitch = 1.2f;
+
+            endFor1v1.SetActive(true);
             winningEnd.SetActive(false);
-            scoreMessage.text = "You died after " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
+            losingEnd.SetActive(false);
+            scoreMessage.text = "Player " + PersistentData.winner + " destroy the farm first !";
         }
+
 
         firstTouch = true;
 
-        ActiveNextScene = GameScene;
+        ActiveNextScene = StartScene;
     }
 
     // Update is called once per frame
@@ -50,7 +72,7 @@ public class EndEngine : MonoBehaviour {
     {
         if (Input.GetButtonDown("JoystickA"))
         {
-            if (ActiveNextScene == GameScene)
+            if (ActiveNextScene == StartScene)
                 SceneManager.LoadScene(ActiveNextScene);
             else
                 Application.Quit();
@@ -61,12 +83,10 @@ public class EndEngine : MonoBehaviour {
         {
             firstTouch = false;
 
-            if (ActiveNextScene == GameScene)
+            if (ActiveNextScene == StartScene)
                 ActiveNextScene = CommandsScene;
             else
-                ActiveNextScene = GameScene;
-
-            Debug.Log("Active : " + ActiveNextScene);
+                ActiveNextScene = StartScene;
         }
 
         if (Input.GetAxisRaw("VerticalCross") == 0.0f)
@@ -79,7 +99,7 @@ public class EndEngine : MonoBehaviour {
 
     public void ShowActiveSelection()
     {
-        if (ActiveNextScene == GameScene)
+        if (ActiveNextScene == StartScene)
         {
             buttonStart.image.color = selectedColorButton;
             buttonExit.image.color = Color.white;

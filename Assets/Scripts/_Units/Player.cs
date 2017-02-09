@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 using System.Collections.Generic;
 
 public class Player : MovableEntity {
@@ -13,25 +12,47 @@ public class Player : MovableEntity {
     private LeaderBehavior leader;
 
     public Vector2 _behindPosition;
+    [HideInInspector] public Farm targetToDestroy = null;
+    [HideInInspector] public bool nearToTarget;
+    [HideInInspector] public int _joystickNumber;
     public int _money;
-
-    
+   
     // Constructor
     public Player()
 	{
-        _faction = 1;
-        _fieldOfView = 8.0f;
-        _healPoint = 50.0f;
-
         listOfUnits = new List<Unit> { };
         listOfWorkerUnits = new List<Unit> { };
         listOfHoldPositionUnits = new List<List<Unit>> { };
         listOfPositions = new List<FixedEntity> { };
-
-        leader = new LeaderBehavior(this);
 	}
 
-	// Update is called once per frame
+    public void init(Farm farm, int allyFaction, int enemyFaction, int joystickNumber)
+    {
+        this._joystickNumber = joystickNumber;
+
+        this._faction = allyFaction;
+        this._enemyFaction = enemyFaction;
+
+        this._currentPosition = nearToFarm(farm);
+        this.updatePosition(this._currentPosition);
+
+        leader = new LeaderBehavior(this, this._joystickNumber);
+    }
+
+    public void init(Farm farm, Farm target, int allyFaction, int enemyFaction, int joystickNumber)
+    {
+        this._joystickNumber = joystickNumber;
+
+        this.targetToDestroy = target;
+        this._faction = allyFaction;
+        this._enemyFaction = enemyFaction;
+
+        this._currentPosition = nearToFarm(farm);
+        this.updatePosition(this._currentPosition);
+
+        leader = new LeaderBehavior(this, this._joystickNumber);
+    }
+
 	public void update()
 	{
         Vector2 prevPosition = this._currentPosition;
@@ -50,10 +71,12 @@ public class Player : MovableEntity {
         //this.transform.localEulerAngles = new Vector3(0.0f, -angle, 0.0f);
 
         // Seeking all the unit around the player
-        Unit[] listOfNeighboor = ListOfNeighboors();
+        List<Unit> listOfNeighboors = new List<Unit> { };
+        List<Unit> listOfNeighboorEnemies = new List<Unit> { };
+        ListOfNeighboors(listOfNeighboors, listOfNeighboorEnemies);
         Field[] listOfField = ListOfFields();
 
-        //      ChangeMaterialColorHighlight[] hList = GameObject.FindObjectsOfType<ChangeMaterialColorHighlight>();
+        //ChangeMaterialColorHighlight[] hList = GameObject.FindObjectsOfType<ChangeMaterialColorHighlight>();
 
         //foreach (ChangeMaterialColorHighlight h in hList) // Allow to highlight in blue all the neighboors of the player
         //{
@@ -70,11 +93,11 @@ public class Player : MovableEntity {
         //}
 
         // Take unit on if player push 'space' button and unit is in radius (Or 'A' button on 360 controler)
-        if(Input.GetButtonDown("TakeUnitOn"))
+        if(Input.GetButtonDown("TakeUnitOn_" + this._joystickNumber.ToString()))
         {
-            if(listOfNeighboor.Length != 0)
+            if(listOfNeighboors.Count != 0)
             {
-                Unit nearestUnit = (Unit)getNearestUnit(listOfNeighboor);
+                Unit nearestUnit = (Unit)getNearestUnit(listOfNeighboors, 0);
 
                 if (_money >= 1 && nearestUnit != null)
                 {
@@ -84,7 +107,7 @@ public class Player : MovableEntity {
                     listOfUnits[newUnitIndex].getSimpleTarget()._nbCurrentUnit--;
                     listOfUnits[newUnitIndex]._unitTarget = this;
                     listOfUnits[newUnitIndex].general = this;
-                    listOfUnits[newUnitIndex].setFaction(this._faction);
+                    listOfUnits[newUnitIndex]._faction = this._faction;
                     listOfUnits[newUnitIndex].triggeringUpdate();
 
                     _money--;
@@ -93,7 +116,7 @@ public class Player : MovableEntity {
         }
 
         // Unit hold position if player push 'c' button (Or 'B' button on 360 controler)
-        if(Input.GetButtonDown("HoldPosition"))
+        if(Input.GetButtonDown("HoldPosition_" + this._joystickNumber.ToString()))
         {
             if(listOfUnits.Count == 0)
                 return;
@@ -124,7 +147,7 @@ public class Player : MovableEntity {
         }
 
         // Call units back if player push 'v' button (Or 'X' button on 360 controler)
-        if(Input.GetButtonDown("CallBack"))
+        if(Input.GetButtonDown("CallBack_" + this._joystickNumber.ToString()))
         {
             for(int i = 0; i < listOfHoldPositionUnits.Count; i++)
             {
@@ -150,7 +173,7 @@ public class Player : MovableEntity {
         }
 
         // Unit works if player push 'n' button (Or 'Y' button on 360 controler)
-        if(Input.GetButtonDown("Work"))
+        if(Input.GetButtonDown("Work_" + this._joystickNumber.ToString()))
         {
             if(listOfUnits.Count == 0 || listOfField.Length == 0)
                 return;
@@ -184,18 +207,34 @@ public class Player : MovableEntity {
         }
 
         // Engage units in combat
-        if (listOfNeighboor.Length != 0)
+        if(listOfUnits.Count != 0)
         {
-            for (int i = 0; i < listOfNeighboor.Length; i++)
+            if(listOfNeighboorEnemies.Count != 0)
             {
-                if (listOfNeighboor[i].getFaction() == 2)
+                Unit NearestUnit = getNearestUnit(listOfNeighboorEnemies, this._enemyFaction);
+
+                for(int i=0; i<listOfUnits.Count; i++)
                 {
-                    for (int j = 0; j < listOfUnits.Count; j++)
+                    listOfUnits[i]._unitTarget = NearestUnit;
+                    listOfUnits[i].triggeringUpdate();
+                }
+            }
+
+            if(this.targetToDestroy != null)
+            {
+                float distance = (this._currentPosition - this.targetToDestroy.position).magnitude;
+                if(distance < this._fieldOfView)
+                {
+                    nearToTarget = true;
+
+                    for(int i=0; i<listOfUnits.Count; i++)
                     {
-                        listOfUnits[j]._unitTarget = listOfNeighboor[i];
-                        listOfUnits[j].triggeringUpdate();
+                        listOfUnits[i]._simpleTarget = this.targetToDestroy;
+                        listOfUnits[i].triggeringUpdate();
                     }
                 }
+                else
+                    nearToTarget = false;
             }
         }
 
@@ -203,6 +242,15 @@ public class Player : MovableEntity {
             p.update();
 
         checkAllUnits();
+    }
+
+    // Return a position near to Vector2
+    private Vector2 nearToFarm(Farm farm)
+    {
+        float x = Random.Range(farm.position.x - 2, farm.position.x + 2);
+        float y = Random.Range(farm.position.y - 2, farm.position.y + 2);
+
+        return new Vector2(x, y);
     }
 
     // Update all the unit list
@@ -228,14 +276,14 @@ public class Player : MovableEntity {
     }
 
     // Return the nearsest unit of the player
-    public Unit getNearestUnit(Unit[] listOfNeighboor)
+    public Unit getNearestUnit(List<Unit> listOfNeighboors, int faction)
 	{
 		float minDistance = float.MaxValue;
 		Unit nearestUnit = null;
 
-		foreach (Unit u in listOfNeighboor)
+		foreach (Unit u in listOfNeighboors)
 		{
-            if(u.getFaction() == 0)
+            if(u._faction == faction)
             {
                 float distance = (this._currentPosition - u._currentPosition).magnitude;
                 if (distance < minDistance)
@@ -250,12 +298,9 @@ public class Player : MovableEntity {
 	}
 
     // Return the tab containing all the neighboors of the player
-    public Unit[] ListOfNeighboors()
+    public void ListOfNeighboors(List<Unit> listOfNeighboors, List<Unit> listOfNeighboorEnemies)
     {
         Unit[] listOfUnit = GameObject.FindObjectsOfType<Unit>();
-        bool[] isInRadius = new bool[listOfUnit.Length];
-
-        int nbNeighboors = 0;
 
         for (int i = 0; i < listOfUnit.Length; i++)
         {
@@ -265,29 +310,13 @@ public class Player : MovableEntity {
 
                 if (distance < this._fieldOfView)
                 {
-                    isInRadius[i] = true;
-                    nbNeighboors++;
-                }
-                else
-                {
-                    isInRadius[i] = false;
+                    listOfNeighboors.Add(listOfUnit[i]);
+
+                    if(listOfUnit[i]._faction == this._enemyFaction)
+                        listOfNeighboorEnemies.Add(listOfUnit[i]);
                 }
             }
         }
-
-        int indiceNewList = 0;
-
-        Unit[] listOfNeighboors = new Unit[nbNeighboors];
-        for(int i = 0; i < listOfUnit.Length; i++)
-        {
-            if(isInRadius[i])
-            {
-                listOfNeighboors.SetValue(listOfUnit[i], indiceNewList);
-                indiceNewList++;
-            }
-        }
-
-        return listOfNeighboors;
     }
 
     public Field[] ListOfFields()

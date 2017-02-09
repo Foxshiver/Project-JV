@@ -5,7 +5,7 @@ public class Coin : MonoBehaviour {
 
     public Vector2 position;
     private Field field;
-    private Player player;
+    private Player[] player;
 
     public AudioClip CoinSound;
 
@@ -17,19 +17,22 @@ public class Coin : MonoBehaviour {
         this.position = position;
         this.transform.position = new Vector3(this.position.x, this.transform.position.y, this.position.y);
 
-        player = FindObjectOfType(typeof(Player)) as Player;
+        player = FindObjectsOfType(typeof(Player)) as Player[];
     }
 
     public void update()
     {
         this.position = Vector3TOVector2(this.transform.position);
 
-        float distance = (player._currentPosition - this.position).magnitude;
-        if(distance < 1.0f)
+        for(int i=0; i<player.Length; i++)
         {
-            player._money++;
-            AudioSource.PlayClipAtPoint(CoinSound, this.transform.position,0.01f);
-            toDestroy = true;
+            float distance = (player[i]._currentPosition - this.position).magnitude;
+            if(distance < 1.0f)
+            {
+                player[i]._money++;
+                AudioSource.PlayClipAtPoint(CoinSound, this.transform.position,0.01f);
+                toDestroy = true;
+            }
         }
     }
 

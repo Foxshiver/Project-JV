@@ -17,5 +17,7 @@ public interface IUnitState {
 
     void ToAttackEnemyState();
 
+    void ToAttackTargetState();
+
     void ToWorkState();
 }

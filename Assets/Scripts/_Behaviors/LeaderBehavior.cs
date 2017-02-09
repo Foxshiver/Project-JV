@@ -4,15 +4,18 @@ using System.Collections;
 public class LeaderBehavior : GeneralBehavior
 {
     public float _radius;
+    private int _joystickNumber;
     private float LEADER_BEHIND_DIST = 5.0f;
 
-    public LeaderBehavior(MovableEntity mc) : base(mc)
-    {}
+    public LeaderBehavior(MovableEntity mc, int joystickNumber) : base(mc)
+    {
+        _joystickNumber = joystickNumber;
+    }
 
 	public Vector2 controllerMovement()
 	{
-		float forceHorizontal = Input.GetAxis ("Horizontal");
-		float forceVertical = Input.GetAxis ("Vertical");
+		float forceHorizontal = Input.GetAxis ("Horizontal_" + _joystickNumber.ToString());
+		float forceVertical = Input.GetAxis ("Vertical_" + _joystickNumber.ToString());
 
 		Vector2 force = new Vector2 (forceHorizontal, forceVertical);
 

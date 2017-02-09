@@ -5,13 +5,10 @@ public class FollowLeaderState : IUnitState {
 
     private readonly RecruitmentPattern state;
     private SeekBehavior seek;
-
-    private Animator animator;
+    
     // Constructor
     public FollowLeaderState(RecruitmentPattern statePatternUnit, SeekBehavior seekBehavior)
     {
-        //if (state._unit.gameObject != null)
-        //    animator = state._unit.gameObject.GetComponent<Animator>();
         state = statePatternUnit;
         seek = seekBehavior;
     }
@@ -25,24 +22,27 @@ public class FollowLeaderState : IUnitState {
     {
         // 3 scénarios possibles
         // - Si le joueur appuie sur 'B' Alors l'unité qui le suit garde la position
-        if(Input.GetButtonDown("HoldPosition"))
+        if(Input.GetButtonDown("HoldPosition_" + state._unit.general._joystickNumber.ToString()))
         {
             ToHoldPositionState();
             return;
         }
 
         // - Si le joueur appuie sur 'Y' ET qu'il est à proximité d'un champ Alors l'unité va travailler au champ
-        if (Input.GetButtonDown("Work"))
+        if (Input.GetButtonDown("Work_" + state._unit.general._joystickNumber.ToString()))
         {
             ToWorkState();
             return;
         }
 
-        // - Si le joueur est à proximité d'un ennemie Alors l'unité va attaquer
-        float distance = (state._unit._unitTarget._currentPosition - state._unit.general._currentPosition).magnitude;
+        if(state._unit.general.nearToTarget)
+        {
+            ToAttackTargetState();
+            return;
+        }
 
-        if (distance <= state._unit.general._fieldOfView)
-            ToAttackEnemyState();
+        // - Si le joueur est à proximité d'un ennemie Alors l'unité va attaquer
+        ToAttackEnemyState();
     }
 
     public void ToWaitState()
@@ -56,7 +56,6 @@ public class FollowLeaderState : IUnitState {
         state.currentState = state.holdPositionState;
         state._unit._animatorEntity.SetBool("IsWorking", false);
         state._unit._animatorEntity.SetBool("IsAttacking", false);
-
     }
 
     public void ToDefendPositionState()
@@ -65,6 +64,13 @@ public class FollowLeaderState : IUnitState {
     public void ToAttackEnemyState()
     {
         state.currentState = state.attackEnemyState;
+        state._unit._animatorEntity.SetBool("IsWorking", false);
+        state._unit._animatorEntity.SetBool("IsAttacking", true);
+    }
+
+    public void ToAttackTargetState()
+    {
+        state.currentState = state.attackTargetState;
         state._unit._animatorEntity.SetBool("IsWorking", false);
         state._unit._animatorEntity.SetBool("IsAttacking", true);
     }

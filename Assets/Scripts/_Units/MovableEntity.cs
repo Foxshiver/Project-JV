@@ -22,6 +22,8 @@ public class MovableEntity : MonoBehaviour {
     //      > 1 = ally
     //      > 2 = enemy
     public int _faction;
+    public int _enemyFaction;
+
     public float _fieldOfView;
     public float _healPoint;
     public Animator _animatorEntity;

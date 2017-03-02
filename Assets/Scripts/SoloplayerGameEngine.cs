@@ -19,15 +19,6 @@ public class SoloplayerGameEngine : MonoBehaviour {
     public Player playerPrefab;
     Player playerClone;
 
-    // SPAWNERS
-    public NestSpawner foxSpawner;
-    public NestSpawner chickenSpawner;
-    public NestSpawner snakeSpawner;
-
-    public EvilNestSpawner evilFoxSpawner;
-    public EvilNestSpawner evilChickenSpawner;
-    public EvilNestSpawner evilSnakeSpawner;
-
     // FARM
     public Farm allyQG;
 
@@ -107,20 +98,12 @@ public class SoloplayerGameEngine : MonoBehaviour {
         playerClone.init(allyQG, 1, 2, 1);
         playerCanvas.GetComponentInChildren<GestionUserInterface>()._player = playerClone;
 
-        // Instanciate 3 neutral fox
-        foxSpawner.createUnit();
-        foxSpawner.createUnit();
-        foxSpawner.createUnit();
-
-        // Instanciate 3 neutral chicken
-        chickenSpawner.createUnit();
-        chickenSpawner.createUnit();
-        chickenSpawner.createUnit();
-
-        // Instanciate 3 neutral snake
-        snakeSpawner.createUnit();
-        snakeSpawner.createUnit();
-        snakeSpawner.createUnit();
+        foreach (NestSpawner spawn in _spawnersList)
+        {
+            spawn.createUnit();
+            spawn.createUnit();
+            spawn.createUnit();
+        }
 
         _neutralsUnitsList = FindObjectsOfType(typeof(Unit)) as Unit[];
     }
@@ -136,9 +119,8 @@ public class SoloplayerGameEngine : MonoBehaviour {
             timeBeforeNextAttack = Random.Range(25.0f, 50.0f);
             timeAttack = Time.time;
 
-            evilFoxSpawner.createUnit(allyQG);
-            evilChickenSpawner.createUnit(allyQG);
-            evilSnakeSpawner.createUnit(allyQG);
+            foreach (EvilNestSpawner spawn in _evilSpawnersList)
+                spawn.createUnit(allyQG);
         }
     }
 

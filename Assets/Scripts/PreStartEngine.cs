@@ -7,8 +7,6 @@ public class PreStartEngine : MonoBehaviour {
 
     private float beginTime;
 
-    public AudioSource sound;
-
 	// Use this for initialization
 	void Start () {
         ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();

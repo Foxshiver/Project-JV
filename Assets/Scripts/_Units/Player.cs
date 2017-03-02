@@ -58,7 +58,8 @@ public class Player : MovableEntity {
         Vector2 prevPosition = this._currentPosition;
 
         // Update behind point and current player position 
-        _currentPosition = Vector3TOVector2(this.transform.position);
+        //_currentPosition = Vector3TOVector2(prevPosition);
+        _currentPosition = new Vector2(this.transform.position.x, this.transform.position.z);
         _behindPosition = leader.getBehindLeader();
         _currentPosition = leader.computeNewPosition(leader.controllerMovement());
         updatePosition(_currentPosition);

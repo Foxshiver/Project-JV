@@ -82,6 +82,9 @@ public class AttackTargetState : IEnemyState
             {
                 enemy.setHealPoint(enemy.getHealPoint()-2.0f);
                 enemy.playDamageSound();
+
+                if (Random.Range(0.0f, 1.0f) < 0.5f)
+                    state._unit._healPoint -= 4.0f;
             }
         }
     }

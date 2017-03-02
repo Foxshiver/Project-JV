@@ -39,7 +39,7 @@ public class EndEngine : MonoBehaviour {
                 winningEnd.SetActive(true);
                 losingEnd.SetActive(false);
                 endFor1v1.SetActive(false);
-                scoreMessage.text = "You have defend your farm from " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
+                scoreMessage.text = "You have defend your farm from " + PersistentData.nbOfWaves + " attacks.\nYou have survived " + Mathf.Round(PersistentData.TimeAlive) + " secs";
             }
             else
             {
@@ -48,7 +48,7 @@ public class EndEngine : MonoBehaviour {
                 losingEnd.SetActive(true);
                 winningEnd.SetActive(false);
                 endFor1v1.SetActive(false);
-                scoreMessage.text = "You died after " + PersistentData.nbOfWaves + " attacks.\nYou have survive " + Mathf.Round(PersistentData.TimeAlive) + " secs";
+                scoreMessage.text = "You died after " + PersistentData.nbOfWaves + " attacks.\nYou have survived " + Mathf.Round(PersistentData.TimeAlive) + " secs";
             }
         }
         else
@@ -58,7 +58,7 @@ public class EndEngine : MonoBehaviour {
             endFor1v1.SetActive(true);
             winningEnd.SetActive(false);
             losingEnd.SetActive(false);
-            scoreMessage.text = "Player " + PersistentData.winner + " destroy the farm first !";
+            scoreMessage.text = "Player " + PersistentData.winner + " destroyed the farm first !";
         }
 
 

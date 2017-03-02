@@ -89,7 +89,7 @@ public class AttackLeaderTargetState : IUnitState
 
     private void checkAround()
     {
-        float distance = (state._unit._unitTarget._currentPosition - state._unit.general._currentPosition).magnitude;
+        float distance = (state._unit._simpleTarget.position - state._unit.general._currentPosition).magnitude;
 
         if(distance > state._unit.general._fieldOfView)
         {
@@ -117,8 +117,11 @@ public class AttackLeaderTargetState : IUnitState
             float distance = (state._unit._currentPosition - state._unit._simpleTarget.position).magnitude;
             if(distance < state._unit._fieldOfView)
             {
-                enemy.setHealPoint(enemy.getHealPoint() - 2.0f);
+                enemy.setHealPoint(enemy.getHealPoint() - 1.0f);
                 enemy.playDamageSound();
+
+                if (Random.Range(0.0f, 1.0f) < 0.5f)
+                    state._unit._healPoint -= 1.0f;
             }
         }
     }

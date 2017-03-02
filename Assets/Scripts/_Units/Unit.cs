@@ -55,6 +55,7 @@ public class Unit : MovableEntity {
     public void update()
     {
         Vector2 prevPosition = this._currentPosition;
+        this._currentPosition = Vector3TOVector2(this.transform.position);
 
         if(this._healPoint <= 0.0f)
         {
